@@ -1,113 +1,104 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ToolMela — Free Online Tools</title>
-<meta name="description" content="Free online calculators, text, image and utility tools.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToolMela - 50 free online tools for everyday use.">
+<title>ToolMela - 50 Free Online Tools</title>
+
 <style>
-:root{--bg:#f6f8fc;--card:#fff;--text:#172033;--muted:#667085;--brand:#2563eb;--line:#e5e7eb}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.nav{max-width:1150px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:800}.logo b{color:var(--brand)}
-nav a{margin-left:18px;color:var(--text);text-decoration:none;font-size:14px}
-.hero{max-width:1150px;margin:auto;padding:58px 20px 30px;text-align:center}.hero h1{font-size:45px;margin:0 0 12px}.hero p{color:var(--muted);font-size:18px}
-.search{max-width:650px;margin:25px auto;display:flex;background:white;border:1px solid var(--line);border-radius:14px;padding:5px}.search input{flex:1;border:0;outline:0;padding:14px;font-size:16px}.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer}
-main{max-width:1150px;margin:auto;padding:10px 20px 60px}.section{margin-top:35px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;cursor:pointer}.card:hover{box-shadow:0 8px 25px #00000012;transform:translateY(-2px)}.icon{font-size:30px}.card h3{margin:10px 0 7px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
-.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:25px;margin-top:30px}.panel.active{display:block}.field{width:100%;padding:12px;margin:7px 0;border:1px solid #d5d9e0;border-radius:9px;font-size:15px}.result{margin-top:12px;padding:15px;background:#f1f5f9;border-radius:10px;min-height:20px}.ad{margin:25px 0;padding:20px;text-align:center;border:1px dashed #cbd5e1;color:#94a3b8;border-radius:12px}
-footer{background:#111827;color:#cbd5e1;padding:35px 20px;text-align:center}footer a{color:#cbd5e1;margin:0 8px}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}nav a{display:none}.hero h1{font-size:35px}}
-@media(max-width:500px){.grid{grid-template-columns:1fr}.hero{padding-top:40px}}
-</style>
-</head>
-<body>
-<header><div class="nav"><div class="logo">Tool<b>Mela</b></div><nav><a href="#tools">Tools</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div></header>
-<section class="hero"><h1>Free Online Tools</h1><p>Fast, simple and useful tools — all in one place.</p>
-<div class="search"><input id="search" placeholder="Search tools..." oninput="filterTools()"><button class="btn">Search</button></div></section>
-<main id="tools">
-<div class="ad">Advertisement space</div>
-<div class="section"><h2>Popular Tools</h2><div class="grid" id="grid">
-<div class="card" data-name="age calculator" onclick="show('age')"><div class="icon">🎂</div><h3>Age Calculator</h3><p>Calculate age in years, months and days.</p></div>
-<div class="card" data-name="percentage calculator" onclick="show('percent')"><div class="icon">🧮</div><h3>Percentage Calculator</h3><p>Find percentages quickly.</p></div>
-<div class="card" data-name="discount calculator" onclick="show('discount')"><div class="icon">🏷️</div><h3>Discount Calculator</h3><p>Calculate sale price and savings.</p></div>
-<div class="card" data-name="bmi calculator" onclick="show('bmi')"><div class="icon">📊</div><h3>BMI Calculator</h3><p>Calculate BMI from height and weight.</p></div>
-<div class="card" data-name="word counter" onclick="show('words')"><div class="icon">📝</div><h3>Word Counter</h3><p>Count words, characters and spaces.</p></div>
-<div class="card" data-name="case converter" onclick="show('case')"><div class="icon">🔤</div><h3>Case Converter</h3><p>Convert text to upper or lower case.</p></div>
-<div class="card" data-name="password generator" onclick="show('pass')"><div class="icon">🔐</div><h3>Password Generator</h3><p>Generate a random password.</p></div>
-<div class="card" data-name="qr code generator" onclick="show('qr')"><div class="icon">🔳</div><h3>QR Code Generator</h3><p>Create a QR code from text or URL.</p></div>
-<div class="card" data-name="image compressor"><div class="icon">🖼️</div><h3>Image Compressor</h3><p>Coming soon.</p></div>
-<div class="card" data-name="image resizer"><div class="icon">📐</div><h3>Image Resizer</h3><p>Coming soon.</p></div>
-<div class="card" data-name="jpg to pdf"><div class="icon">📄</div><h3>JPG to PDF</h3><p>Coming soon.</p></div>
-<div class="card" data-name="pdf compressor"><div class="icon">📦</div><h3>PDF Compressor</h3><p>Coming soon.</p></div>
-
-<div class="card" data-name="average calculator" onclick="show('average')"><div class="icon">📈</div><h3>Average Calculator</h3><p>Find the average of numbers.</p></div>
-<div class="card" data-name="sum calculator" onclick="show('sum')"><div class="icon">➕</div><h3>Sum Calculator</h3><p>Add a list of numbers.</p></div>
-<div class="card" data-name="gpa calculator" onclick="show('gpa')"><div class="icon">🎓</div><h3>GPA Calculator</h3><p>Estimate GPA from grades.</p></div>
-<div class="card" data-name="time calculator" onclick="show('time')"><div class="icon">⏱️</div><h3>Time Calculator</h3><p>Add hours and minutes.</p></div>
-<div class="card" data-name="minutes to hours" onclick="show('mth')"><div class="icon">🕐</div><h3>Minutes to Hours</h3><p>Convert minutes to hours.</p></div>
-<div class="card" data-name="hours to minutes" onclick="show('htm')"><div class="icon">⏰</div><h3>Hours to Minutes</h3><p>Convert hours to minutes.</p></div>
-<div class="card" data-name="celsius fahrenheit" onclick="show('temp')"><div class="icon">🌡️</div><h3>Temperature Converter</h3><p>Convert Celsius and Fahrenheit.</p></div>
-<div class="card" data-name="kilometers miles" onclick="show('distance')"><div class="icon">📏</div><h3>Distance Converter</h3><p>Convert km and miles.</p></div>
-<div class="card" data-name="kg pounds" onclick="show('weight')"><div class="icon">⚖️</div><h3>Weight Converter</h3><p>Convert kilograms and pounds.</p></div>
-<div class="card" data-name="meters feet" onclick="show('length')"><div class="icon">📐</div><h3>Length Converter</h3><p>Convert meters and feet.</p></div>
-<div class="card" data-name="random number generator" onclick="show('random')"><div class="icon">🎲</div><h3>Random Number</h3><p>Generate a random number.</p></div>
-<div class="card" data-name="text reverser" onclick="show('reverse')"><div class="icon">🔄</div><h3>Text Reverser</h3><p>Reverse any text.</p></div>
-<div class="card" data-name="remove spaces" onclick="show('spaces')"><div class="icon">✂️</div><h3>Remove Spaces</h3><p>Remove extra spaces from text.</p></div>
-<div class="card" data-name="line counter" onclick="show('lines')"><div class="icon">📋</div><h3>Line Counter</h3><p>Count lines in text.</p></div>
-<div class="card" data-name="json formatter" onclick="show('json')"><div class="icon">🧩</div><h3>JSON Formatter</h3><p>Format JSON neatly.</p></div>
-<div class="card" data-name="base64 encoder" onclick="show('base64')"><div class="icon">🔐</div><h3>Base64 Encoder</h3><p>Encode text to Base64.</p></div>
-<div class="card" data-name="slug generator" onclick="show('slug')"><div class="icon">🔗</div><h3>Slug Generator</h3><p>Create URL-friendly slugs.</p></div>
-<div class="card" data-name="lorem ipsum generator" onclick="show('lorem')"><div class="icon">📃</div><h3>Lorem Ipsum</h3><p>Generate placeholder text.</p></div>
-<div class="card" data-name="binary converter" onclick="show('binary')"><div class="icon">💻</div><h3>Binary Converter</h3><p>Convert text to binary.</p></div>
-<div class="card" data-name="unix timestamp" onclick="show('timestamp')"><div class="icon">🗓️</div><h3>Unix Timestamp</h3><p>Get the current Unix timestamp.</p></div>
-</div></div>
-
-
-<div id="average" class="panel"><h2>📈 Average Calculator</h2><input class="field" id="avg" placeholder="Example: 10, 20, 30"><button class="btn" onclick="averageCalc()">Calculate</button><div class="result" id="avgR"></div></div>
-<div id="sum" class="panel"><h2>➕ Sum Calculator</h2><input class="field" id="sumx" placeholder="Example: 10, 20, 30"><button class="btn" onclick="sumCalc()">Calculate</button><div class="result" id="sumR"></div></div>
-<div id="gpa" class="panel"><h2>🎓 GPA Calculator</h2><input class="field" id="gpaX" placeholder="Enter grade points, e.g. 3.5, 3, 4"><button class="btn" onclick="gpaCalc()">Calculate</button><div class="result" id="gpaR"></div></div>
-<div id="time" class="panel"><h2>⏱️ Time Calculator</h2><input class="field" id="th" type="number" placeholder="Hours"><input class="field" id="tm" type="number" placeholder="Minutes"><button class="btn" onclick="timeCalc()">Calculate</button><div class="result" id="timeR"></div></div>
-<div id="mth" class="panel"><h2>🕐 Minutes to Hours</h2><input class="field" id="mins" type="number" placeholder="Minutes"><button class="btn" onclick="mthCalc()">Convert</button><div class="result" id="mthR"></div></div>
-<div id="htm" class="panel"><h2>⏰ Hours to Minutes</h2><input class="field" id="hours" type="number" placeholder="Hours"><button class="btn" onclick="htmCalc()">Convert</button><div class="result" id="htmR"></div></div>
-<div id="temp" class="panel"><h2>🌡️ Temperature Converter</h2><input class="field" id="tc" type="number" placeholder="Celsius"><button class="btn" onclick="tempCalc()">Convert</button><div class="result" id="tempR"></div></div>
-<div id="distance" class="panel"><h2>📏 Distance Converter</h2><input class="field" id="km" type="number" placeholder="Kilometers"><button class="btn" onclick="distCalc()">Convert</button><div class="result" id="distR"></div></div>
-<div id="weight" class="panel"><h2>⚖️ Weight Converter</h2><input class="field" id="kg2" type="number" placeholder="Kilograms"><button class="btn" onclick="weightCalc()">Convert</button><div class="result" id="weightR"></div></div>
-<div id="length" class="panel"><h2>📐 Length Converter</h2><input class="field" id="meter" type="number" placeholder="Meters"><button class="btn" onclick="lengthCalc()">Convert</button><div class="result" id="lengthR"></div></div>
-<div id="random" class="panel"><h2>🎲 Random Number</h2><input class="field" id="rmin" type="number" placeholder="Minimum"><input class="field" id="rmax" type="number" placeholder="Maximum"><button class="btn" onclick="randomCalc()">Generate</button><div class="result" id="randomR"></div></div>
-<div id="reverse" class="panel"><h2>🔄 Text Reverser</h2><textarea class="field" id="rev" rows="5"></textarea><button class="btn" onclick="reverseCalc()">Reverse</button><div class="result" id="reverseR"></div></div>
-<div id="spaces" class="panel"><h2>✂️ Remove Spaces</h2><textarea class="field" id="sp" rows="5"></textarea><button class="btn" onclick="spacesCalc()">Clean</button><div class="result" id="spacesR"></div></div>
-<div id="lines" class="panel"><h2>📋 Line Counter</h2><textarea class="field" id="ln" rows="5" oninput="linesCalc()"></textarea><div class="result" id="linesR">Lines: 0</div></div>
-<div id="json" class="panel"><h2>🧩 JSON Formatter</h2><textarea class="field" id="jx" rows="7"></textarea><button class="btn" onclick="jsonCalc()">Format</button><div class="result" id="jsonR"></div></div>
-<div id="base64" class="panel"><h2>🔐 Base64 Encoder</h2><textarea class="field" id="b64" rows="5"></textarea><button class="btn" onclick="b64Calc()">Encode</button><div class="result" id="base64R"></div></div>
-<div id="slug" class="panel"><h2>🔗 Slug Generator</h2><input class="field" id="sl" placeholder="Your page title"><button class="btn" onclick="slugCalc()">Generate</button><div class="result" id="slugR"></div></div>
-<div id="lorem" class="panel"><h2>📃 Lorem Ipsum</h2><button class="btn" onclick="loremCalc()">Generate</button><div class="result" id="loremR"></div></div>
-<div id="binary" class="panel"><h2>💻 Binary Converter</h2><input class="field" id="bin" placeholder="Enter English text"><button class="btn" onclick="binaryCalc()">Convert</button><div class="result" id="binaryR"></div></div>
-<div id="timestamp" class="panel"><h2>🗓️ Unix Timestamp</h2><button class="btn" onclick="timestampCalc()">Get Timestamp</button><div class="result" id="timestampR"></div></div>
-<div id="age" class="panel"><h2>🎂 Age Calculator</h2><input class="field" id="dob" type="date"><button class="btn" onclick="ageCalc()">Calculate</button><div class="result" id="ageR"></div></div>
-<div id="percent" class="panel"><h2>🧮 Percentage Calculator</h2><input class="field" id="pn" type="number" placeholder="Number"><input class="field" id="pt" type="number" placeholder="Total"><button class="btn" onclick="percentCalc()">Calculate</button><div class="result" id="percentR"></div></div>
-<div id="discount" class="panel"><h2>🏷️ Discount Calculator</h2><input class="field" id="price" type="number" placeholder="Original price"><input class="field" id="disc" type="number" placeholder="Discount %"><button class="btn" onclick="discountCalc()">Calculate</button><div class="result" id="discountR"></div></div>
-<div id="bmi" class="panel"><h2>📊 BMI Calculator</h2><input class="field" id="kg" type="number" placeholder="Weight (kg)"><input class="field" id="cm" type="number" placeholder="Height (cm)"><button class="btn" onclick="bmiCalc()">Calculate</button><div class="result" id="bmiR"></div></div>
-<div id="words" class="panel"><h2>📝 Word Counter</h2><textarea class="field" id="txt" rows="8" placeholder="Type or paste text..." oninput="wordCalc()"></textarea><div class="result" id="wordR">Words: 0 | Characters: 0 | Characters without spaces: 0</div></div>
-<div id="case" class="panel"><h2>🔤 Case Converter</h2><textarea class="field" id="caseTxt" rows="6" placeholder="Enter text"></textarea><button class="btn" onclick="upper()">UPPERCASE</button> <button class="btn" onclick="lower()">lowercase</button><div class="result" id="caseR"></div></div>
-<div id="pass" class="panel"><h2>🔐 Password Generator</h2><input class="field" id="plen" type="number" value="12" min="6" max="50"><button class="btn" onclick="genPass()">Generate</button><div class="result" id="passR"></div></div>
-<div id="qr" class="panel"><h2>🔳 QR Code Generator</h2><input class="field" id="qrTxt" placeholder="Enter text or URL"><button class="btn" onclick="genQR()">Generate</button><div class="result" id="qrR"></div></div>
-
-<div class="ad">Advertisement space</div>
-<section id="about" class="section"><h2>About ToolMela</h2><p>ToolMela is a collection of simple online tools designed to save time and make everyday tasks easier.</p></section>
-<section id="contact" class="section"><h2>Contact</h2><p>For questions or feedback, add your business email here before publishing the site.</p></section>
-<section class="section"><h2>Privacy Policy</h2><p>This website may use cookies and third-party advertising services. Replace this placeholder with your final privacy policy before applying for advertising programs.</p></section>
-<section class="section"><h2>Terms of Use</h2><p>Tools are provided for general informational use. Verify important calculations before relying on them.</p></section>
-</main>
-<footer>© 2026 ToolMela · <a href="#about">About</a> · <a href="#contact">Contact</a> · Privacy · Terms</footer>
-<script>
-const panels=document.querySelectorAll('.panel');
-function show(id){panels.forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById(id).scrollIntoView({behavior:'smooth'})}
-function filterTools(){let q=search.value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.includes(q)?'block':'none')}
-function ageCalc(){let d=new Date(dob.value),n=new Date();if(isNaN(d)){ageR.textContent='Select your birth date.';return}let y=n.getFullYear()-d.getFullYear(),m=n.getMonth()-d.getMonth(),day=n.getDate()-d.getDate();if(day<0){m--;day+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}ageR.textContent=`Age: ${y} years, ${m} months, ${day} days`}
-function percentCalc(){let a=+pn.value,b=+pt.value;percentR.textContent=b?((a/b)*100).toFixed(2)+'%':'Enter valid values.'}
-function discountCalc(){let p=+price.value,d=+disc.value;if(p>=0&&d>=0){let s=p*d/100;discountR.textContent=`You save: ${s.toFixed(2)} | Final price: ${(p-s).toFixed(2)}`}else discountR.textContent='Enter valid values.'}
-function bmiCalc(){let w=+kg.value,h=+cm.value/100;if(w>0&&h>0){let b=w/(h*h);bmiR.textContent='BMI: '+b.toFixed(1)}else bmiR.textContent='Enter valid values.'}
-function wordCalc(){let t=txt.value;let w=t.trim()?t.trim().split(/\s+/).length:0;wordR.textContent=`Words: ${w} | Characters: ${t.length} | Characters without spaces: ${t.replace(/\s/g,'').length}`}
-function upper(){caseR.textContent=caseTxt.value.toUpperCase()}function lower(){caseR.textContent=caseTxt.value.toLowerCase()}
-function genPass(){let n=Math.max(6,Math.min(50,+plen.value||12)),s='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';let x='';for(let i=0;i<n;i++)x+=s[Math.floor(Math.random()*s.length)];passR.textContent=x}
-function genQR(){let t=encodeURIComponent(qrTxt.value.trim());qrR.innerHTML=t?`<img alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${t}">`:'Enter text or URL.'}
-</script>
-</body></html>
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#687386;
+  --primary:#2563eb;
+  --border:#e2e6ef;
+  --danger:#dc2626;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.nav{
+  max-width:1150px;
+  margin:auto;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:28px;
+  font-weight:800;
+  color:#172033;
+}
+.logo span{color:#2563eb}
+.hero{
+  text-align:center;
+  max-width:1000px;
+  margin:auto;
+  padding:55px 20px 30px;
+}
+.hero h1{
+  font-size:48px;
+  margin:10px 0;
+}
+.hero p{
+  color:var(--muted);
+  font-size:20px;
+}
+.search{
+  max-width:700px;
+  margin:28px auto;
+  display:flex;
+  background:#fff;
+  padding:7px;
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+.search input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:16px;
+  font-size:17px;
+}
+button{
+  border:0;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  padding:12px 18px;
+  font-size:15px;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+main{
+  max-width:1150px;
+  margin:auto;
+  padding:10px 20px 50px;
+}
+.ad{
+  height:100px;
+  border:1px dashed #cbd2df;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#98a3b6;
+  margin:20px 0 45px;
+}
+.section-title{
+  font-size:30px;
+  margin:25px 0;

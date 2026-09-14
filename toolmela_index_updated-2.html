@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToolMela — Free Online Tools</title>
+<meta name="description" content="Free online calculators, converters, text, developer and utility tools.">
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#172033;--muted:#667085;--brand:#2563eb;--line:#e5e7eb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}.nav{max-width:1150px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:800}.logo b{color:var(--brand)}
+nav a{margin-left:18px;color:var(--text);text-decoration:none;font-size:14px}
+.hero{max-width:1150px;margin:auto;padding:58px 20px 30px;text-align:center}.hero h1{font-size:45px;margin:0 0 12px}.hero p{color:var(--muted);font-size:18px}
+.search{max-width:650px;margin:25px auto;display:flex;background:white;border:1px solid var(--line);border-radius:14px;padding:5px}.search input{flex:1;border:0;outline:0;padding:14px;font-size:16px}.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer;margin:3px}
+main{max-width:1150px;margin:auto;padding:10px 20px 60px}.section{margin-top:35px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;cursor:pointer;transition:.15s}.card:hover{box-shadow:0 8px 25px #00000012;transform:translateY(-2px)}.icon{font-size:30px}.card h3{margin:10px 0 7px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:25px;margin-top:30px}.panel.active{display:block}.field{width:100%;padding:12px;margin:7px 0;border:1px solid #d5d9e0;border-radius:9px;font-size:15px}.result{margin-top:12px;padding:15px;background:#f1f5f9;border-radius:10px;min-height:20px;white-space:pre-wrap;word-break:break-word}.ad{margin:25px 0;padding:20px;text-align:center;border:1px dashed #cbd5e1;color:#94a3b8;border-radius:12px}
+footer{background:#111827;color:#cbd5e1;padding:35px 20px;text-align:center}footer a{color:#cbd5e1;margin:0 8px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}nav a{display:none}.hero h1{font-size:35px}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.hero{padding-top:40px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="logo">Tool<b>Mela</b></div><nav><a href="#tools">Tools</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div></header>
+<section class="hero"><h1>Free Online Tools</h1><p>Fast, simple and useful tools — all in one place.</p>
+<div class="search"><input id="search" placeholder="Search tools..." oninput="filterTools()"><button class="btn" onclick="filterTools()">Search</button></div></section>
+
+<main id="tools">
+<div class="ad">Advertisement space</div>
+<div class="section"><h2>Popular Tools</h2><div class="grid" id="grid">
+
+<!-- Original tools -->
+<div class="card" data-name="age calculator" onclick="show('age')"><div class="icon">🎂</div><h3>Age Calculator</h3><p>Calculate age in years, months and days.</p></div>
+<div class="card" data-name="percentage calculator" onclick="show('percent')"><div class="icon">🧮</div><h3>Percentage Calculator</h3><p>Find percentages quickly.</p></div>
+<div class="card" data-name="discount calculator" onclick="show('discount')"><div class="icon">🏷️</div><h3>Discount Calculator</h3><p>Calculate sale price and savings.</p></div>
+<div class="card" data-name="bmi calculator" onclick="show('bmi')"><div class="icon">📊</div><h3>BMI Calculator</h3><p>Calculate BMI from height and weight.</p></div>
+<div class="card" data-name="word counter" onclick="show('words')"><div class="icon">📝</div><h3>Word Counter</h3><p>Count words, characters and spaces.</p></div>
+<div class="card" data-name="case converter" onclick="show('case')"><div class="icon">🔤</div><h3>Case Converter</h3><p>Convert text to upper or lower case.</p></div>
+<div class="card" data-name="password generator" onclick="show('pass')"><div class="icon">🔐</div><h3>Password Generator</h3><p>Generate a random password.</p></div>
+<div class="card" data-name="qr code generator" onclick="show('qr')"><div class="icon">🔳</div><h3>QR Code Generator</h3><p>Create a QR code from text or URL.</p></div>
+<div class="card" data-name="average calculator" onclick="show('average')"><div class="icon">📈</div><h3>Average Calculator</h3><p>Find the average of numbers.</p></div>
+<div class="card" data-name="sum calculator" onclick="show('sum')"><div class="icon">➕</div><h3>Sum Calculator</h3><p>Add a list of numbers.</p></div>
+<div class="card" data-name="gpa calculator" onclick="show('gpa')"><div class="icon">🎓</div><h3>GPA Calculator</h3><p>Estimate GPA from grade points.</p></div>
+<div class="card" data-name="time calculator" onclick="show('time')"><div class="icon">⏱️</div><h3>Time Calculator</h3><p>Add hours and minutes.</p></div>
+<div class="card" data-name="minutes to hours" onclick="show('mth')"><div class="icon">🕐</div><h3>Minutes to Hours</h3><p>Convert minutes to hours.</p></div>
+<div class="card" data-name="hours to minutes" onclick="show('htm')"><div class="icon">⏰</div><h3>Hours to Minutes</h3><p>Convert hours to minutes.</p></div>
+<div class="card" data-name="temperature converter celsius fahrenheit" onclick="show('temp')"><div class="icon">🌡️</div><h3>Temperature Converter</h3><p>Convert Celsius and Fahrenheit.</p></div>
+<div class="card" data-name="distance converter kilometers miles" onclick="show('distance')"><div class="icon">📏</div><h3>Distance Converter</h3><p>Convert km and miles.</p></div>
+<div class="card" data-name="weight converter kg pounds" onclick="show('weight')"><div class="icon">⚖️</div><h3>Weight Converter</h3><p>Convert kilograms and pounds.</p></div>
+<div class="card" data-name="length converter meters feet" onclick="show('length')"><div class="icon">📐</div><h3>Length Converter</h3><p>Convert meters and feet.</p></div>
+<div class="card" data-name="random number generator" onclick="show('random')"><div class="icon">🎲</div><h3>Random Number</h3><p>Generate a random number.</p></div>
+<div class="card" data-name="text reverser" onclick="show('reverse')"><div class="icon">🔄</div><h3>Text Reverser</h3><p>Reverse any text.</p></div>
+<div class="card" data-name="remove spaces" onclick="show('spaces')"><div class="icon">✂️</div><h3>Remove Spaces</h3><p>Clean extra spaces from text.</p></div>
+<div class="card" data-name="line counter" onclick="show('lines')"><div class="icon">📋</div><h3>Line Counter</h3><p>Count lines in text.</p></div>
+<div class="card" data-name="json formatter" onclick="show('json')"><div class="icon">🧩</div><h3>JSON Formatter</h3><p>Format JSON neatly.</p></div>
+<div class="card" data-name="base64 encoder" onclick="show('base64')"><div class="icon">🔐</div><h3>Base64 Encoder</h3><p>Encode text to Base64.</p></div>
+<div class="card" data-name="slug generator" onclick="show('slug')"><div class="icon">🔗</div><h3>Slug Generator</h3><p>Create URL-friendly slugs.</p></div>
+<div class="card" data-name="lorem ipsum generator" onclick="show('lorem')"><div class="icon">📃</div><h3>Lorem Ipsum</h3><p>Generate placeholder text.</p></div>
+<div class="card" data-name="binary converter" onclick="show('binary')"><div class="icon">💻</div><h3>Binary Converter</h3><p>Convert text to binary.</p></div>
+<div class="card" data-name="unix timestamp" onclick="show('timestamp')"><div class="icon">🗓️</div><h3>Unix Timestamp</h3><p>Get the current Unix timestamp.</p></div>
+
+<!-- 25 new tools -->
+<div class="card" data-name="tip calculator" onclick="show('tip')"><div class="icon">💵</div><h3>Tip Calculator</h3><p>Calculate tip and total bill.</p></div>
+<div class="card" data-name="tax calculator" onclick="show('tax')"><div class="icon">🧾</div><h3>Tax Calculator</h3><p>Add tax to any amount.</p></div>
+<div class="card" data-name="loan payment calculator" onclick="show('loan')"><div class="icon">🏦</div><h3>Loan Payment</h3><p>Estimate monthly loan payment.</p></div>
+<div class="card" data-name="emi calculator" onclick="show('emi')"><div class="icon">💳</div><h3>EMI Calculator</h3><p>Calculate monthly EMI.</p></div>
+<div class="card" data-name="fraction calculator" onclick="show('fraction')"><div class="icon">½</div><h3>Fraction Calculator</h3><p>Add, subtract, multiply or divide fractions.</p></div>
+<div class="card" data-name="prime number checker" onclick="show('prime')"><div class="icon">🔢</div><h3>Prime Checker</h3><p>Check whether a number is prime.</p></div>
+<div class="card" data-name="factorial calculator" onclick="show('factorial')"><div class="icon">❗</div><h3>Factorial Calculator</h3><p>Calculate n factorial.</p></div>
+<div class="card" data-name="power calculator exponent" onclick="show('power')"><div class="icon">⚡</div><h3>Power Calculator</h3><p>Calculate x raised to y.</p></div>
+<div class="card" data-name="square root calculator" onclick="show('sqrt')"><div class="icon">√</div><h3>Square Root</h3><p>Find the square root of a number.</p></div>
+<div class="card" data-name="bytes converter kb mb gb" onclick="show('bytes')"><div class="icon">💾</div><h3>Bytes Converter</h3><p>Convert bytes, KB, MB and GB.</p></div>
+<div class="card" data-name="speed converter kmh mph" onclick="show('speed')"><div class="icon">🚗</div><h3>Speed Converter</h3><p>Convert km/h and mph.</p></div>
+<div class="card" data-name="area calculator rectangle" onclick="show('area')"><div class="icon">⬛</div><h3>Area Calculator</h3><p>Calculate rectangle area.</p></div>
+<div class="card" data-name="triangle area calculator" onclick="show('triangle')"><div class="icon">🔺</div><h3>Triangle Area</h3><p>Calculate triangle area.</p></div>
+<div class="card" data-name="circle calculator circumference" onclick="show('circle')"><div class="icon">⭕</div><h3>Circle Calculator</h3><p>Calculate area and circumference.</p></div>
+<div class="card" data-name="days between dates" onclick="show('days')"><div class="icon">📅</div><h3>Days Between Dates</h3><p>Count days between two dates.</p></div>
+<div class="card" data-name="password strength checker" onclick="show('pstrength')"><div class="icon">🛡️</div><h3>Password Strength</h3><p>Check basic password strength.</p></div>
+<div class="card" data-name="number to words" onclick="show('numwords')"><div class="icon">🔠</div><h3>Number to Words</h3><p>Convert numbers to English words.</p></div>
+<div class="card" data-name="dice roller" onclick="show('dice')"><div class="icon">🎲</div><h3>Dice Roller</h3><p>Roll one or more dice.</p></div>
+<div class="card" data-name="character frequency counter" onclick="show('freq')"><div class="icon">🔤</div><h3>Character Frequency</h3><p>Count how often characters appear.</p></div>
+<div class="card" data-name="duplicate line remover" onclick="show('dedupe')"><div class="icon">🧹</div><h3>Duplicate Line Remover</h3><p>Remove duplicate lines from text.</p></div>
+<div class="card" data-name="sort lines" onclick="show('sortlines')"><div class="icon">↕️</div><h3>Sort Lines</h3><p>Sort text lines alphabetically.</p></div>
+<div class="card" data-name="url encoder decoder" onclick="show('urlcodec')"><div class="icon">🌐</div><h3>URL Encoder</h3><p>Encode or decode URL text.</p></div>
+<div class="card" data-name="html entity encoder" onclick="show('htmlcode')"><div class="icon">🏷️</div><h3>HTML Entity Encoder</h3><p>Encode special HTML characters.</p></div>
+<div class="card" data-name="hex rgb converter color" onclick="show('hexrgb')"><div class="icon">🎨</div><h3>HEX ↔ RGB</h3><p>Convert HEX colors to RGB.</p></div>
+<div class="card" data-name="percentage change calculator" onclick="show('change')"><div class="icon">📉</div><h3>Percentage Change</h3><p>Calculate increase or decrease.</p></div>
+<div class="card" data-name="ratio calculator" onclick="show('ratio')"><div class="icon">⚖️</div><h3>Ratio Calculator</h3><p>Simplify two-number ratios.</p></div>
+
+</div></div>
+
+<!-- Panels -->
+<div id="age" class="panel"><h2>🎂 Age Calculator</h2><input class="field" id="dob" type="date"><button class="btn" onclick="ageCalc()">Calculate</button><div class="result" id="ageR"></div></div>
+<div id="percent" class="panel"><h2>🧮 Percentage Calculator</h2><input class="field" id="pn" type="number" placeholder="Number"><input class="field" id="pt" type="number" placeholder="Total"><button class="btn" onclick="percentCalc()">Calculate</button><div class="result" id="percentR"></div></div>
+<div id="discount" class="panel"><h2>🏷️ Discount Calculator</h2><input class="field" id="price" type="number" placeholder="Original price"><input class="field" id="disc" type="number" placeholder="Discount %"><button class="btn" onclick="discountCalc()">Calculate</button><div class="result" id="discountR"></div></div>
+<div id="bmi" class="panel"><h2>📊 BMI Calculator</h2><input class="field" id="kg" type="number" placeholder="Weight (kg)"><input class="field" id="cm" type="number" placeholder="Height (cm)"><button class="btn" onclick="bmiCalc()">Calculate</button><div class="result" id="bmiR"></div></div>
+<div id="words" class="panel"><h2>📝 Word Counter</h2><textarea class="field" id="txt" rows="8" placeholder="Type or paste text..." oninput="wordCalc()"></textarea><div class="result" id="wordR">Words: 0 | Characters: 0 | Characters without spaces: 0</div></div>
+<div id="case" class="panel"><h2>🔤 Case Converter</h2><textarea class="field" id="caseTxt" rows="6" placeholder="Enter text"></textarea><button class="btn" onclick="upper()">UPPERCASE</button><button class="btn" onclick="lower()">lowercase</button><button class="btn" onclick="titleCase()">Title Case</button><div class="result" id="caseR"></div></div>
+<div id="pass" class="panel"><h2>🔐 Password Generator</h2><input class="field" id="plen" type="number" value="12" min="6" max="50"><button class="btn" onclick="genPass()">Generate</button><div class="result" id="passR"></div></div>
+<div id="qr" class="panel"><h2>🔳 QR Code Generator</h2><input class="field" id="qrTxt" placeholder="Enter text or URL"><button class="btn" onclick="genQR()">Generate</button><div class="result" id="qrR"></div></div>
+<div id="average" class="panel"><h2>📈 Average Calculator</h2><input class="field" id="avg" placeholder="10, 20, 30"><button class="btn" onclick="averageCalc()">Calculate</button><div class="result" id="avgR"></div></div>
+<div id="sum" class="panel"><h2>➕ Sum Calculator</h2><input class="field" id="sumx" placeholder="10, 20, 30"><button class="btn" onclick="sumCalc()">Calculate</button><div class="result" id="sumR"></div></div>
+<div id="gpa" class="panel"><h2>🎓 GPA Calculator</h2><input class="field" id="gpaX" placeholder="3.5, 3, 4"><button class="btn" onclick="gpaCalc()">Calculate</button><div class="result" id="gpaR"></div></div>
+<div id="time" class="panel"><h2>⏱️ Time Calculator</h2><input class="field" id="th" type="number" placeholder="Hours"><input class="field" id="tm" type="number" placeholder="Minutes"><button class="btn" onclick="timeCalc()">Calculate</button><div class="result" id="timeR"></div></div>
+<div id="mth" class="panel"><h2>🕐 Minutes to Hours</h2><input class="field" id="mins" type="number" placeholder="Minutes"><button class="btn" onclick="mthCalc()">Convert</button><div class="result" id="mthR"></div></div>
+<div id="htm" class="panel"><h2>⏰ Hours to Minutes</h2><input class="field" id="hours" type="number" placeholder="Hours"><button class="btn" onclick="htmCalc()">Convert</button><div class="result" id="htmR"></div></div>
+<div id="temp" class="panel"><h2>🌡️ Temperature Converter</h2><input class="field" id="tc" type="number" placeholder="Celsius"><button class="btn" onclick="tempCalc()">Convert</button><div class="result" id="tempR"></div></div>
+<div id="distance" class="panel"><h2>📏 Distance Converter</h2><input class="field" id="km" type="number" placeholder="Kilometers"><button class="btn" onclick="distCalc()">Convert</button><div class="result" id="distR"></div></div>
+<div id="weight" class="panel"><h2>⚖️ Weight Converter</h2><input class="field" id="kg2" type="number" placeholder="Kilograms"><button class="btn" onclick="weightCalc()">Convert</button><div class="result" id="weightR"></div></div>
+<div id="length" class="panel"><h2>📐 Length Converter</h2><input class="field" id="meter" type="number" placeholder="Meters"><button class="btn" onclick="lengthCalc()">Convert</button><div class="result" id="lengthR"></div></div>
+<div id="random" class="panel"><h2>🎲 Random Number</h2><input class="field" id="rmin" type="number" placeholder="Minimum"><input class="field" id="rmax" type="number" placeholder="Maximum"><button class="btn" onclick="randomCalc()">Generate</button><div class="result" id="randomR"></div></div>
+<div id="reverse" class="panel"><h2>🔄 Text Reverser</h2><textarea class="field" id="rev" rows="5"></textarea><button class="btn" onclick="reverseCalc()">Reverse</button><div class="result" id="reverseR"></div></div>
+<div id="spaces" class="panel"><h2>✂️ Remove Spaces</h2><textarea class="field" id="sp" rows="5"></textarea><button class="btn" onclick="spacesCalc()">Clean</button><div class="result" id="spacesR"></div></div>
+<div id="lines" class="panel"><h2>📋 Line Counter</h2><textarea class="field" id="ln" rows="5" oninput="linesCalc()"></textarea><div class="result" id="linesR">Lines: 0</div></div>
+<div id="json" class="panel"><h2>🧩 JSON Formatter</h2><textarea class="field" id="jx" rows="7"></textarea><button class="btn" onclick="jsonCalc()">Format</button><div class="result" id="jsonR"></div></div>
+<div id="base64" class="panel"><h2>🔐 Base64 Encoder</h2><textarea class="field" id="b64" rows="5"></textarea><button class="btn" onclick="b64Calc()">Encode</button><div class="result" id="base64R"></div></div>
+<div id="slug" class="panel"><h2>🔗 Slug Generator</h2><input class="field" id="sl" placeholder="Your page title"><button class="btn" onclick="slugCalc()">Generate</button><div class="result" id="slugR"></div></div>
+<div id="lorem" class="panel"><h2>📃 Lorem Ipsum</h2><input class="field" id="loremN" type="number" value="3" min="1" max="10" placeholder="Paragraphs"><button class="btn" onclick="loremCalc()">Generate</button><div class="result" id="loremR"></div></div>
+<div id="binary" class="panel"><h2>💻 Binary Converter</h2><input class="field" id="bin" placeholder="Enter English text"><button class="btn" onclick="binaryCalc()">Convert</button><div class="result" id="binaryR"></div></div>
+<div id="timestamp" class="panel"><h2>🗓️ Unix Timestamp</h2><button class="btn" onclick="timestampCalc()">Get Timestamp</button><div class="result" id="timestampR"></div></div>
+
+<!-- New tool panels -->
+<div id="tip" class="panel"><h2>💵 Tip Calculator</h2><input class="field" id="tipBill" type="number" placeholder="Bill amount"><input class="field" id="tipPct" type="number" value="10" placeholder="Tip %"><input class="field" id="tipPeople" type="number" value="1" min="1" placeholder="People"><button class="btn" onclick="tipCalc()">Calculate</button><div class="result" id="tipR"></div></div>
+<div id="tax" class="panel"><h2>🧾 Tax Calculator</h2><input class="field" id="taxAmt" type="number" placeholder="Amount"><input class="field" id="taxPct" type="number" placeholder="Tax %"><button class="btn" onclick="taxCalc()">Calculate</button><div class="result" id="taxR"></div></div>
+<div id="loan" class="panel"><h2>🏦 Loan Payment</h2><input class="field" id="loanAmt" type="number" placeholder="Loan amount"><input class="field" id="loanRate" type="number" placeholder="Annual interest %"><input class="field" id="loanYears" type="number" placeholder="Years"><button class="btn" onclick="loanCalc()">Calculate</button><div class="result" id="loanR"></div></div>
+<div id="emi" class="panel"><h2>💳 EMI Calculator</h2><input class="field" id="emiAmt" type="number" placeholder="Principal"><input class="field" id="emiRate" type="number" placeholder="Annual interest %"><input class="field" id="emiYears" type="number" placeholder="Years"><button class="btn" onclick="emiCalc()">Calculate</button><div class="result" id="emiR"></div></div>
+<div id="fraction" class="panel"><h2>½ Fraction Calculator</h2><input class="field" id="fa" placeholder="First numerator/denominator e.g. 1/2"><input class="field" id="fb" placeholder="Second e.g. 1/3"><select class="field" id="fop"><option>+</option><option>-</option><option>×</option><option>÷</option></select><button class="btn" onclick="fractionCalc()">Calculate</button><div class="result" id="fractionR"></div></div>
+<div id="prime" class="panel"><h2>🔢 Prime Checker</h2><input class="field" id="primeN" type="number" placeholder="Number"><button class="btn" onclick="primeCalc()">Check</button><div class="result" id="primeR"></div></div>
+<div id="factorial" class="panel"><h2>❗ Factorial Calculator</h2><input class="field" id="factN" type="number" min="0" max="170" placeholder="0–170"><button class="btn" onclick="factorialCalc()">Calculate</button><div class="result" id="factR"></div></div>
+<div id="power" class="panel"><h2>⚡ Power Calculator</h2><input class="field" id="powA" type="number" placeholder="Base"><input class="field" id="powB" type="number" placeholder="Exponent"><button class="btn" onclick="powerCalc()">Calculate</button><div class="result" id="powR"></div></div>
+<div id="sqrt" class="panel"><h2>√ Square Root</h2><input class="field" id="sqrtN" type="number" placeholder="Number"><button class="btn" onclick="sqrtCalc()">Calculate</button><div class="result" id="sqrtR"></div></div>
+<div id="bytes" class="panel"><h2>💾 Bytes Converter</h2><input class="field" id="byteN" type="number" placeholder="Value"><select class="field" id="byteUnit"><option>Bytes</option><option>KB</option><option>MB</option><option>GB</option></select><button class="btn" onclick="bytesCalc()">Convert</button><div class="result" id="bytesR"></div></div>
+<div id="speed" class="panel"><h2>🚗 Speed Converter</h2><input class="field" id="speedN" type="number" placeholder="Value"><select class="field" id="speedUnit"><option>km/h</option><option>mph</option></select><button class="btn" onclick="speedCalc()">Convert</button><div class="result" id="speedR"></div></div>
+<div id="area" class="panel"><h2>⬛ Area Calculator</h2><input class="field" id="areaW" type="number" placeholder="Width"><input class="field" id="areaH" type="number" placeholder="Height"><button class="btn" onclick="areaCalc()">Calculate</button><div class="result" id="areaR"></div></div>
+<div id="triangle" class="panel"><h2>🔺 Triangle Area</h2><input class="field" id="triB" type="number" placeholder="Base"><input class="field" id="triH" type="number" placeholder="Height"><button class="btn" onclick="triangleCalc()">Calculate</button><div class="result" id="triR"></div></div>
+<div id="circle" class="panel"><h2>⭕ Circle Calculator</h2><input class="field" id="circleR" type="number" placeholder="Radius"><button class="btn" onclick="circleCalc()">Calculate</button><div class="result" id="circleOut"></div></div>
+<div id="days" class="panel"><h2>📅 Days Between Dates</h2><input class="field" id="dateA" type="date"><input class="field" id="dateB" type="date"><button class="btn" onclick="daysCalc()">Calculate</button><div class="result" id="daysR"></div></div>
+<div id="pstrength" class="panel"><h2>🛡️ Password Strength</h2><input class="field" id="ps" type="text" placeholder="Enter password" oninput="strengthCalc()"><div class="result" id="psR"></div></div>
+<div id="numwords" class="panel"><h2>🔠 Number to Words</h2><input class="field" id="nw" type="number" min="0" max="999999999" placeholder="Enter whole number"><button class="btn" onclick="numWordsCalc()">Convert</button><div class="result" id="nwR"></div></div>
+<div id="dice" class="panel"><h2>🎲 Dice Roller</h2><input class="field" id="diceN" type="number" min="1" max="20" value="2" placeholder="Number of dice"><input class="field" id="diceS" type="number" min="2" max="100" value="6" placeholder="Sides per die"><button class="btn" onclick="diceCalc()">Roll</button><div class="result" id="diceR"></div></div>
+<div id="freq" class="panel"><h2>🔤 Character Frequency</h2><textarea class="field" id="freqT" rows="6" placeholder="Enter text"></textarea><button class="btn" onclick="freqCalc()">Count</button><div class="result" id="freqR"></div></div>
+<div id="dedupe" class="panel"><h2>🧹 Duplicate Line Remover</h2><textarea class="field" id="dedupeT" rows="7" placeholder="One item per line"></textarea><button class="btn" onclick="dedupeCalc()">Remove Duplicates</button><div class="result" id="dedupeR"></div></div>
+<div id="sortlines" class="panel"><h2>↕️ Sort Lines</h2><textarea class="field" id="sortT" rows="7" placeholder="One item per line"></textarea><button class="btn" onclick="sortCalc()">Sort</button><div class="result" id="sortR"></div></div>
+<div id="urlcodec" class="panel"><h2>🌐 URL Encoder / Decoder</h2><textarea class="field" id="urlT" rows="5" placeholder="Enter URL text"></textarea><button class="btn" onclick="urlEncodeCalc()">Encode</button><button class="btn" onclick="urlDecodeCalc()">Decode</button><div class="result" id="urlR"></div></div>
+<div id="htmlcode" class="panel"><h2>🏷️ HTML Entity Encoder</h2><textarea class="field" id="htmlT" rows="5" placeholder="Enter HTML/text"></textarea><button class="btn" onclick="htmlEncodeCalc()">Encode</button><div class="result" id="htmlR"></div></div>
+<div id="hexrgb" class="panel"><h2>🎨 HEX ↔ RGB</h2><input class="field" id="hexT" placeholder="#2563eb or 2563eb"><button class="btn" onclick="hexToRgbCalc()">HEX → RGB</button><input class="field" id="rgbT" placeholder="37, 99, 235"><button class="btn" onclick="rgbToHexCalc()">RGB → HEX</button><div class="result" id="hexR"></div></div>
+<div id="change" class="panel"><h2>📉 Percentage Change</h2><input class="field" id="oldV" type="number" placeholder="Old value"><input class="field" id="newV" type="number" placeholder="New value"><button class="btn" onclick="changeCalc()">Calculate</button><div class="result" id="changeR"></div></div>
+<div id="ratio" class="panel"><h2>⚖️ Ratio Calculator</h2><input class="field" id="ratioA" type="number" placeholder="First number"><input class="field" id="ratioB" type="number" placeholder="Second number"><button class="btn" onclick="ratioCalc()">Simplify</button><div class="result" id="ratioR"></div></div>
+
+<div class="ad">Advertisement space</div>
+<section id="about" class="section"><h2>About ToolMela</h2><p>ToolMela is a collection of simple online tools designed to save time and make everyday tasks easier.</p></section>
+<section id="contact" class="section"><h2>Contact</h2><p>For questions or feedback, add your business email here before publishing the site.</p></section>
+<section class="section"><h2>Privacy Policy</h2><p>This website may use cookies and third-party advertising services. Replace this placeholder with your final privacy policy before applying for advertising programs.</p></section>
+<section class="section"><h2>Terms of Use</h2><p>Tools are provided for general informational use. Verify important calculations before relying on them.</p></section>
+</main>
+<footer>© 2026 ToolMela · <a href="#about">About</a> · <a href="#contact">Contact</a> · Privacy · Terms</footer>
+
+<script>
+const panels=document.querySelectorAll('.panel');
+function show(id){panels.forEach(p=>p.classList.remove('active'));const x=document.getElementById(id);if(x){x.classList.add('active');x.scrollIntoView({behavior:'smooth',block:'start'})}}
+function filterTools(){let q=document.getElementById('search').value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.toLowerCase().includes(q)?'block':'none')}
+function nums(id){return document.getElementById(id).value.split(',').map(x=>Number(x.trim())).filter(x=>Number.isFinite(x))}
+function ageCalc(){let d=new Date(dob.value),n=new Date();if(isNaN(d)){ageR.textContent='Select your birth date.';return}let y=n.getFullYear()-d.getFullYear(),m=n.getMonth()-d.getMonth(),day=n.getDate()-d.getDate();if(day<0){m--;day+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}ageR.textContent=`Age: ${y} years, ${m} months, ${day} days`}
+function percentCalc(){let a=+pn.value,b=+pt.value;percentR.textContent=b?((a/b)*100).toFixed(2)+'%':'Enter valid values.'}
+function discountCalc(){let p=+price.value,d=+disc.value;if(p>=0&&d>=0){let s=p*d/100;discountR.textContent=`You save: ${s.toFixed(2)} | Final price: ${(p-s).toFixed(2)}`}else discountR.textContent='Enter valid values.'}
+function bmiCalc(){let w=+kg.value,h=+cm.value/100;if(w>0&&h>0){let b=w/(h*h);let cat=b<18.5?'Underweight':b<25?'Normal':b<30?'Overweight':'Obesity';bmiR.textContent=`BMI: ${b.toFixed(1)} (${cat})`}else bmiR.textContent='Enter valid values.'}
+function wordCalc(){let t=txt.value;let w=t.trim()?t.trim().split(/\s+/).length:0;wordR.textContent=`Words: ${w} | Characters: ${t.length} | Characters without spaces: ${t.replace(/\s/g,'').length}`}
+function upper(){caseR.textContent=caseTxt.value.toUpperCase()}function lower(){caseR.textContent=caseTxt.value.toLowerCase()}function titleCase(){caseR.textContent=caseTxt.value.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase())}
+function genPass(){let n=Math.max(6,Math.min(50,+plen.value||12)),s='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';let x='';for(let i=0;i<n;i++)x+=s[Math.floor(Math.random()*s.length)];passR.textContent=x}
+function genQR(){let t=encodeURIComponent(qrTxt.value.trim());qrR.innerHTML=t?`<img alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${t}">`:'Enter text or URL.'}
+function averageCalc(){let a=nums('avg');avgR.textContent=a.length?'Average: '+(a.reduce((x,y)=>x+y,0)/a.length).toFixed(2):'Enter numbers.'}
+function sumCalc(){let a=nums('sumx');sumR.textContent=a.length?'Sum: '+a.reduce((x,y)=>x+y,0):'Enter numbers.'}
+function gpaCalc(){let a=nums('gpaX');gpaR.textContent=a.length?'GPA: '+(a.reduce((x,y)=>x+y,0)/a.length).toFixed(2):'Enter grade points.'}
+function timeCalc(){let h=+th.value||0,m=+tm.value||0;timeR.textContent=`Total: ${h+Math.floor(m/60)} hours ${m%60} minutes (${h*60+m} minutes)`}
+function mthCalc(){let m=+mins.value;mthR.textContent=Number.isFinite(m)?`${(m/60).toFixed(2)} hours`:''}
+function htmCalc(){let h=+hours.value;htmR.textContent=Number.isFinite(h)?`${(h*60).toFixed(2)} minutes`:''}
+function tempCalc(){let c=+tc.value;tempR.textContent=Number.isFinite(c)?`${c} °C = ${(c*9/5+32).toFixed(2)} °F`:''}
+function distCalc(){let k=+km.value;distR.textContent=Number.isFinite(k)?`${k} km = ${(k*0.621371).toFixed(3)} miles`:''}
+function weightCalc(){let k=+kg2.value;weightR.textContent=Number.isFinite(k)?`${k} kg = ${(k*2.20462262).toFixed(3)} lb`:''}
+function lengthCalc(){let m=+meter.value;lengthR.textContent=Number.isFinite(m)?`${m} m = ${(m*3.28084).toFixed(3)} ft`:''}
+function randomCalc(){let a=Math.ceil(+rmin.value),b=Math.floor(+rmax.value);randomR.textContent=a<=b?Math.floor(Math.random()*(b-a+1))+a:'Enter a valid range.'}
+function reverseCalc(){reverseR.textContent=rev.value.split('').reverse().join('')}
+function spacesCalc(){spacesR.textContent=sp.value.replace(/\s+/g,' ').trim()}
+function linesCalc(){let t=ln.value;linesR.textContent='Lines: '+(t? t.split(/\r?\n/).length:0)}
+function jsonCalc(){try{jsonR.textContent=JSON.stringify(JSON.parse(jx.value),null,2)}catch(e){jsonR.textContent='Invalid JSON.'}}
+function b64Calc(){try{base64R.textContent=btoa(unescape(encodeURIComponent(b64.value)))}catch(e){base64R.textContent='Could not encode.'}}
+function slugCalc(){slugR.textContent=sl.value.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function loremCalc(){const n=Math.max(1,Math.min(10,+loremN.value||3));const p='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo nec urna facilisis consequat. Praesent commodo, massa at tincidunt aliquet, libero lorem posuere nibh, sed feugiat purus sem a neque.';loremR.textContent=Array(n).fill(p).join('\\n\\n')}
+function binaryCalc(){binaryR.textContent=[...bin.value].map(c=>c.charCodeAt(0).toString(2).padStart(8,'0')).join(' ')}
+function timestampCalc(){timestampR.textContent=Math.floor(Date.now()/1000)}
+function tipCalc(){let b=+tipBill.value,p=+tipPct.value,people=Math.max(1,+tipPeople.value||1);if(b>=0){let t=b*p/100;tipR.textContent=`Tip: ${t.toFixed(2)} | Total: ${(b+t).toFixed(2)} | Per person: ${((b+t)/people).toFixed(2)}`}}
+function taxCalc(){let a=+taxAmt.value,t=+taxPct.value;if(a>=0&&t>=0){let x=a*t/100;taxR.textContent=`Tax: ${x.toFixed(2)} | Total: ${(a+x).toFixed(2)}`}}
+function loanCalc(){let P=+loanAmt.value,r=(+loanRate.value||0)/1200,n=(+loanYears.value||0)*12;if(P>0&&n>0){let pay=r?P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1):P/n;loanR.textContent=`Monthly payment: ${pay.toFixed(2)} | Total: ${(pay*n).toFixed(2)}`}}
+function emiCalc(){loanAmt.value=emiAmt.value;loanRate.value=emiRate.value;loanYears.value=emiYears.value;loanCalc();emiR.textContent=loanR.textContent}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){let t=a%b;a=b;b=t}return a||1}
+function fractionCalc(){function f(s){let a=s.split('/').map(Number);return a.length===2&&a.every(Number.isFinite)?a:null}let a=f(fa.value),b=f(fb.value);if(!a||!b||b[1]===0||a[1]===0){fractionR.textContent='Use fractions like 1/2 and 1/3.';return}let [x,y]=a,[u,v]=b,o=fop.value,n,d;if(o==='+'){n=x*v+u*y;d=y*v}else if(o==='-'){n=x*v-u*y;d=y*v}else if(o==='×'){n=x*u;d=y*v}else{n=x*v;d=y*u}let g=gcd(n,d);fractionR.textContent=`Result: ${n/g}/${d/g}`}
+function primeCalc(){let n=+primeN.value;if(!Number.isInteger(n)||n<2){primeR.textContent='Not prime.';return}for(let i=2;i<=Math.sqrt(n);i++)if(n%i===0){primeR.textContent=`${n} is not prime.`;return}primeR.textContent=`${n} is prime.`}
+function factorialCalc(){let n=+factN.value;if(!Number.isInteger(n)||n<0||n>170){factR.textContent='Enter an integer from 0 to 170.';return}let x=1;for(let i=2;i<=n;i++)x*=i;factR.textContent=`${n}! = ${x}`}
+function powerCalc(){let a=+powA.value,b=+powB.value;powR.textContent=Number.isFinite(a)&&Number.isFinite(b)?`${a} ^ ${b} = ${Math.pow(a,b)}`:''}
+function sqrtCalc(){let n=+sqrtN.value;sqrtR.textContent=n>=0?`√${n} = ${Math.sqrt(n)}`:'Enter a non-negative number.'}
+function bytesCalc(){let n=+byteN.value,u=byteUnit.value,base={Bytes:1,KB:1024,MB:1048576,GB:1073741824}[u];if(n>=0){let b=n*base;bytesR.textContent=`Bytes: ${b}\\nKB: ${(b/1024).toFixed(4)}\\nMB: ${(b/1048576).toFixed(4)}\\nGB: ${(b/1073741824).toFixed(6)}`}}
+function speedCalc(){let n=+speedN.value;if(speedUnit.value==='km/h')speedR.textContent=`${n} km/h = ${(n*0.621371).toFixed(3)} mph`;else speedR.textContent=`${n} mph = ${(n/0.621371).toFixed(3)} km/h`}
+function areaCalc(){let w=+areaW.value,h=+areaH.value;areaR.textContent=w>=0&&h>=0?`Area: ${(w*h).toFixed(2)} square units`:''}
+function triangleCalc(){let b=+triB.value,h=+triH.value;triR.textContent=b>=0&&h>=0?`Area: ${(b*h/2).toFixed(2)} square units`:''}
+function circleCalc(){let r=+document.getElementById('circleR').value;if(r>=0)document.getElementById('circleOut').textContent=`Area: ${(Math.PI*r*r).toFixed(2)}\\nCircumference: ${(2*Math.PI*r).toFixed(2)}`}
+function daysCalc(){let a=new Date(dateA.value),b=new Date(dateB.value);if(isNaN(a)||isNaN(b)){daysR.textContent='Select both dates.';return}daysR.textContent=`Difference: ${Math.round(Math.abs(b-a)/86400000)} days`}
+function strengthCalc(){let s=ps.value,score=0;if(s.length>=8)score++;if(/[A-Z]/.test(s))score++;if(/[a-z]/.test(s))score++;if(/[0-9]/.test(s))score++;if(/[^A-Za-z0-9]/.test(s))score++;let level=['Very weak','Weak','Fair','Good','Strong','Very strong'][score];psR.textContent=s?`Strength: ${level} (${score}/5)`:'Enter a password.'}
+function numWordsCalc(){let n=Number(nw.value);if(!Number.isInteger(n)||n<0||n>999999999){nwR.textContent='Enter a whole number from 0 to 999,999,999.';return}function below(x){let o=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],t=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];if(x<20)return o[x];if(x<100)return t[Math.floor(x/10)]+(x%10?' '+o[x%10]:'');if(x<1000)return o[Math.floor(x/100)]+' Hundred'+(x%100?' '+below(x%100):'')}function words(x){if(x<1000)return below(x);if(x<1000000)return below(Math.floor(x/1000))+' Thousand'+(x%1000?' '+below(x%1000):'');return below(Math.floor(x/1000000))+' Million'+(x%1000000?' '+words(x%1000000):'')}nwR.textContent=n===0?'Zero':words(n)}
+function diceCalc(){let n=Math.max(1,Math.min(20,+diceN.value||1)),s=Math.max(2,Math.min(100,+diceS.value||6)),a=[];for(let i=0;i<n;i++)a.push(Math.floor(Math.random()*s)+1);diceR.textContent=`Rolls: ${a.join(', ')}\\nTotal: ${a.reduce((x,y)=>x+y,0)}`}
+function freqCalc(){let t=freqT.value, m={};for(const c of t.toLowerCase()){if(c===' ')continue;m[c]=(m[c]||0)+1}freqR.textContent=Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`${c}: ${n}`).join('\\n')||'No text.'}
+function dedupeCalc(){let a=dedupeT.value.split(/\\r?\\n/),seen=new Set(),out=[];for(const x of a){let k=x.trim();if(k&&!seen.has(k)){seen.add(k);out.push(x)}}dedupeR.textContent=out.join('\\n')}
+function sortCalc(){sortR.textContent=sortT.value.split(/\\r?\\n/).filter(x=>x.trim()).sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:'base'})).join('\\n')}
+function urlEncodeCalc(){urlR.textContent=encodeURIComponent(urlT.value)}function urlDecodeCalc(){try{urlR.textContent=decodeURIComponent(urlT.value)}catch(e){urlR.textContent='Invalid encoded URL.'}}
+function htmlEncodeCalc(){htmlR.textContent=htmlT.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function hexToRgbCalc(){let h=hexT.value.trim().replace('#','');if(h.length===3)h=h.split('').map(x=>x+x).join('');if(!/^[0-9a-fA-F]{6}$/.test(h)){hexR.textContent='Invalid HEX color.';return}hexR.textContent=`RGB: ${parseInt(h.slice(0,2),16)}, ${parseInt(h.slice(2,4),16)}, ${parseInt(h.slice(4,6),16)}`}
+function rgbToHexCalc(){let a=rgbT.value.split(',').map(Number);if(a.length!==3||a.some(x=>x<0||x>255||!Number.isFinite(x))){hexR.textContent='Use RGB like 37, 99, 235.';return}hexR.textContent='#'+a.map(x=>Math.round(x).toString(16).padStart(2,'0')).join('').toUpperCase()}
+function changeCalc(){let a=+oldV.value,b=+newV.value;if(a===0){changeR.textContent='Old value cannot be 0.';return}let p=(b-a)/Math.abs(a)*100;changeR.textContent=`Percentage change: ${p.toFixed(2)}%`}
+function ratioCalc(){let a=+ratioA.value,b=+ratioB.value;if(!Number.isInteger(a)||!Number.isInteger(b)||a<=0||b<=0){ratioR.textContent='Enter two positive whole numbers.';return}let g=gcd(a,b);ratioR.textContent=`Simplified ratio: ${a/g}:${b/g}`}
+</script>
+</body></html>

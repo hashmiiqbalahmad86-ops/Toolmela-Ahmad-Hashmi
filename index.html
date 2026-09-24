@@ -217,3 +217,13 @@ function changeCalc(){let a=+oldV.value,b=+newV.value;if(a===0){changeR.textCont
 function ratioCalc(){let a=+ratioA.value,b=+ratioB.value;if(!Number.isInteger(a)||!Number.isInteger(b)||a<=0||b<=0){ratioR.textContent='Enter two positive whole numbers.';return}let g=gcd(a,b);ratioR.textContent=`Simplified ratio: ${a/g}:${b/g}`}
 </script>
 </body></html>
+<!-- Image to PDF Tool Card -->
+<a href="image-to-pdf.html" style="text-decoration: none; color: inherit;">
+    <div style="background: var(--card); border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-top: 15px; display: flex; align-items: center; gap: 15px;">
+        <div style="font-size: 32px;">🖼️</div>
+        <div>
+            <h3 style="margin: 0; font-size: 18px; color: var(--text);">Image to PDF</h3>
+            <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">Convert images to PDF format easily.</p>
+        </div>
+    </div>
+</a>

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://hashmiiqbalahmad86-ops.github.io/toolmela/sitemap.xml

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ToolMela - Free online tools for PDF, images, text, calculators, converters and more.">
+<title>ToolMela - Free Online Tools</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--p:#4f46e5;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e4e7ec}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.nav{max-width:1150px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:18px}
+.logo{font-size:25px;font-weight:800;color:var(--p);white-space:nowrap}.logo span{color:#111827}
+.search{flex:1;max-width:500px;margin:auto}.search input{width:100%;padding:12px 16px;border:1px solid #d0d5dd;border-radius:12px;font-size:15px;outline:0}.search input:focus{border-color:var(--p)}
+.hero{max-width:1150px;margin:25px auto 10px;padding:10px 18px;text-align:center}.hero h1{font-size:36px;margin:10px 0}.hero p{color:var(--muted);font-size:16px}
+.categories{max-width:1150px;margin:18px auto;padding:0 18px;display:flex;gap:8px;overflow:auto}.cat{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;white-space:nowrap;cursor:pointer}.cat.active,.cat:hover{background:var(--p);color:#fff}
+.grid{max-width:1150px;margin:18px auto 50px;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;transition:.18s;box-shadow:0 3px 12px #10182808}.tool:hover{transform:translateY(-3px);box-shadow:0 10px 25px #10182814}.icon{font-size:30px}.tool h3{margin:10px 0 6px;font-size:17px}.tool p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.tag{display:inline-block;margin-top:12px;font-size:11px;background:#eef2ff;color:#3730a3;padding:4px 8px;border-radius:20px}
+.count{max-width:1150px;margin:0 auto;padding:0 18px;color:var(--muted);font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;padding:15px;overflow:auto}.modal.show{display:block}.box{background:#fff;max-width:760px;margin:30px auto;border-radius:18px;padding:20px;position:relative}.close{position:absolute;right:15px;top:12px;border:0;background:#f2f4f7;border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer}.box h2{margin:0 45px 6px 0}.desc{color:var(--muted);font-size:14px;margin-bottom:18px}
+label{display:block;font-weight:700;margin:13px 0 7px}input,textarea,select{width:100%;padding:11px 12px;border:1px solid #d0d5dd;border-radius:10px;font-size:15px;background:#fff}textarea{min-height:130px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}button.action{border:0;border-radius:10px;padding:11px 15px;background:var(--p);color:#fff;font-weight:700;cursor:pointer}button.secondary{background:#e5e7eb;color:#111827}.result{margin-top:15px;padding:14px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);white-space:pre-wrap;overflow:auto}
+.upload{border:2px dashed #818cf8;background:#f8f8ff;border-radius:13px;padding:24px;text-align:center;cursor:pointer}.upload input{display:none}
+.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}.preview img{width:100%;height:110px;object-fit:contain;background:#eee;border-radius:8px}
+footer{text-align:center;padding:35px 15px;background:#111827;color:#cbd5e1}footer strong{color:#fff}
+@media(max-width:650px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.hero h1{font-size:28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 10px}.tool{padding:14px}.row{grid-template-columns:1fr}.hero{padding:10px}}
+@media(max-width:390px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="logo">Tool<span>Mela</span></div><div class="search"><input id="search" placeholder="🔎 Search 70+ tools..."></div></div></header>
+
+<section class="hero"><h1>Free Online Tools</h1><p>PDF, Image, Text, Calculator, Converter, Developer & Daily tools — all in one place.</p></section>
+<div class="categories" id="cats"></div>
+<div class="count" id="count"></div>
+<main class="grid" id="grid"></main>
+
+<footer><strong>ToolMela</strong><br><br>Free online tools for everyone.<br><small>Use tools directly in your browser.</small></footer>
+
+<div class="modal" id="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2 id="mtitle"></h2><div class="desc" id="mdesc"></div><div id="body"></div></div></div>
+
+<script>
+const tools=[
+["📄","Image to PDF","PDF","Convert multiple pictures into one PDF.","imagepdf"],
+["📝","Text to PDF","PDF","Write text and download it as PDF.","textpdf"],
+["🖼️","Image Compressor","Image","Compress an image and download it.","compress"],
+["📐","Image Resizer","Image","Resize an image by width and height.","resize"],
+["🔄","Image Converter","Image","Convert JPG, PNG or WEBP images.","convertimg"],
+["🖼️","Image to Base64","Image","Convert an image to Base64 text.","base64"],
+["🔤","Word Counter","Text","Count words, characters and lines.","wordcount"],
+["🔠","Case Converter","Text","Convert text to upper, lower, title or sentence case.","case"],
+["🧹","Remove Extra Spaces","Text","Clean repeated spaces and blank lines.","spaces"],
+["↩️","Reverse Text","Text","Reverse text instantly.","reverse"],
+["🔢","Text to Binary","Text","Convert text into binary.","binary"],
+["🔐","Password Generator","Security","Generate strong random passwords.","password"],
+["🔑","UUID Generator","Developer","Generate UUIDs.","uuid"],
+["🧾","JSON Formatter","Developer","Format or validate JSON.","json"],
+["🔗","URL Encoder","Developer","Encode text for URLs.","urlencode"],
+["🔓","URL Decoder","Developer","Decode URL encoded text.","urldecode"],
+["🧮","Calculator","Calculator","Basic calculator.","calc"],
+["💯","Percentage Calculator","Calculator","Calculate percentage of a number.","percent"],
+["📈","Profit Calculator","Calculator","Calculate profit and profit percentage.","profit"],
+["🏷️","Discount Calculator","Calculator","Calculate sale price after discount.","discount"],
+["💰","Tip Calculator","Calculator","Calculate tip and split bill.","tip"],
+["📊","Average Calculator","Calculator","Calculate average of numbers.","average"],
+["➕","Add Numbers","Calculator","Add a list of numbers.","add"],
+["✖️","Multiply Numbers","Calculator","Multiply a list of numbers.","multiply"],
+["⚖️","BMI Calculator","Health","Calculate BMI from height and weight.","bmi"],
+["📏","Length Converter","Converter","Convert mm, cm, m, km, inch, ft, yard and mile.","length"],
+["⚖️","Weight Converter","Converter","Convert kg, g, lb and oz.","weight"],
+["🌡️","Temperature Converter","Converter","Convert Celsius, Fahrenheit and Kelvin.","temp"],
+["🕒","Time Converter","Converter","Convert hours, minutes and seconds.","time"],
+["📦","Data Size Converter","Converter","Convert bytes, KB, MB and GB.","data"],
+["💱","Currency Calculator","Converter","Quick currency calculation using a rate you enter.","currency"],
+["📅","Age Calculator","Date","Calculate age from date of birth.","age"],
+["📆","Days Between Dates","Date","Find the number of days between two dates.","datediff"],
+["➕","Add Days to Date","Date","Add days to a selected date.","adddays"],
+["📅","Weekday Finder","Date","Find the weekday for any date.","weekday"],
+["⏱️","Countdown","Date","Create a countdown to a date/time.","countdown"],
+["🕐","Unix Timestamp","Date","Convert Unix timestamp and date.","unix"],
+["🎲","Random Number","Generator","Generate random numbers.","random"],
+["🔢","Number to Words","Generator","Convert a number into English words.","numwords"],
+["🎨","HEX Color Picker","Generator","Pick a color and copy its HEX value.","color"],
+["🌈","Gradient Generator","Generator","Create a CSS linear gradient.","gradient"],
+["📋","Lorem Ipsum","Generator","Generate placeholder text.","lorem"],
+["🆔","QR Code Generator","Generator","Create a QR code from text or URL.","qr"],
+["🔗","Link Cleaner","Text","Remove tracking parameters from a URL.","linkclean"],
+["🧮","Scientific Calculator","Calculator","Calculate common scientific expressions.","scientific"],
+["2️⃣","Number Sorter","Text","Sort numbers ascending or descending.","sort"],
+["🔡","Remove Duplicate Lines","Text","Remove duplicate lines from text.","dupes"],
+["🔍","Find & Replace","Text","Replace words in text.","replace"],
+["📏","Line Counter","Text","Count lines in text.","lines"],
+["🧮","Character Frequency","Text","Count character frequency.","freq"],
+["🗒️","Text Extractor","Text","Extract email addresses and URLs from text.","extract"],
+["✉️","Email Extractor","Text","Find email addresses in text.","emails"],
+["🌐","URL Extractor","Text","Find URLs in text.","urls"],
+["🔢","Roman Numeral Converter","Converter","Convert numbers to Roman numerals.","roman"],
+["🧩","Prime Checker","Calculator","Check whether a number is prime.","prime"],
+["🔢","Fibonacci Generator","Generator","Generate Fibonacci numbers.","fib"],
+["📐","Area Calculator","Calculator","Calculate rectangle, circle and triangle area.","area"],
+["📦","Volume Calculator","Calculator","Calculate box and cylinder volume.","volume"],
+["🛣️","Speed Converter","Converter","Convert km/h, mph and m/s.","speed"],
+["⚡","Power Converter","Converter","Convert watts, kilowatts and horsepower.","power"],
+["💾","Text File Maker","File","Turn text into a downloadable TXT file.","txtfile"],
+["📋","CSV Maker","File","Create a simple CSV file from rows.","csvfile"],
+["🖨️","Print Page","Utility","Print the current page.","print"],
+["📱","Device Info","Utility","View basic browser/device information.","device"],
+["📏","Aspect Ratio Calculator","Calculator","Calculate image/video aspect ratio.","aspect"],
+["🔒","HTML Escape","Developer","Escape HTML special characters.","htmlescape"],
+["🧰","CSS Minifier","Developer","Minify simple CSS text.","cssmin"],
+["🧰","JS Minifier","Developer","Minify simple JavaScript text.","jsmin"],
+["🔎","Text Compare","Text","Compare two pieces of text.","compare"],
+["⏳","Stopwatch","Utility","Simple browser stopwatch.","stopwatch"],
+["🔔","Character Limit","Text","Count text against a character limit.","limit"],
+["🧮","GPA Calculator","Calculator","Calculate GPA from grades and credit hours.","gpa"]
+];
+
+const categories=["All",...new Set(tools.map(x=>x[2]))];
+let active="All";
+const grid=document.getElementById("grid"),cats=document.getElementById("cats"),search=document.getElementById("search"),count=document.getElementById("count");
+categories.forEach(c=>{let b=document.createElement("button");b.className="cat"+(c==="All"?" active":"");b.textContent=c;b.onclick=()=>{active=c;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()};cats.appendChild(b)});
+function render(){
+ let q=search.value.toLowerCase();
+ let a=tools.filter(t=>(active==="All"||t[2]===active)&&(t[1].toLowerCase().includes(q)||t[3].toLowerCase().includes(q)));
+ count.textContent=`Showing ${a.length} of ${tools.length} tools`;
+ grid.innerHTML=a.map((t,i)=>`<div class="tool" onclick="openTool('${t[4]}')"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[3]}</p><span class="tag">${t[2]}</span></div>`).join("");
+}
+search.oninput=render;render();
+
+const modal=document.getElementById("modal"),body=document.getElementById("body"),mtitle=document.getElementById("mtitle"),mdesc=document.getElementById("mdesc");
+function closeModal(){modal.classList.remove("show");if(window._timer)clearInterval(window._timer)}
+function openTool(id){
+ const t=tools.find(x=>x[4]===id);mtitle.textContent=t[0]+" "+t[1];mdesc.textContent=t[3];body.innerHTML=ui(id);modal.classList.add("show");afterUI(id);
+}
+function ui(id){
+ const ta='<textarea id="a" placeholder="Enter or paste text here..."></textarea>';
+ if(id==="imagepdf")return `<div class="upload" onclick="document.getElementById('imgs').click()">📷 Select pictures<input id="imgs" type="file" accept="image/*" multiple></div><div id="prev" class="preview"></div><div class="btns"><button class="action" onclick="makeImagePDF()">Download PDF</button></div>`;
+ if(id==="textpdf")return `${ta}<div class="btns"><button class="action" onclick="makeTextPDF()">Download PDF</button></div>`;
+ if(["compress","resize","convertimg","base64"].includes(id))return `<div class="upload" onclick="document.getElementById('oneimg').click()">🖼️ Select image<input id="oneimg" type="file" accept="image/*"></div><div id="imgout"></div>`;
+ if(["wordcount","case","spaces","reverse","binary","urlencode","urldecode","linkclean","sort","dupes","replace","lines","freq","extract","emails","urls","htmlescape","textfile","compare","limit"].includes(id))return `${ta}${id==="replace"?'<div class="row"><input id="find" placeholder="Find"><input id="rep" placeholder="Replace with"></div>':id==="limit"?'<input id="lim" type="number" value="100" placeholder="Limit">':''}<div class="btns"><button class="action" onclick="runText('${id}')">Run</button><button class="action secondary" onclick="copyResult()">Copy result</button></div><div class="result" id="r"></div>`;
+ if(id==="json")return `${ta}<div class="btns"><button class="action" onclick="runText('json')">Format JSON</button></div><div class="result" id="r"></div>`;
+ if(id==="password")return `<div class="row"><input id="plen" type="number" value="16" min="4" max="100"><select id="pchars"><option value="all">Letters + Numbers + Symbols</option><option value="letters">Letters + Numbers</option><option value="lettersOnly">Letters only</option></select></div><div class="btns"><button class="action" onclick="genPassword()">Generate</button><button class="action secondary" onclick="copyResult()">Copy</button></div><div class="result" id="r"></div>`;
+ if(id==="uuid")return `<div class="btns"><button class="action" onclick="uuid()">Generate UUID</button><button class="action secondary" onclick="copyResult()">Copy</button></div><div class="result" id="r"></div>`;
+ if(["calc","scientific"].includes(id))return `<input id="expr" placeholder="Example: (25*4)+10"><div class="btns"><button class="action" onclick="calculate()">Calculate</button></div><div class="result" id="r"></div>`;
+ if(["percent","profit","discount","tip","average","add","multiply","bmi","currency","random","numwords","area","volume","speed","power","aspect","gpa","length","weight","temp","time","data","age","datediff","adddays","weekday","unix","roman","prime","fib"].includes(id))return formFor(id);
+ if(id==="color")return `<input id="color" type="color" value="#4f46e5"><div class="result" id="r">#4F46E5</div><div class="btns"><button class="action" onclick="copyResult()">Copy HEX</button></div>`;
+ if(id==="gradient")return `<div class="row"><input id="c1" type="color" value="#4f46e5"><input id="c2" type="color" value="#06b6d4"></div><div id="grad" style="height:130px;border-radius:12px;margin-top:12px"></div><div class="result" id="r"></div>`;
+ if(id==="lorem")return `<input id="words" type="number" value="50"><div class="btns"><button class="action" onclick="lorem()">Generate</button></div><div class="result" id="r"></div>`;
+ if(id==="qr")return `<input id="qrtext" placeholder="Enter text or URL"><div class="btns"><button class="action" onclick="qr()">Create QR</button></div><div id="r" class="result"></div>`;
+ if(id==="print")return `<p>Tap the button to print this page.</p><button class="action" onclick="window.print()">Print</button>`;
+ if(id==="device")return `<div class="result" id="r"></div>`;
+ if(id==="cssmin"||id==="jsmin")return `${ta}<div class="btns"><button class="action" onclick="runText('${id}')">Minify</button></div><div class="result" id="r"></div>`;
+ if(id==="stopwatch")return `<div id="sw" class="result" style="font-size:32px;text-align:center">00:00:00.0</div><div class="btns"><button class="action" onclick="startSW()">Start</button><button class="action secondary" onclick="stopSW()">Stop</button><button class="action secondary" onclick="resetSW()">Reset</button></div>`;
+ return `<p>This tool is ready for use.</p>`;
+}
+function formFor(id){
+ const labels={
+percent:["Number","Percent"],profit:["Cost Price","Selling Price"],discount:["Original Price","Discount %"],tip:["Bill","Tip %"],
+average:["Numbers (comma separated)"],add:["Numbers (comma separated)"],multiply:["Numbers (comma separated)"],bmi:["Weight (kg)","Height (cm)"],
+currency:["Amount","Rate"],random:["Minimum","Maximum"],numwords:["Number"],area:["Width","Height"],volume:["Width","Height","Depth"],
+speed:["Value","From (kmh/mph/ms)"],power:["Value","Unit (w/kw/hp)"],aspect:["Width","Height"],gpa:["Grades (A,B,C...)","Credits (comma separated)"],
+length:["Value","From unit","To unit"],weight:["Value","From unit","To unit"],temp:["Value","From (C/F/K)","To (C/F/K)"],
+time:["Value","From (seconds/minutes/hours)","To (seconds/minutes/hours)"],data:["Value","From (B/KB/MB/GB)","To (B/KB/MB/GB)"],
+age:["Birth date"],datediff:["Start date","End date"],adddays:["Date","Days to add"],weekday:["Date"],unix:["Timestamp or date"],roman:["Number"],prime:["Number"],fib:["How many numbers"]
+};
+return (labels[id]||["Value"]).map((x,i)=>`<label>${x}</label><input id="f${i}" ${id==="age"||id==="datediff"||id==="adddays"||id==="weekday"?"type=date":id==="random"||id==="percent"||id==="discount"||id==="tip"||id==="bmi"||id==="currency"||id==="area"||id==="volume"||id==="aspect"||id==="speed"||id==="power"||id==="length"||id==="weight"||id==="temp"||id==="time"||id==="data"?"type=number":"type=text"}>`).join("")+`<div class="btns"><button class="action" onclick="runForm('${id}')">Calculate</button></div><div class="result" id="r"></div>`;
+}
+function out(v){document.getElementById("r").textContent=String(v)}
+function copyResult(){navigator.clipboard?.writeText(document.getElementById("r").textContent||"");}
+function runText(id){
+ let s=document.getElementById("a")?.value||"",v="";
+ if(id==="wordcount")v=`Words: ${s.trim()?s.trim().split(/\s+/).length:0}\nCharacters: ${s.length}\nCharacters (no spaces): ${s.replace(/\s/g,"").length}\nLines: ${s?s.split(/\n/).length:0}`;
+ if(id==="case"){v=s.toLowerCase();v=`UPPER: ${s.toUpperCase()}\nLOWER: ${s.toLowerCase()}\nTITLE: ${s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase())}\nSENTENCE: ${s.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,m=>m.toUpperCase())}`}
+ if(id==="spaces")v=s.replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n\n").trim();
+ if(id==="reverse")v=[...s].reverse().join("");
+ if(id==="binary")v=[...s].map(c=>c.charCodeAt(0).toString(2).padStart(8,"0")).join(" ");
+ if(id==="urlencode")v=encodeURIComponent(s);
+ if(id==="urldecode")try{v=decodeURIComponent(s)}catch(e){v="Invalid encoded URL"};
+ if(id==="linkclean")try{let u=new URL(s);["utm_source","utm_medium","utm_campaign","utm_term","utm_content","fbclid","gclid"].forEach(k=>u.searchParams.delete(k));v=u.toString()}catch(e){v="Enter a valid URL"};
+ if(id==="sort")v=s.split(/[,\s]+/).filter(Boolean).map(Number).filter(Number.isFinite).sort((a,b)=>a-b).join("\n");
+ if(id==="dupes")v=[...new Set(s.split(/\r?\n/))].join("\n");
+ if(id==="replace")v=s.split(document.getElementById("find").value).join(document.getElementById("rep").value);
+ if(id==="lines")v=`Lines: ${s?s.split(/\r?\n/).length:0}`;
+ if(id==="freq"){let m={};[...s.toLowerCase()].forEach(c=>{if(c.trim())m[c]=(m[c]||0)+1});v=Object.entries(m).sort((a,b)=>b[1]-a[1]).map(x=>`${x[0]}: ${x[1]}`).join("\n")}
+ if(id==="emails")v=(s.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)||[]).join("\n");
+ if(id==="urls")v=(s.match(/https?:\/\/[^\s]+/ig)||[]).join("\n");
+ if(id==="extract")v=`Emails:\n${s.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)||"None"}\n\nURLs:\n${s.match(/https?:\/\/[^\s]+/ig)||"None"}`;
+ if(id==="htmlescape")v=s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+ if(id==="json")try{v=JSON.stringify(JSON.parse(s),null,2)}catch(e){v="Invalid JSON: "+e.message}
+ if(id==="cssmin")v=s.replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").replace(/\s*([{}:;,])\s*/g,"$1").trim();
+ if(id==="jsmin")v=s.replace(/\/\/.*$/gm,"").replace(/\/\*[\s\S]*?\*\//g,"").replace(/\s+/g," ").trim();
+ if(id==="compare"){let b=prompt("Enter second text")||"";v=s===b?"Texts are identical.":`Texts are different.\nFirst length: ${s.length}\nSecond length: ${b.length}`;}
+ if(id==="limit"){let n=+document.getElementById("lim").value||100;v=s.length<=n?`OK — ${s.length}/${n}`:`Over limit by ${s.length-n} characters (${s.length}/${n})`}
+ if(id==="textfile"){downloadBlob(new Blob([s],{type:"text/plain"}),"toolmela-text.txt");v="TXT file downloaded."}
+ out(v);
+}
+function genPassword(){let n=Math.max(4,Math.min(100,+document.getElementById("plen").value||16)),type=document.getElementById("pchars").value,chars=type==="lettersOnly"?"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":type==="letters"?"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789":"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}";let a=new Uint32Array(n);crypto.getRandomValues(a);out([...a].map(x=>chars[x%chars.length]).join(""))}
+function uuid(){out(crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{let r=Math.random()*16|0,v=c==="x"?r:(r&3|8);return v.toString(16)}))}
+function calculate(){try{out(Function("return "+document.getElementById("expr").value)())}catch(e){out("Invalid expression")}}
+function runForm(id){
+ let f=i=>document.getElementById("f"+i)?.value, v="";
+ if(id==="percent")v=(+f(0)*+f(1)/100);
+ if(id==="profit")v=`Profit: ${+f(1)-+f(0)}\nProfit %: ${((+f(1)-+f(0))/(+f(0)||1)*100).toFixed(2)}%`;
+ if(id==="discount")v=(+f(0)*(1-(+f(1)/100))).toFixed(2);
+ if(id==="tip")v=`Tip: ${(+f(0)*+f(1)/100).toFixed(2)}\nTotal: ${(+f(0)*(1+ +f(1)/100)).toFixed(2)}`;
+ if(["average","add","multiply"].includes(id)){let a=f(0).split(",").map(Number).filter(Number.isFinite);v=id==="average"?a.reduce((x,y)=>x+y,0)/a.length:id==="add"?a.reduce((x,y)=>x+y,0):a.reduce((x,y)=>x*y,1)}
+ if(id==="bmi")v=(+f(0)/Math.pow(+f(1)/100,2)).toFixed(2);
+ if(id==="currency")v=(+f(0)*+f(1)).toFixed(2);
+ if(id==="random")v=Math.floor(Math.random()*(+f(1)-+f(0)+1)) + +f(0);
+ if(id==="area")v=`Rectangle area: ${+f(0)*+f(1)}\nCircle area (using first): ${(Math.PI*Math.pow(+f(0),2)).toFixed(2)}`;
+ if(id==="volume")v=(+f(0)*+f(1)*+f(2)).toFixed(2);
+ if(id==="aspect"){let a=+f(0),b=+f(1),g=gcd(a,b);v=`${a/g}:${b/g}`}
+ if(id==="age"){let d=new Date(f(0)),now=new Date();let age=now.getFullYear()-d.getFullYear();if(new Date(now.getFullYear(),d.getMonth(),d.getDate())>now)age--;v=age+" years"}
+ if(id==="datediff")v=Math.abs((new Date(f(1))-new Date(f(0)))/86400000)+" days";
+ if(id==="adddays"){let d=new Date(f(0));d.setDate(d.getDate()+ +f(1));v=d.toISOString().slice(0,10)}
+ if(id==="weekday")v=new Date(f(0)).toLocaleDateString(undefined,{weekday:"long"});
+ if(id==="unix"){let x=f(0);v=/^\d+$/.test(x)?new Date(+x*1000).toString():Math.floor(new Date(x).getTime()/1000)}
+ if(id==="prime"){let n=+f(0);v=n>1&&[...Array(Math.floor(Math.sqrt(n))-1)].every((_,i)=>n%(i+2)!==0)?`${n} is prime`:`${n} is not prime`}
+ if(id==="fib"){let n=Math.min(100,+f(0)||10),a=[0,1];while(a.length<n)a.push(a.at(-1)+a.at(-2));v=a.slice(0,n).join(", ")}
+ if(id==="roman"){let n=+f(0),vals=[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]],s="";for(let [x,c] of vals){while(n>=x){s+=c;n-=x}}v=s||"Enter 1-3999"}
+ if(["length","weight","temp","time","data","speed","power"].includes(id))v=convert(id,+f(0),f(1),f(2));
+ if(id==="gpa"){let grades=f(0).split(",").map(x=>({A:4,B:3,C:2,D:1,F:0}[x.trim().toUpperCase()]??0)),cr=f(1).split(",").map(Number);v=(grades.reduce((s,x,i)=>s+x*(cr[i]||1),0)/(cr.reduce((s,x)=>s+x,0)||grades.length)).toFixed(2)}
+ out(v);
+}
+function gcd(a,b){while(b){[a,b]=[b,a%b]}return Math.abs(a)}
+function convert(id,v,from,to){
+ if(id==="temp"){let c=from.toUpperCase()==="F"?(v-32)*5/9:from.toUpperCase()==="K"?v-273.15:v;return to.toUpperCase()==="F"?c*9/5+32:to.toUpperCase()==="K"?c+273.15:c}
+ const maps={length:{mm:1,cm:.01,m:1,km:1000,in:.0254,ft:.3048,yd:.9144,mi:1609.344},weight:{g:1,kg:1000,lb:453.59237,oz:28.3495},time:{seconds:1,minutes:60,hours:3600},data:{b:1,kb:1024,mb:1048576,gb:1073741824},speed:{ms:1,kmh:.2777777778,mph:.44704},power:{w:1,kw:1000,hp:745.699872}};
+ let m=maps[id];if(!m)return v;return (v*m[from.toLowerCase()]/m[to.toLowerCase()]).toFixed(6).replace(/\.?0+$/,"");
+}
+function gcdSafe(a,b){return gcd(a,b)}
+function lorem(){let base="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";let n=+document.getElementById("words").value||50;out(Array.from({length:n},(_,i)=>base.split(" ")[i%base.split(" ").length]).join(" ")+" .")}
+function qr(){let s=encodeURIComponent(document.getElementById("qrtext").value);document.getElementById("r").innerHTML=`<img style="max-width:260px" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${s}" alt="QR Code"><br><small>QR image generated using a public QR service.</small>`}
+function downloadBlob(blob,name){let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function afterUI(id){
+ if(id==="color"){document.getElementById("color").oninput=e=>document.getElementById("r").textContent=e.target.value.toUpperCase()}
+ if(id==="gradient"){let u=()=>{let a=c1.value,b=c2.value,s=`linear-gradient(90deg,${a},${b})`;grad.style.background=s;r.textContent=`background: ${s};`};c1.oninput=c2.oninput=u;u()}
+ if(id==="device")out(`Browser: ${navigator.userAgent}\nLanguage: ${navigator.language}\nScreen: ${screen.width} × ${screen.height}\nOnline: ${navigator.onLine}`);
+ if(id==="qr"){}
+ if(id==="oneimg")document.getElementById("oneimg").onchange=e=>imageAction(e.target.files[0],id);
+ if(id==="imagepdf")document.getElementById("imgs").onchange=e=>{window.pdfImgs=[...e.target.files];prev.innerHTML=pdfImgs.map(x=>`<img src="${URL.createObjectURL(x)}">`).join("")};
+}
+async function imageAction(file,id){
+ if(!file)return;let im=new Image();im.onload=()=>{
+  if(id==="base64")imgout.innerHTML=`<textarea style="height:160px">${im.src}</textarea><div class="btns"><button class="action" onclick="navigator.clipboard.writeText(document.querySelector('#imgout textarea').value)">Copy</button></div>`;
+  else{let c=document.createElement("canvas"),w=im.width,h=im.height;
+   if(id==="resize"){w=+prompt("New width",im.width)||im.width;h=+prompt("New height",im.height)||im.height}
+   c.width=w;c.height=h;c.getContext("2d").drawImage(im,0,0,w,h);
+   let type=id==="convertimg"?(prompt("Type: image/png, image/jpeg or image/webp","image/png")||"image/png"):"image/jpeg";
+   c.toBlob(b=>{let url=URL.createObjectURL(b);imgout.innerHTML=`<img style="max-width:100%;max-height:280px" src="${url}"><div class="btns"><a class="action" style="text-decoration:none;display:inline-block" href="${url}" download="toolmela-image.${type.split('/')[1]}">Download Image</a></div>`},type,id==="compress"?0.65:.92)
+  }
+ };im.src=URL.createObjectURL(file)
+}
+async function makeImagePDF(){
+ if(!window.pdfImgs?.length){alert("Select pictures first.");return}
+ const {jsPDF}=window.jspdf,pdf=new jsPDF({format:"a4"});let first=true;
+ for(const f of pdfImgs){let data=await fileData(f),im=await load(data);if(!first)pdf.addPage();first=false;let r=Math.min(194/im.width,281/im.height),w=im.width*r,h=im.height*r;pdf.addImage(im,"JPEG",(210-w)/2,(297-h)/2,w,h)}
+ pdf.save("toolmela-images.pdf");
+}
+function load(src){return new Promise((res,rej)=>{let i=new Image;i.onload=()=>res(i);i.onerror=rej;i.src=src})}
+function fileData(f){return new Promise(r=>{let x=new FileReader;x.onload=()=>r(x.result);x.readAsDataURL(f)})}
+function makeTextPDF(){let {jsPDF}=window.jspdf,p=new jsPDF(),s=document.getElementById("a").value||"";p.setFontSize(12);let y=18;p.splitTextToSize(s,180).forEach(x=>{if(y>280){p.addPage();y=18}p.text(x,15,y);y+=7});p.save("toolmela-text.pdf")}
+function startSW(){if(window._timer)return;window._start=Date.now()-(window._elapsed||0);window._timer=setInterval(()=>{let x=Date.now()-window._start;let s=(x/1000).toFixed(1),m=Math.floor(x/60000),sec=((x%60000)/1000).toFixed(1).padStart(4,"0");document.getElementById("sw").textContent=`${String(m).padStart(2,"0")}:${sec}`},100)}
+function stopSW(){clearInterval(window._timer);window._timer=null;window._elapsed=Date.now()-(window._start||Date.now())}
+function resetSW(){stopSW();window._elapsed=0;document.getElementById("sw").textContent="00:00:00.0"}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+</script>
+</body>
+</html>

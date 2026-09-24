@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6c4df6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<title>ToolMela Public Reviews</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:#172033;font-family:Arial,sans-serif}
+.wrap{max-width:1000px;margin:auto;padding:18px}.hero{background:linear-gradient(135deg,#17122f,#6c4df6);color:#fff;border-radius:24px;padding:30px 20px;text-align:center}
+.hero h1{margin:0 0 8px;font-size:32px}.hero p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;margin-top:18px}
+.card{background:#fff;border:1px solid #e7e9f0;border-radius:20px;padding:20px;box-shadow:0 12px 35px rgba(20,25,45,.08)}
+h2{margin-top:0}label{display:block;font-weight:700;margin:13px 0 7px}
+input,textarea{width:100%;padding:12px;border:1px solid #d9dce6;border-radius:12px;font:inherit}textarea{min-height:120px;resize:vertical}
+.stars{display:flex;gap:5px}.star{font-size:34px;color:#c9ced8;cursor:pointer}.star.active{color:#f59e0b}
+button{width:100%;margin-top:14px;padding:13px;border:0;border-radius:12px;background:#6c4df6;color:#fff;font-weight:700;font-size:15px}
+button:disabled{opacity:.6}.notice{margin-top:13px;padding:12px;border-radius:12px;background:#f0edff;color:#4530a8;font-size:14px}
+#status{display:none;margin-top:12px;padding:12px;border-radius:12px}.review{border:1px solid #e7e9f0;border-radius:16px;padding:15px;margin:11px 0}
+.review-top{display:flex;justify-content:space-between;gap:10px}.name{font-weight:800}.date{font-size:12px;color:#667085}.rating{color:#f59e0b;letter-spacing:1px}
+.review p{line-height:1.55}.empty{text-align:center;color:#667085;padding:28px 10px}
+.footer{text-align:center;color:#667085;font-size:13px;padding:18px}
+.install{display:none;margin-top:14px;background:#111827}.install.show{display:block}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.hero h1{font-size:27px}}
+</style>
+</head>
+<body><div class="wrap">
+<section class="hero">
+<h1>⭐ ToolMela Public Reviews</h1>
+<p>Share your experience and help other visitors.</p>
+<button id="installBtn" class="install">📲 Install ToolMela Reviews App</button>
+</section>
+<div class="grid">
+<section class="card">
+<h2>Write a Review</h2>
+<p>Reviews are shown publicly after approval.</p>
+<form id="reviewForm">
+<label>Your Name</label><input id="name" maxlength="60" required placeholder="e.g. Ali Khan">
+<label>Your Rating</label><div class="stars">
+<span class="star" data-rating="1">★</span><span class="star" data-rating="2">★</span><span class="star" data-rating="3">★</span><span class="star" data-rating="4">★</span><span class="star" data-rating="5">★</span></div>
+<label>Your Review</label><textarea id="message" maxlength="1000" required placeholder="Write your experience with ToolMela..."></textarea>
+<button id="submitBtn">Submit Review</button><div id="status"></div>
+</form>
+<div class="notice">Do not submit passwords, payment details, addresses or other private information.</div>
+</section>
+<section class="card"><h2>Customer Reviews</h2><div id="reviews"><div class="empty">Loading reviews...</div></div></section>
+</div>
+<div class="footer">© <span id="year"></span> ToolMela • Public Reviews</div>
+</div>
+<script>
+const API_URL="PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+let selectedRating=0; document.getElementById("year").textContent=new Date().getFullYear();
+document.querySelectorAll(".star").forEach(s=>s.onclick=()=>{selectedRating=+s.dataset.rating;document.querySelectorAll(".star").forEach(x=>x.classList.toggle("active",+x.dataset.rating<=selectedRating))});
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function show(msg,ok){let x=document.getElementById("status");x.textContent=msg;x.style.display="block";x.style.background=ok?"#eaf8ef":"#fff0f0";x.style.color=ok?"#176b37":"#a21d1d"}
+function render(rs){let b=document.getElementById("reviews");if(!rs.length){b.innerHTML='<div class="empty">No reviews yet. Be the first!</div>';return}b.innerHTML=rs.map(r=>{let n=Math.max(1,Math.min(5,+r.rating||5));return `<article class="review"><div class="review-top"><div class="name">${esc(r.name||"Anonymous")}</div><div class="date">${r.date?esc(new Date(r.date).toLocaleDateString()):""}</div></div><div class="rating">${"★".repeat(n)+"☆".repeat(5-n)}</div><p>${esc(r.message||"")}</p></article>`}).join("")}
+async function load(){if(API_URL.includes("PASTE_YOUR_")){document.getElementById("reviews").innerHTML='<div class="empty">Backend not connected yet.</div>';return}try{let r=await fetch(API_URL+"?action=list",{cache:"no-store"}),d=await r.json();render(d.reviews||[])}catch(e){document.getElementById("reviews").innerHTML='<div class="empty">Could not load reviews right now.</div>'}}
+document.getElementById("reviewForm").onsubmit=async e=>{e.preventDefault();let name=document.getElementById("name").value.trim(),message=document.getElementById("message").value.trim(),btn=document.getElementById("submitBtn");
+if(!selectedRating)return show("Please select a star rating.",false);if(!name||!message)return show("Please complete all fields.",false);if(API_URL.includes("PASTE_YOUR_"))return show("Connect the Google Apps Script URL first.",false);
+btn.disabled=true;btn.textContent="Submitting...";try{let body=new URLSearchParams({action:"submit",name,rating:selectedRating,message}),r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body}),d=await r.json();if(d.ok){e.target.reset();selectedRating=0;document.querySelectorAll(".star").forEach(s=>s.classList.remove("active"));show("Thank you! Your review was submitted.",true);load()}else show(d.error||"Could not submit.",false)}catch(x){show("Submission failed. Please try again.",false)}finally{btn.disabled=false;btn.textContent="Submit Review"}};
+load();
+
+let deferredPrompt;
+const installBtn=document.getElementById("installBtn");
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.classList.add("show")});
+installBtn.onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.classList.remove("show")};
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js"));
+</script></body></html>

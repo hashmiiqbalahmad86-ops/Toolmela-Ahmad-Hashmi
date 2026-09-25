@@ -1,38 +1,93 @@
-style<img src="./IMG-20260127-WA0080.jpg" alt="Ahmad Hashmi" style="position:absolute;right:8px;top:6px;width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid white;">TYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="ToolMela - Free online tools for PDF, images, text, calculators, converters and more.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToolMela - Free Online Tools">
 <title>ToolMela - Free Online Tools</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <style>
-:root{--p:#4f46e5;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e4e7ec}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
-.nav{max-width:1150px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:18px}
-.logo{font-size:25px;font-weight:800;color:var(--p);white-space:nowrap}.logo span{color:#111827}
-.search{flex:1;max-width:500px;margin:auto}.search input{width:100%;padding:12px 16px;border:1px solid #d0d5dd;border-radius:12px;font-size:15px;outline:0}.search input:focus{border-color:var(--p)}
-.hero{max-width:1150px;margin:25px auto 10px;padding:10px 18px;text-align:center}.hero h1{font-size:36px;margin:10px 0}.hero p{color:var(--muted);font-size:16px}
-.categories{max-width:1150px;margin:18px auto;padding:0 18px;display:flex;gap:8px;overflow:auto}.cat{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;white-space:nowrap;cursor:pointer}.cat.active,.cat:hover{background:var(--p);color:#fff}
-.grid{max-width:1150px;margin:18px auto 50px;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
-.tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;transition:.18s;box-shadow:0 3px 12px #10182808}.tool:hover{transform:translateY(-3px);box-shadow:0 10px 25px #10182814}.icon{font-size:30px}.tool h3{margin:10px 0 6px;font-size:17px}.tool p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.tag{display:inline-block;margin-top:12px;font-size:11px;background:#eef2ff;color:#3730a3;padding:4px 8px;border-radius:20px}
-.count{max-width:1150px;margin:0 auto;padding:0 18px;color:var(--muted);font-size:13px}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;padding:15px;overflow:auto}.modal.show{display:block}.box{background:#fff;max-width:760px;margin:30px auto;border-radius:18px;padding:20px;position:relative}.close{position:absolute;right:15px;top:12px;border:0;background:#f2f4f7;border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer}.box h2{margin:0 45px 6px 0}.desc{color:var(--muted);font-size:14px;margin-bottom:18px}
-label{display:block;font-weight:700;margin:13px 0 7px}input,textarea,select{width:100%;padding:11px 12px;border:1px solid #d0d5dd;border-radius:10px;font-size:15px;background:#fff}textarea{min-height:130px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}button.action{border:0;border-radius:10px;padding:11px 15px;background:var(--p);color:#fff;font-weight:700;cursor:pointer}button.secondary{background:#e5e7eb;color:#111827}.result{margin-top:15px;padding:14px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);white-space:pre-wrap;overflow:auto}
-.upload{border:2px dashed #818cf8;background:#f8f8ff;border-radius:13px;padding:24px;text-align:center;cursor:pointer}.upload input{display:none}
-.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}.preview img{width:100%;height:110px;object-fit:contain;background:#eee;border-radius:8px}
-footer{text-align:center;padding:35px 15px;background:#111827;color:#cbd5e1}footer strong{color:#fff}
-@media(max-width:650px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.hero h1{font-size:28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 10px}.tool{padding:14px}.row{grid-template-columns:1fr}.hero{padding:10px}}
+:root{--p:#4f46e5;--bg:#f5f7fb;--card:#fff;--text:#111827;--border:#e5e7eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.3s}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--border)}
+.nav{max-width:1150px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:15px}
+.logo{font-size:25px;font-weight:800;color:var(--p)}
+.search{flex:1;max-width:500px;margin:auto}
+.search input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px}
+.hero{max-width:1150px;margin:25px auto 10px;padding:0 18px}
+.categories{max-width:1150px;margin:18px auto;padding:0 18px}
+.grid{max-width:1150px;margin:18px auto 50px;padding:0 18px}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:12px}
+.count{max-width:1150px;margin:0 auto;padding:0 18px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:100}
+label{display:block;font-weight:700;margin:13px 0}
+.upload{border:2px dashed #818cf8;background:#fff}
+.preview{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+footer{text-align:center;padding:35px 15px;background:var(--card);border-top:1px solid var(--border)}
+
+.dots-wrap{margin-left:auto;position:relative}
+.dots-btn{border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;padding:5px 10px;color:var(--text)}
+.profile-menu{display:none;position:absolute;right:0;top:48px;width:210px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;box-shadow:0 8px 25px #0002;text-align:center;z-index:50}
+.profile-menu.show{display:block}
+.profile-menu img{width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--p)}
+.profile-menu strong{display:block;margin:8px 0 14px}
+.dark-btn{width:100%;padding:10px;border:0;border-radius:9px;background:var(--p);color:white;font-weight:bold;cursor:pointer}
+
+body.dark{--bg:#0b0d10;--card:#171a20;--text:#f5f5f5;--border:#30343b}
+body.dark .search input{background:#20242b;color:white}
+body.dark .upload{background:#171a20}
+
+@media(max-width:650px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}}
 @media(max-width:390px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
+
 <body>
-<header><div class="nav"><div class="logo">Tool<span>Mela</span></div><div class="search"><input id="search" placeholder="🔎 Search 70+ tools..."></div></div></header>
+
+<header>
+<div class="nav">
+
+<div class="logo">ToolMela</div>
+
+<div class="search">
+<input type="text" placeholder="Search tools...">
+</div>
+
+<div class="dots-wrap">
+<button class="dots-btn" onclick="toggleMenu()">⋮</button>
+
+<div class="profile-menu" id="profileMenu">
+<img src="IMG-20260127-WA0080.jpg" alt="Ahmad Hashmi">
+<strong>Ahmad Hashmi</strong>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+</div>
+</div>
+
+</div>
+</header>
+
 <a href="reviews.html" style="display:block;position:relative;text-align:center;margin:15px auto;padding:12px 20px;background:#4f46e5;color:white;text-decoration:none;border-radius:10px;font-weight:bold;max-width:220px;">
 <img src="IMG-20260127-WA0080.jpg" alt="Ahmad Hashmi" style="position:absolute;right:8px;top:6px;width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid white;">
-  ⭐ Public Reviews
+⭐ Public Reviews
 </a>
+
+<script>
+function toggleMenu(){
+document.getElementById("profileMenu").classList.toggle("show");
+}
+
+function toggleDarkMode(){
+document.body.classList.toggle("dark");
+localStorage.setItem("darkMode",document.body.classList.contains("dark")?"1":"0");
+}
+
+if(localStorage.getItem("darkMode")==="1"){
+document.body.classList.add("dark");
+}
+</script>
 <section class="hero"><h1>Free Online Tools</h1><p>PDF, Image, Text, Calculator, Converter, Developer & Daily tools — all in one place.</p></section>
 <div class="categories" id="cats"></div>
 <div class="count" id="count"></div>

@@ -5,362 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ToolMela - Free Online Tools</title>
-<meta name="description" content="ToolMela - Free online tools for PDF, images, text and more.">
+
 <meta name="theme-color" content="#4f46e5">
 
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icon-192.png">
 
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
 <style>
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#111827;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+color:#111827;
 }
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-/* HEADER */
 header{
-  background:linear-gradient(135deg,#4f46e5,#7c3aed);
-  color:white;
-  padding:16px 20px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:0 3px 15px rgba(0,0,0,.15);
-}
-
-.header-inner{
-  max-width:1150px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+background:linear-gradient(135deg,#4f46e5,#7c3aed);
+color:white;
+padding:25px 15px;
+text-align:center;
 }
 
 .logo{
-  font-size:26px;
-  font-weight:800;
+font-size:30px;
+font-weight:bold;
 }
 
-.header-actions{
-  display:flex;
-  gap:8px;
+main{
+max-width:900px;
+margin:auto;
+padding:25px 18px;
 }
 
-.header-btn{
-  border:1px solid rgba(255,255,255,.4);
-  background:rgba(255,255,255,.15);
-  color:white;
-  padding:9px 12px;
-  border-radius:10px;
-}
-
-/* HERO */
 .hero{
-  max-width:1150px;
-  margin:auto;
-  padding:45px 20px 25px;
-  text-align:center;
+text-align:center;
+padding:25px 0;
 }
 
 .hero h1{
-  font-size:42px;
-  margin:0 0 12px;
+font-size:40px;
+margin:0 0 10px;
 }
 
 .hero p{
-  font-size:18px;
-  color:#6b7280;
-  max-width:700px;
-  margin:0 auto 25px;
+font-size:18px;
+color:#6b7280;
 }
 
-.search{
-  width:100%;
-  max-width:650px;
-  padding:16px 18px;
-  border:1px solid #ddd;
-  border-radius:15px;
-  outline:none;
-  background:white;
-  box-shadow:0 5px 20px rgba(0,0,0,.06);
+.install{
+background:white;
+border:2px solid #c7d2fe;
+border-radius:18px;
+padding:25px;
+text-align:center;
+margin:25px 0;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
-.search:focus{
-  border-color:#4f46e5;
-}
-
-/* INSTALL */
-.install-section{
-  max-width:1150px;
-  margin:0 auto 25px;
-  padding:0 20px;
-}
-
-.install-box{
-  background:linear-gradient(135deg,#eef2ff,#f5f3ff);
-  border:2px solid #c7d2fe;
-  border-radius:18px;
-  padding:20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-}
-
-.install-text h2{
-  margin:0 0 7px;
-  font-size:22px;
-}
-
-.install-text p{
-  margin:0;
-  color:#6b7280;
+.install h2{
+margin-top:0;
 }
 
 #installBtn{
-  border:0;
-  background:#4f46e5;
-  color:white;
-  padding:14px 22px;
-  border-radius:12px;
-  font-weight:700;
-  font-size:16px;
-  box-shadow:0 5px 15px rgba(79,70,229,.3);
-  white-space:nowrap;
+display:block;
+width:100%;
+max-width:420px;
+margin:18px auto 0;
+padding:16px;
+background:#4f46e5;
+color:white;
+border:0;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
 }
 
-#installBtn:hover{
-  background:#4338ca;
-}
-
-/* CATEGORIES */
-.categories{
-  max-width:1150px;
-  margin:0 auto 20px;
-  padding:0 20px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-}
-
-.category{
-  border:1px solid #ddd;
-  background:white;
-  color:#374151;
-  padding:9px 15px;
-  border-radius:20px;
-}
-
-.category.active,
-.category:hover{
-  background:#4f46e5;
-  color:white;
-  border-color:#4f46e5;
-}
-
-/* TOOLS */
 .tools{
-  max-width:1150px;
-  margin:auto;
-  padding:0 20px 50px;
-}
-
-.tool-count{
-  color:#6b7280;
-  margin-bottom:15px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
 }
 
 .card{
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 4px 15px rgba(0,0,0,.05);
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 25px rgba(0,0,0,.1);
-}
-
-.icon{
-  font-size:35px;
-  margin-bottom:10px;
+background:white;
+border:1px solid #e5e7eb;
+border-radius:15px;
+padding:20px;
 }
 
 .card h3{
-  margin:0 0 8px;
-  font-size:19px;
+margin:0 0 8px;
 }
 
 .card p{
-  color:#6b7280;
-  min-height:42px;
-  margin:0 0 15px;
-  line-height:1.4;
+color:#6b7280;
 }
 
-.open-btn{
-  width:100%;
-  border:0;
-  background:#4f46e5;
-  color:white;
-  padding:11px;
-  border-radius:10px;
-  font-weight:700;
-}
-
-.open-btn:hover{
-  background:#4338ca;
-}
-
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:5000;
-  padding:20px;
-  overflow:auto;
-}
-
-.modal.show{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-box{
-  width:100%;
-  max-width:650px;
-  background:white;
-  border-radius:18px;
-  padding:25px;
-  position:relative;
-}
-
-.close{
-  position:absolute;
-  top:12px;
-  right:15px;
-  border:0;
-  background:#f3f4f6;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  font-size:20px;
-}
-
-.modal-box h2{
-  margin-top:0;
-}
-
-.modal-box textarea,
-.modal-box input,
-.modal-box select{
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  margin:8px 0;
-}
-
-.action{
-  background:#4f46e5;
-  color:white;
-  border:0;
-  padding:12px 18px;
-  border-radius:10px;
-  margin-top:8px;
-  font-weight:bold;
-}
-
-.result{
-  margin-top:15px;
-  padding:15px;
-  background:#f3f4f6;
-  border-radius:10px;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-/* FOOTER */
 footer{
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:30px 20px;
-}
-
-footer a{
-  color:white;
-  text-decoration:none;
-}
-
-/* MOBILE */
-@media(max-width:900px){
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+text-align:center;
+background:#111827;
+color:white;
+padding:25px;
+margin-top:30px;
 }
 
 @media(max-width:600px){
-  .hero{
-    padding-top:30px;
-  }
 
-  .hero h1{
-    font-size:32px;
-  }
+.hero h1{
+font-size:32px;
+}
 
-  .install-box{
-    flex-direction:column;
-    align-items:stretch;
-    text-align:center;
-  }
+.tools{
+grid-template-columns:1fr;
+}
 
-  #installBtn{
-    width:100%;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .header-inner{
-    flex-direction:column;
-  }
 }
 </style>
 </head>
@@ -368,676 +131,145 @@ footer a{
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="logo">🛠️ ToolMela</div>
-
-    <div class="header-actions">
-      <button class="header-btn" onclick="toggleDark()">🌙</button>
-    </div>
-  </div>
+<div class="logo">🛠️ ToolMela</div>
 </header>
 
 <main>
 
 <section class="hero">
-  <h1>Free Online Tools</h1>
-  <p>
-    Powerful and simple online tools for PDF, images, text, calculations and more.
-  </p>
 
-  <input
-    id="search"
-    class="search"
-    type="search"
-    placeholder="🔍 Search tools..."
-  >
+<h1>Free Online Tools</h1>
+
+<p>
+Simple and useful online tools for everyone.
+</p>
+
 </section>
 
-<!-- INSTALL APP -->
-<section class="install-section">
-  <div class="install-box">
 
-    <div class="install-text">
-      <h2>📱 Install ToolMela</h2>
-      <p>Install ToolMela on your phone for quick access.</p>
-    </div>
+<section class="install">
 
-    <button id="installBtn" type="button">
-      📲 Install App
-    </button>
+<h2>📱 Install ToolMela</h2>
 
-  </div>
+<p>
+Install ToolMela on your phone for quick access.
+</p>
+
+<button id="installBtn">
+📲 Install App
+</button>
+
 </section>
 
-<!-- CATEGORIES -->
-<div class="categories">
-
-  <button class="category active" data-category="all">
-    All
-  </button>
-
-  <button class="category" data-category="pdf">
-    📄 PDF
-  </button>
-
-  <button class="category" data-category="image">
-    🖼️ Image
-  </button>
-
-  <button class="category" data-category="text">
-    📝 Text
-  </button>
-
-  <button class="category" data-category="calculator">
-    🧮 Calculator
-  </button>
-
-</div>
 
 <section class="tools">
 
-  <div class="tool-count">
-    <span id="count">20</span> tools available
-  </div>
+<div class="card">
+<h3>📄 PDF Tools</h3>
+<p>Useful PDF tools.</p>
+</div>
 
-  <div class="grid" id="grid">
+<div class="card">
+<h3>🖼️ Image Tools</h3>
+<p>Useful image tools.</p>
+</div>
 
-    <div class="card" data-category="pdf" data-name="PDF Merger">
-      <div class="icon">📄</div>
-      <h3>PDF Merger</h3>
-      <p>Merge PDF files together.</p>
-      <button class="open-btn" onclick="openTool('PDF Merger')">Open Tool</button>
-    </div>
+<div class="card">
+<h3>📝 Text Tools</h3>
+<p>Useful text tools.</p>
+</div>
 
-    <div class="card" data-category="pdf" data-name="PDF Splitter">
-      <div class="icon">✂️</div>
-      <h3>PDF Splitter</h3>
-      <p>Split PDF pages easily.</p>
-      <button class="open-btn" onclick="openTool('PDF Splitter')">Open Tool</button>
-    </div>
+<div class="card">
+<h3>🧮 Calculators</h3>
+<p>Useful calculators.</p>
+</div>
 
-    <div class="card" data-category="pdf" data-name="PDF to Text">
-      <div class="icon">📑</div>
-      <h3>PDF to Text</h3>
-      <p>Extract text from PDF files.</p>
-      <button class="open-btn" onclick="openTool('PDF to Text')">Open Tool</button>
-    </div>
+<div class="card">
+<h3>🔐 Security Tools</h3>
+<p>Useful security tools.</p>
+</div>
 
-    <div class="card" data-category="pdf" data-name="PDF Compressor">
-      <div class="icon">🗜️</div>
-      <h3>PDF Compressor</h3>
-      <p>Reduce PDF file size.</p>
-      <button class="open-btn" onclick="openTool('PDF Compressor')">Open Tool</button>
-    </div>
+<div class="card">
+<h3>🔄 Converter Tools</h3>
+<p>Convert files and units easily.</p>
+</div>
 
-    <div class="card" data-category="image" data-name="Image Compressor">
-      <div class="icon">🖼️</div>
-      <h3>Image Compressor</h3>
-      <p>Compress images in your browser.</p>
-      <button class="open-btn" onclick="openTool('Image Compressor')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="image" data-name="Image Resizer">
-      <div class="icon">📐</div>
-      <h3>Image Resizer</h3>
-      <p>Resize your images quickly.</p>
-      <button class="open-btn" onclick="openTool('Image Resizer')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="image" data-name="Image Converter">
-      <div class="icon">🔄</div>
-      <h3>Image Converter</h3>
-      <p>Convert images between formats.</p>
-      <button class="open-btn" onclick="openTool('Image Converter')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="image" data-name="Image Cropper">
-      <div class="icon">✂️</div>
-      <h3>Image Cropper</h3>
-      <p>Crop images easily.</p>
-      <button class="open-btn" onclick="openTool('Image Cropper')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Word Counter">
-      <div class="icon">🔢</div>
-      <h3>Word Counter</h3>
-      <p>Count words and characters.</p>
-      <button class="open-btn" onclick="openTool('Word Counter')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Text Case Converter">
-      <div class="icon">🔠</div>
-      <h3>Text Case Converter</h3>
-      <p>Change text to uppercase or lowercase.</p>
-      <button class="open-btn" onclick="openTool('Text Case Converter')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Remove Extra Spaces">
-      <div class="icon">🧹</div>
-      <h3>Remove Extra Spaces</h3>
-      <p>Clean unnecessary spaces from text.</p>
-      <button class="open-btn" onclick="openTool('Remove Extra Spaces')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Text Reverser">
-      <div class="icon">↔️</div>
-      <h3>Text Reverser</h3>
-      <p>Reverse any text instantly.</p>
-      <button class="open-btn" onclick="openTool('Text Reverser')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="calculator" data-name="Calculator">
-      <div class="icon">🧮</div>
-      <h3>Calculator</h3>
-      <p>Simple online calculator.</p>
-      <button class="open-btn" onclick="openTool('Calculator')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="calculator" data-name="Percentage Calculator">
-      <div class="icon">％</div>
-      <h3>Percentage Calculator</h3>
-      <p>Calculate percentages quickly.</p>
-      <button class="open-btn" onclick="openTool('Percentage Calculator')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="calculator" data-name="Age Calculator">
-      <div class="icon">🎂</div>
-      <h3>Age Calculator</h3>
-      <p>Calculate age from date of birth.</p>
-      <button class="open-btn" onclick="openTool('Age Calculator')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="calculator" data-name="BMI Calculator">
-      <div class="icon">⚖️</div>
-      <h3>BMI Calculator</h3>
-      <p>Calculate body mass index.</p>
-      <button class="open-btn" onclick="openTool('BMI Calculator')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Text Sorter">
-      <div class="icon">🔤</div>
-      <h3>Text Sorter</h3>
-      <p>Sort lines alphabetically.</p>
-      <button class="open-btn" onclick="openTool('Text Sorter')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Text Cleaner">
-      <div class="icon">✨</div>
-      <h3>Text Cleaner</h3>
-      <p>Clean and format text.</p>
-      <button class="open-btn" onclick="openTool('Text Cleaner')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="image" data-name="Base64 Image">
-      <div class="icon">🔐</div>
-      <h3>Image Base64</h3>
-      <p>Convert an image to Base64.</p>
-      <button class="open-btn" onclick="openTool('Image Base64')">Open Tool</button>
-    </div>
-
-    <div class="card" data-category="text" data-name="Lorem Ipsum">
-      <div class="icon">📝</div>
-      <h3>Lorem Ipsum</h3>
-      <p>Generate placeholder text.</p>
-      <button class="open-btn" onclick="openTool('Lorem Ipsum')">Open Tool</button>
-    </div>
-
-  </div>
 </section>
 
 </main>
 
+
 <footer>
-  <strong>🛠️ ToolMela</strong>
-  <p>Free online tools for everyone.</p>
-  <p>© 2026 ToolMela</p>
+
+© 2026 ToolMela
+
 </footer>
 
-<!-- TOOL MODAL -->
-<div class="modal" id="modal">
-
-  <div class="modal-box">
-
-    <button class="close" onclick="closeTool()">×</button>
-
-    <h2 id="modalTitle">Tool</h2>
-
-    <div id="toolArea">
-
-      <textarea
-        id="toolInput"
-        rows="8"
-        placeholder="Enter your text here..."
-      ></textarea>
-
-      <button class="action" onclick="runTool()">
-        Run Tool
-      </button>
-
-      <div class="result" id="result">
-        Result will appear here.
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
 
 <script>
 
-/* =========================
-   INSTALL APP
-========================= */
-
 let deferredPrompt = null;
 
-const installBtn = document.getElementById("installBtn");
+const installBtn =
+document.getElementById("installBtn");
 
-window.addEventListener("beforeinstallprompt", function(event){
 
-  event.preventDefault();
+window.addEventListener(
+"beforeinstallprompt",
+function(event){
 
-  deferredPrompt = event;
+event.preventDefault();
 
-});
+deferredPrompt = event;
 
-installBtn.addEventListener("click", async function(){
+}
+);
 
-  if(deferredPrompt){
 
-    deferredPrompt.prompt();
+installBtn.addEventListener(
+"click",
+async function(){
 
-    try{
+if(deferredPrompt){
 
-      const choice = await deferredPrompt.userChoice;
+deferredPrompt.prompt();
 
-      if(choice.outcome === "accepted"){
-        installBtn.textContent = "✅ Installed";
-      }
+try{
 
-    }catch(error){
+await deferredPrompt.userChoice;
 
-      console.log(error);
+}catch(error){
 
-    }
-
-    deferredPrompt = null;
-
-  }else{
-
-    alert(
-      "Install option is not ready yet.\n\n" +
-      "Chrome menu ⋮ → Add to Home screen → Install App"
-    );
-
-  }
-
-});
-
-window.addEventListener("appinstalled", function(){
-
-  installBtn.textContent = "✅ Installed";
-
-  deferredPrompt = null;
-
-});
-
-
-/* =========================
-   SEARCH
-========================= */
-
-const search = document.getElementById("search");
-const cards = document.querySelectorAll(".card");
-const count = document.getElementById("count");
-
-search.addEventListener("input", function(){
-
-  const value = search.value.toLowerCase().trim();
-
-  let visible = 0;
-
-  cards.forEach(function(card){
-
-    const name = card.dataset.name.toLowerCase();
-
-    if(name.includes(value)){
-
-      card.style.display = "";
-
-      visible++;
-
-    }else{
-
-      card.style.display = "none";
-
-    }
-
-  });
-
-  count.textContent = visible;
-
-});
-
-
-/* =========================
-   CATEGORIES
-========================= */
-
-const categoryButtons = document.querySelectorAll(".category");
-
-categoryButtons.forEach(function(button){
-
-  button.addEventListener("click", function(){
-
-    categoryButtons.forEach(function(btn){
-      btn.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    const category = button.dataset.category;
-
-    let visible = 0;
-
-    cards.forEach(function(card){
-
-      if(category === "all" || card.dataset.category === category){
-
-        card.style.display = "";
-
-        visible++;
-
-      }else{
-
-        card.style.display = "none";
-
-      }
-
-    });
-
-    count.textContent = visible;
-
-  });
-
-});
-
-
-/* =========================
-   MODAL
-========================= */
-
-let currentTool = "";
-
-function openTool(name){
-
-  currentTool = name;
-
-  document.getElementById("modalTitle").textContent = name;
-
-  document.getElementById("toolInput").value = "";
-
-  document.getElementById("result").textContent =
-    "Result will appear here.";
-
-  document.getElementById("modal").classList.add("show");
+console.log(error);
 
 }
 
-function closeTool(){
+deferredPrompt = null;
 
-  document.getElementById("modal").classList.remove("show");
+}else{
+
+alert(
+"Install ToolMela:\n\n" +
+"Chrome menu ⋮ → Add to Home screen → Install App"
+);
 
 }
 
-document.getElementById("modal").addEventListener("click", function(event){
+}
+);
 
-  if(event.target === this){
 
-    closeTool();
+window.addEventListener(
+"appinstalled",
+function(){
 
-  }
-
-});
-
-
-/* =========================
-   TOOLS
-========================= */
-
-function runTool(){
-
-  const input = document.getElementById("toolInput").value;
-
-  const result = document.getElementById("result");
-
-  if(currentTool === "Word Counter"){
-
-    const words = input.trim()
-      ? input.trim().split(/\s+/).length
-      : 0;
-
-    result.textContent =
-      "Words: " + words +
-      "\nCharacters: " + input.length;
-
-    return;
-
-  }
-
-  if(currentTool === "Text Case Converter"){
-
-    result.textContent =
-      "UPPERCASE:\n" + input.toUpperCase() +
-      "\n\nlowercase:\n" + input.toLowerCase();
-
-    return;
-
-  }
-
-  if(currentTool === "Remove Extra Spaces"){
-
-    result.textContent =
-      input.replace(/\s+/g," ").trim();
-
-    return;
-
-  }
-
-  if(currentTool === "Text Reverser"){
-
-    result.textContent =
-      input.split("").reverse().join("");
-
-    return;
-
-  }
-
-  if(currentTool === "Text Sorter"){
-
-    result.textContent =
-      input
-      .split("\n")
-      .sort(function(a,b){
-        return a.localeCompare(b);
-      })
-      .join("\n");
-
-    return;
-
-  }
-
-  if(currentTool === "Text Cleaner"){
-
-    result.textContent =
-      input
-      .replace(/\r/g,"")
-      .replace(/[ \t]+/g," ")
-      .replace(/\n\s*\n+/g,"\n\n")
-      .trim();
-
-    return;
-
-  }
-
-  if(currentTool === "Lorem Ipsum"){
-
-    result.textContent =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
-    return;
-
-  }
-
-  if(currentTool === "Percentage Calculator"){
-
-    const numbers = input.match(/[-+]?\d*\.?\d+/g);
-
-    if(numbers && numbers.length >= 2){
-
-      const percent = parseFloat(numbers[0]);
-      const number = parseFloat(numbers[1]);
-
-      result.textContent =
-        percent + "% of " + number +
-        " = " + ((percent / 100) * number);
-
-    }else{
-
-      result.textContent =
-        "Enter two numbers. Example: 20 500";
-
-    }
-
-    return;
-
-  }
-
-  if(currentTool === "Calculator"){
-
-    try{
-
-      const safe = input.replace(/[^0-9+\-*/().% ]/g,"");
-
-      if(!safe.trim()){
-
-        result.textContent =
-          "Enter a calculation. Example: 25 + 50";
-
-        return;
-
-      }
-
-      result.textContent =
-        String(Function('"use strict"; return (' + safe + ')')());
-
-    }catch(error){
-
-      result.textContent =
-        "Invalid calculation.";
-
-    }
-
-    return;
-
-  }
-
-  if(currentTool === "BMI Calculator"){
-
-    const numbers = input.match(/[-+]?\d*\.?\d+/g);
-
-    if(numbers && numbers.length >= 2){
-
-      const weight = parseFloat(numbers[0]);
-      const heightCm = parseFloat(numbers[1]);
-
-      const height = heightCm / 100;
-
-      if(height > 0){
-
-        const bmi = weight / (height * height);
-
-        result.textContent =
-          "BMI: " + bmi.toFixed(2);
-
-      }
-
-    }else{
-
-      result.textContent =
-        "Enter weight in kg and height in cm.\nExample: 70 175";
-
-    }
-
-    return;
-
-  }
-
-  result.textContent =
-    currentTool +
-    "\n\nThis tool is ready for the next feature update.";
+installBtn.innerHTML =
+"✅ ToolMela Installed";
 
 }
-
-
-/* =========================
-   DARK MODE
-========================= */
-
-function toggleDark(){
-
-  const dark =
-    document.body.dataset.dark === "yes";
-
-  if(dark){
-
-    document.body.dataset.dark = "no";
-
-    document.body.style.background = "#f5f7fb";
-    document.body.style.color = "#111827";
-
-  }else{
-
-    document.body.dataset.dark = "yes";
-
-    document.body.style.background = "#111827";
-    document.body.style.color = "#ffffff";
-
-  }
-
-}
-
-
-/* =========================
-   SERVICE WORKER
-========================= */
-
-if("serviceWorker" in navigator){
-
-  window.addEventListener("load", function(){
-
-    navigator.serviceWorker.register("./sw.js")
-      .then(function(){
-
-        console.log("ToolMela Service Worker registered.");
-
-      })
-      .catch(function(error){
-
-        console.log(
-          "Service Worker error:",
-          error
-        );
-
-      });
-
-  });
-
-}
+);
 
 </script>
 
 </body>
-  </html>
+</html>

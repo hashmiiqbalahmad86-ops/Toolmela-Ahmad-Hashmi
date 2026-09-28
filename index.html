@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#4f46e5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="description" content="ToolMela - Free Online Tools">
-
 <title>ToolMela - Free Online Tools</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -72,8 +71,7 @@ margin:auto
 width:100%;
 padding:12px;
 border:1px solid var(--border);
-border-radius:10px;
-font-size:15px
+border-radius:10px
 }
 
 .hero{
@@ -92,11 +90,10 @@ flex-wrap:wrap
 }
 
 .cat{
+padding:9px 14px;
 border:1px solid var(--border);
+border-radius:9px;
 background:var(--card);
-color:var(--text);
-padding:8px 13px;
-border-radius:20px;
 cursor:pointer
 }
 
@@ -124,8 +121,7 @@ transition:.2s
 }
 
 .tool:hover{
-transform:translateY(-3px);
-box-shadow:0 8px 25px #0001
+transform:translateY(-2px)
 }
 
 .tool .icon{
@@ -133,23 +129,22 @@ font-size:30px
 }
 
 .tool h3{
-margin:10px 0 7px
+margin:10px 0 6px
 }
 
 .tool p{
+color:#6b7280;
 font-size:14px;
-line-height:1.5;
-opacity:.75
+line-height:1.5
 }
 
 .tag{
 display:inline-block;
 padding:5px 9px;
-border-radius:8px;
+border-radius:7px;
 background:#eef2ff;
 color:#4f46e5;
-font-size:12px;
-font-weight:bold
+font-size:12px
 }
 
 .count{
@@ -165,7 +160,7 @@ inset:0;
 background:#0008;
 z-index:100;
 overflow:auto;
-padding:30px 15px
+padding:20px
 }
 
 .modal.show{
@@ -174,7 +169,7 @@ display:block
 
 .box{
 max-width:700px;
-margin:40px auto;
+margin:50px auto;
 background:var(--card);
 color:var(--text);
 border-radius:15px;
@@ -185,7 +180,7 @@ position:relative
 .close{
 position:absolute;
 right:12px;
-top:10px;
+top:8px;
 border:0;
 background:transparent;
 font-size:30px;
@@ -199,20 +194,18 @@ font-weight:700;
 margin:13px 0 6px
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
 width:100%;
 padding:12px;
 border:1px solid var(--border);
 border-radius:9px;
 background:var(--card);
 color:var(--text);
-font-size:15px
+font-family:inherit
 }
 
 textarea{
-min-height:180px;
+min-height:160px;
 resize:vertical
 }
 
@@ -237,7 +230,7 @@ margin-top:15px
 }
 
 .preview img{
-width:100%;
+max-width:100%;
 border-radius:10px
 }
 
@@ -250,8 +243,8 @@ margin-top:15px
 
 .action{
 border:0;
+padding:12px 18px;
 border-radius:9px;
-padding:11px 16px;
 background:var(--p);
 color:white;
 font-weight:bold;
@@ -263,17 +256,16 @@ background:#6b7280
 }
 
 .result{
-white-space:pre-wrap;
 margin-top:15px;
 padding:15px;
 background:#f3f4f6;
 border-radius:10px;
-min-height:40px
+white-space:pre-wrap;
+word-break:break-word
 }
 
 .row{
-display:grid;
-grid-template-columns:1fr 1fr;
+display:flex;
 gap:10px
 }
 
@@ -342,6 +334,29 @@ font-weight:bold;
 cursor:pointer
 }
 
+/* INSTALL BUTTON */
+
+#installBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:9999;
+display:block;
+padding:14px 20px;
+border:0;
+border-radius:12px;
+background:#4f46e5;
+color:white;
+font-size:16px;
+font-weight:bold;
+box-shadow:0 5px 20px rgba(0,0,0,.25);
+cursor:pointer
+}
+
+#installBtn:hover{
+transform:scale(1.03)
+}
+
 body.dark{
 --bg:#0b0d10;
 --card:#171a20;
@@ -362,40 +377,6 @@ body.dark .result{
 background:#20242b
 }
 
-body.dark .cat{
-background:#171a20
-}
-
-body.dark .cat.active{
-background:var(--p);
-color:white
-}
-
-
-/* INSTALL BUTTON */
-
-#installBtn{
-display:inline-block;
-background:#4f46e5;
-color:white;
-border:none;
-padding:13px 25px;
-border-radius:12px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 5px 20px rgba(0,0,0,.2)
-}
-
-#installBtn:hover{
-transform:translateY(-2px)
-}
-
-#installBtn:active{
-transform:scale(.97)
-}
-
-
 @media(max-width:650px){
 
 .nav{
@@ -407,10 +388,6 @@ order:3;
 flex-basis:100%
 }
 
-.row{
-grid-template-columns:1fr
-}
-
 }
 
 @media(max-width:390px){
@@ -419,15 +396,19 @@ grid-template-columns:1fr
 grid-template-columns:1fr
 }
 
+#installBtn{
+bottom:15px;
+right:15px;
+font-size:14px;
+padding:12px 16px
+}
+
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -436,7 +417,6 @@ grid-template-columns:1fr
 <div class="logo">
 ToolMela
 </div>
-
 
 <div class="search">
 
@@ -448,35 +428,19 @@ placeholder="Search tools..."
 
 </div>
 
-
 <div class="dots-wrap">
 
-<button
-class="dots-btn"
-onclick="toggleMenu()"
->
+<button class="dots-btn" onclick="toggleMenu()">
 ⋮
 </button>
 
+<div class="profile-menu" id="profileMenu">
 
-<div
-class="profile-menu"
-id="profileMenu"
->
+<img src="IMG-20260127-WA0080.jpg" alt="Profile">
 
-<img
-src="IMG-20260127-WA0080.jpg"
-alt="Ahmad Hashmi"
->
+<strong>Ahmad Hashmi</strong>
 
-<strong>
-Ahmad Hashmi
-</strong>
-
-<button
-class="dark-btn"
-onclick="toggleDarkMode()"
->
+<button class="dark-btn" onclick="toggleDarkMode()">
 🌙 Dark Mode
 </button>
 
@@ -488,9 +452,6 @@ onclick="toggleDarkMode()"
 
 </header>
 
-
-
-<!-- PUBLIC REVIEWS -->
 
 <a
 href="reviews.html"
@@ -506,12 +467,11 @@ text-decoration:none;
 border-radius:10px;
 font-weight:bold;
 max-width:220px;
-"
->
+">
 
 <img
 src="IMG-20260127-WA0080.jpg"
-alt="Ahmad Hashmi"
+alt="Profile"
 style="
 position:absolute;
 right:8px;
@@ -521,30 +481,18 @@ height:42px;
 border-radius:50%;
 object-fit:cover;
 border:2px solid white;
-"
->
+">
 
 ⭐ Public Reviews
 
 </a>
 
 
-
 <!-- INSTALL BUTTON -->
-
-<div
-style="
-text-align:center;
-margin:20px 0;
-"
->
 
 <button id="installBtn">
 📲 Install ToolMela
 </button>
-
-</div>
-
 
 
 <section class="hero">
@@ -560,31 +508,16 @@ PDF, Image, Text, Calculator, Converter, Developer & Daily tools — all in one 
 </section>
 
 
+<div class="categories" id="cats"></div>
 
-<div
-class="categories"
-id="cats"
-></div>
+<div class="count" id="count"></div>
 
-
-<div
-class="count"
-id="count"
-></div>
-
-
-<main
-class="grid"
-id="grid"
-></main>
-
+<main class="grid" id="grid"></main>
 
 
 <footer>
 
-<strong>
-ToolMela
-</strong>
+<strong>ToolMela</strong>
 
 <br><br>
 
@@ -599,27 +532,17 @@ Use tools directly in your browser.
 </footer>
 
 
-
-<div
-class="modal"
-id="modal"
->
+<div class="modal" id="modal">
 
 <div class="box">
 
-<button
-class="close"
-onclick="closeModal()"
->
+<button class="close" onclick="closeModal()">
 ×
 </button>
 
 <h2 id="mtitle"></h2>
 
-<div
-class="desc"
-id="mdesc"
-></div>
+<div id="mdesc"></div>
 
 <div id="body"></div>
 
@@ -628,15 +551,116 @@ id="mdesc"
 </div>
 
 
-
 <script>
+
+/* =========================
+   INSTALL APP
+========================= */
+
+let deferredPrompt = null;
+
+const installBtn =
+document.getElementById("installBtn");
+
+
+window.addEventListener(
+"beforeinstallprompt",
+function(e){
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+installBtn.style.display = "block";
+
+}
+);
+
+
+installBtn.addEventListener(
+"click",
+async function(){
+
+if(deferredPrompt){
+
+deferredPrompt.prompt();
+
+const result =
+await deferredPrompt.userChoice;
+
+if(result.outcome === "accepted"){
+
+installBtn.style.display = "none";
+
+}
+
+deferredPrompt = null;
+
+}else{
+
+alert(
+"Install option is not ready yet.\n\n" +
+"Chrome menu ⋮ → Add to Home screen → Install"
+);
+
+}
+
+}
+);
+
+
+window.addEventListener(
+"appinstalled",
+function(){
+
+installBtn.style.display = "none";
+
+deferredPrompt = null;
+
+}
+);
+
+
+/* =========================
+   SERVICE WORKER
+========================= */
+
+if("serviceWorker" in navigator){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register("./sw.js")
+.then(function(){
+
+console.log("ToolMela Service Worker registered.");
+
+})
+.catch(function(error){
+
+console.log(
+"Service Worker error:",
+error
+);
+
+});
+
+});
+
+}
+
+
+/* =========================
+   PROFILE / DARK MODE
+========================= */
 
 function toggleMenu(){
 
 document
 .getElementById("profileMenu")
-.classList
-.toggle("show");
+.classList.toggle("show");
 
 }
 
@@ -663,12 +687,10 @@ document.body.classList.add("dark");
 
 }
 
-</script>
 
-
-
-<script>
-
+/* =========================
+   TOOLS
+========================= */
 
 const tools=[
 
@@ -824,18 +846,19 @@ const categories=[
 ...new Set(tools.map(x=>x[2]))
 ];
 
-
 let active="All";
 
+const grid=
+document.getElementById("grid");
 
-const grid=document.getElementById("grid");
+const cats=
+document.getElementById("cats");
 
-const cats=document.getElementById("cats");
+const search=
+document.getElementById("search");
 
-const search=document.getElementById("search");
-
-const count=document.getElementById("count");
-
+const count=
+document.getElementById("count");
 
 
 categories.forEach(c=>{
@@ -868,39 +891,50 @@ cats.appendChild(b);
 });
 
 
-
 function render(){
 
-let q=search.value.toLowerCase();
+let q=
+(search.value||"").toLowerCase();
 
-let a=tools.filter(t=>
-(active==="All"||t[2]===active)&&
+let a=
+tools.filter(t=>
+(active==="All"||t[2]===active)
+&&
 (
-t[1].toLowerCase().includes(q)||
+t[1].toLowerCase().includes(q)
+||
 t[3].toLowerCase().includes(q)
 )
 );
 
-
 count.textContent=
 `Showing ${a.length} of ${tools.length} tools`;
 
+grid.innerHTML=
+a.map(t=>`
 
-grid.innerHTML=a.map(t=>
+<div class="tool"
+onclick="openTool('${t[4]}')">
 
-`<div class="tool" onclick="openTool('${t[4]}')">
+<div class="icon">
+${t[0]}
+</div>
 
-<div class="icon">${t[0]}</div>
+<h3>
+${t[1]}
+</h3>
 
-<h3>${t[1]}</h3>
+<p>
+${t[3]}
+</p>
 
-<p>${t[3]}</p>
+<span class="tag">
+${t[2]}
+</span>
 
-<span class="tag">${t[2]}</span>
+</div>
 
-</div>`
-
-).join("");
+`).join("");
 
 }
 
@@ -910,11 +944,14 @@ search.oninput=render;
 render();
 
 
+/* =========================
+   MODAL
+========================= */
 
 const modal=
 document.getElementById("modal");
 
-const body=
+const bodyBox=
 document.getElementById("body");
 
 const mtitle=
@@ -922,7 +959,6 @@ document.getElementById("mtitle");
 
 const mdesc=
 document.getElementById("mdesc");
-
 
 
 function closeModal(){
@@ -935,17 +971,19 @@ clearInterval(window._timer);
 }
 
 
-
 function openTool(id){
 
-const t=tools.find(x=>x[4]===id);
+const t=
+tools.find(x=>x[4]===id);
 
 mtitle.textContent=
 t[0]+" "+t[1];
 
-mdesc.textContent=t[3];
+mdesc.textContent=
+t[3];
 
-body.innerHTML=ui(id);
+bodyBox.innerHTML=
+ui(id);
 
 modal.classList.add("show");
 
@@ -954,20 +992,21 @@ afterUI(id);
 }
 
 
+/* =========================
+   TOOL UI
+========================= */
 
 function ui(id){
 
 const ta=
 '<textarea id="a" placeholder="Enter or paste text here..."></textarea>';
 
-
 if(id==="imagepdf")
-
 return `
-<div
-class="upload"
-onclick="document.getElementById('imgs').click()"
->
+
+<div class="upload"
+onclick="document.getElementById('imgs').click()">
+
 📷 Select pictures
 
 <input
@@ -985,43 +1024,42 @@ multiple
 
 <button
 class="action"
-onclick="makeImagePDF()"
->
+onclick="makeImagePDF()">
+
 Download PDF
+
 </button>
 
 </div>
 `;
 
-
 if(id==="textpdf")
-
 return `
+
 ${ta}
 
 <div class="btns">
 
 <button
 class="action"
-onclick="makeTextPDF()"
->
+onclick="makeTextPDF()">
+
 Download PDF
+
 </button>
 
 </div>
 `;
 
-
 if(
 ["compress","resize","convertimg","base64"]
 .includes(id)
 )
-
 return `
-<div
-class="upload"
-onclick="document.getElementById('oneimg').click()"
->
+
+<div class="upload"
+onclick="document.getElementById('oneimg').click()">
+
 🖼️ Select image
 
 <input
@@ -1034,7 +1072,6 @@ accept="image/*"
 
 <div id="imgout"></div>
 `;
-
 
 if(
 [
@@ -1060,8 +1097,8 @@ if(
 "limit"
 ].includes(id)
 )
-
 return `
+
 ${ta}
 
 ${
@@ -1069,64 +1106,65 @@ id==="replace"
 ?
 '<div class="row"><input id="find" placeholder="Find"><input id="rep" placeholder="Replace with"></div>'
 :
+''
+}
+
+${
 id==="limit"
 ?
 '<input id="lim" type="number" value="100" placeholder="Limit">'
 :
-""
+''
 }
 
 <div class="btns">
 
 <button
 class="action"
-onclick="runText('${id}')"
->
+onclick="runText('${id}')">
+
 Run
+
 </button>
 
 <button
 class="action secondary"
-onclick="copyResult()"
->
+onclick="copyResult()">
+
 Copy result
+
 </button>
 
 </div>
 
-<div
-class="result"
-id="r"
-></div>
+<div class="result" id="r"></div>
+
 `;
 
-
 if(id==="json")
-
 return `
+
 ${ta}
 
 <div class="btns">
 
 <button
 class="action"
-onclick="runText('json')"
->
+onclick="runText('json')">
+
 Format JSON
+
 </button>
 
 </div>
 
-<div
-class="result"
-id="r"
-></div>
+<div class="result" id="r"></div>
+
 `;
 
-
 if(id==="password")
-
 return `
+
 <div class="row">
 
 <input
@@ -1159,61 +1197,58 @@ Letters only
 
 <button
 class="action"
-onclick="genPassword()"
->
+onclick="genPassword()">
+
 Generate
+
 </button>
 
 <button
 class="action secondary"
-onclick="copyResult()"
->
+onclick="copyResult()">
+
 Copy
+
 </button>
 
 </div>
 
-<div
-class="result"
-id="r"
-></div>
+<div class="result" id="r"></div>
+
 `;
 
-
 if(id==="uuid")
-
 return `
+
 <div class="btns">
 
 <button
 class="action"
-onclick="uuid()"
->
+onclick="uuid()">
+
 Generate UUID
+
 </button>
 
 <button
 class="action secondary"
-onclick="copyResult()"
->
+onclick="copyResult()">
+
 Copy
+
 </button>
 
 </div>
 
-<div
-class="result"
-id="r"
-></div>
+<div class="result" id="r"></div>
+
 `;
 
-
 if(
-["calc","scientific"]
-.includes(id)
+["calc","scientific"].includes(id)
 )
-
 return `
+
 <input
 id="expr"
 placeholder="Example: (25*4)+10"
@@ -1223,19 +1258,17 @@ placeholder="Example: (25*4)+10"
 
 <button
 class="action"
-onclick="calculate()"
->
+onclick="calculate()">
+
 Calculate
+
 </button>
 
 </div>
 
-<div
-class="result"
-id="r"
-></div>
-`;
+<div class="result" id="r"></div>
 
+`;
 
 if(
 [
@@ -1271,13 +1304,11 @@ if(
 "fib"
 ].includes(id)
 )
-
 return formFor(id);
 
-
 if(id==="color")
-
 return `
+
 <input
 id="color"
 type="color"
@@ -1286,27 +1317,29 @@ value="#4f46e5"
 
 <div
 class="result"
-id="r"
->
+id="r">
+
 #4F46E5
+
 </div>
 
 <div class="btns">
 
 <button
 class="action"
-onclick="copyResult()"
->
+onclick="copyResult()">
+
 Copy HEX
+
 </button>
 
 </div>
+
 `;
 
-
 if(id==="gradient")
-
 return `
+
 <div class="row">
 
 <input
@@ -1328,20 +1361,20 @@ id="grad"
 style="
 height:130px;
 border-radius:12px;
-margin-top:12px;
-"
-></div>
+margin-top:12px
+">
+</div>
 
 <div
 class="result"
-id="r"
-></div>
+id="r">
+</div>
+
 `;
 
-
 if(id==="lorem")
-
 return `
+
 <input
 id="words"
 type="number"
@@ -1352,23 +1385,24 @@ value="50"
 
 <button
 class="action"
-onclick="lorem()"
->
+onclick="lorem()">
+
 Generate
+
 </button>
 
 </div>
 
 <div
 class="result"
-id="r"
-></div>
+id="r">
+</div>
+
 `;
 
-
 if(id==="qr")
-
 return `
+
 <input
 id="qrtext"
 placeholder="Enter text or URL"
@@ -1378,112 +1412,116 @@ placeholder="Enter text or URL"
 
 <button
 class="action"
-onclick="qr()"
->
+onclick="qr()">
+
 Create QR
+
 </button>
 
 </div>
 
 <div
 id="r"
-class="result"
-></div>
+class="result">
+</div>
+
 `;
 
-
 if(id==="print")
-
 return `
+
 <p>
 Tap the button to print this page.
 </p>
 
 <button
 class="action"
-onclick="window.print()"
->
-Print
-</button>
-`;
+onclick="window.print()">
 
+Print
+
+</button>
+
+`;
 
 if(id==="device")
-
 return `
+
 <div
 class="result"
-id="r"
-></div>
+id="r">
+</div>
+
 `;
 
-
-if(
-id==="cssmin"||
-id==="jsmin"
-)
-
+if(id==="cssmin"||id==="jsmin")
 return `
+
 ${ta}
 
 <div class="btns">
 
 <button
 class="action"
-onclick="runText('${id}')"
->
+onclick="runText('${id}')">
+
 Minify
+
 </button>
 
 </div>
 
 <div
 class="result"
-id="r"
-></div>
+id="r">
+</div>
+
 `;
 
-
 if(id==="stopwatch")
-
 return `
+
 <div
 id="sw"
 class="result"
 style="
 font-size:32px;
 text-align:center
-"
->
+">
+
 00:00:00.0
+
 </div>
 
 <div class="btns">
 
 <button
 class="action"
-onclick="startSW()"
->
+onclick="startSW()">
+
 Start
+
 </button>
 
 <button
 class="action secondary"
-onclick="stopSW()"
->
+onclick="stopSW()">
+
 Stop
+
 </button>
 
 <button
 class="action secondary"
-onclick="resetSW()"
->
+onclick="resetSW()">
+
 Reset
+
 </button>
 
 </div>
-`;
 
+`;
 
 return `
 <p>
@@ -1494,6 +1532,9 @@ This tool is ready for use.
 }
 
 
+/* =========================
+   FORM TOOLS
+========================= */
 
 function formFor(id){
 
@@ -1561,9 +1602,11 @@ fib:["How many numbers"]
 
 };
 
+return (
 
-return (labels[id]||["Value"])
-.map((x,i)=>`
+labels[id]||["Value"]
+
+).map((x,i)=>`
 
 <label>
 ${x}
@@ -1571,35 +1614,32 @@ ${x}
 
 <input
 id="f${i}"
-${
-id==="age"||
-id==="datediff"||
-id==="adddays"||
-id==="weekday"
+type="${
+[
+"age",
+"datediff",
+"adddays",
+"weekday"
+].includes(id)
 ?
-"type=date"
+"date"
 :
-id==="random"||
-id==="percent"||
-id==="discount"||
-id==="tip"||
-id==="bmi"||
-id==="currency"||
-id==="area"||
-id==="volume"||
-id==="aspect"||
-id==="speed"||
-id==="power"||
-id==="length"||
-id==="weight"||
-id==="temp"||
-id==="time"||
-id==="data"
+[
+"random",
+"percent",
+"discount",
+"tip",
+"bmi",
+"currency",
+"area",
+"volume",
+"aspect"
+].includes(id)
 ?
-"type=number"
+"number"
 :
-"type=text"
-}
+"text"
+}"
 >
 
 `).join("")
@@ -1612,41 +1652,52 @@ id==="data"
 
 <button
 class="action"
-onclick="runForm('${id}')"
->
+onclick="runForm('${id}')">
+
 Calculate
+
 </button>
 
 </div>
 
 <div
 class="result"
-id="r"
-></div>
+id="r">
+</div>
 
 `;
 
 }
 
 
+/* =========================
+   TEXT TOOLS
+========================= */
 
 function out(v){
 
-document.getElementById("r").textContent=
-String(v);
+const r=
+document.getElementById("r");
+
+if(r)
+r.textContent=String(v);
 
 }
-
 
 
 function copyResult(){
 
-navigator.clipboard?.writeText(
-document.getElementById("r").textContent||""
-);
+const r=
+document.getElementById("r");
+
+if(r){
+
+navigator.clipboard
+?.writeText(r.textContent||"");
 
 }
 
+}
 
 
 function runText(id){
@@ -1662,8 +1713,10 @@ if(id==="wordcount")
 v=
 `Words: ${
 s.trim()
-?s.trim().split(/\s+/).length
-:0
+?
+s.trim().split(/\s+/).length
+:
+0
 }
 Characters: ${s.length}
 Characters (no spaces): ${
@@ -1671,14 +1724,14 @@ s.replace(/\s/g,"").length
 }
 Lines: ${
 s
-?s.split(/\n/).length
-:0
+?
+s.split(/\n/).length
+:
+0
 }`;
 
 
-if(id==="case"){
-
-v=s.toLowerCase();
+if(id==="case")
 
 v=
 `UPPER: ${s.toUpperCase()}
@@ -1686,11 +1739,8 @@ LOWER: ${s.toLowerCase()}
 TITLE: ${s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase())}
 SENTENCE: ${s.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,m=>m.toUpperCase())}`;
 
-}
-
 
 if(id==="spaces")
-
 v=
 s
 .replace(/[ \t]+/g," ")
@@ -1699,12 +1749,10 @@ s
 
 
 if(id==="reverse")
-
 v=[...s].reverse().join("");
 
 
 if(id==="binary")
-
 v=
 [...s]
 .map(c=>
@@ -1716,25 +1764,19 @@ c.charCodeAt(0)
 
 
 if(id==="urlencode")
-
 v=encodeURIComponent(s);
 
 
 if(id==="urldecode")
-
 try{
-
-v=decodeURIComponent(s);
-
-}catch(e){
-
-v="Invalid encoded URL";
-
+v=decodeURIComponent(s)
+}
+catch(e){
+v="Invalid encoded URL"
 }
 
 
 if(id==="linkclean")
-
 try{
 
 let u=new URL(s);
@@ -1754,7 +1796,8 @@ u.searchParams.delete(k)
 
 v=u.toString();
 
-}catch(e){
+}
+catch(e){
 
 v="Enter a valid URL";
 
@@ -1798,8 +1841,10 @@ if(id==="lines")
 v=
 `Lines: ${
 s
-?s.split(/\r?\n/).length
-:0
+?
+s.split(/\r?\n/).length
+:
+0
 }`;
 
 
@@ -1830,7 +1875,9 @@ v=
 (
 s.match(
 /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig
-)||[]
+)
+||
+[]
 )
 .join("\n");
 
@@ -1841,7 +1888,9 @@ v=
 (
 s.match(
 /https?:\/\/[^\s]+/ig
-)||[]
+)
+||
+[]
 )
 .join("\n");
 
@@ -1850,10 +1899,22 @@ if(id==="extract")
 
 v=
 `Emails:
-${s.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig)||"None"}
+${
+s.match(
+/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig
+)
+||
+"None"
+}
 
 URLs:
-${s.match(/https?:\/\/[^\s]+/ig)||"None"}`;
+${
+s.match(
+/https?:\/\/[^\s]+/ig
+)
+||
+"None"
+}`;
 
 
 if(id==="htmlescape")
@@ -1877,7 +1938,8 @@ null,
 2
 );
 
-}catch(e){
+}
+catch(e){
 
 v="Invalid JSON: "+e.message;
 
@@ -1931,7 +1993,9 @@ s.length<=n
 ?
 `OK — ${s.length}/${n}`
 :
-`Over limit by ${s.length-n} characters (${s.length}/${n})`;
+`Over limit by ${
+s.length-n
+} characters (${s.length}/${n})`;
 
 }
 
@@ -1956,6 +2020,9 @@ out(v);
 }
 
 
+/* =========================
+   PASSWORD
+========================= */
 
 function genPassword(){
 
@@ -1982,8 +2049,8 @@ type==="letters"
 :
 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}";
 
-
-let a=new Uint32Array(n);
+let a=
+new Uint32Array(n);
 
 crypto.getRandomValues(a);
 
@@ -1994,7 +2061,6 @@ out(
 );
 
 }
-
 
 
 function uuid(){
@@ -2024,6 +2090,9 @@ return v.toString(16);
 }
 
 
+/* =========================
+   CALCULATOR
+========================= */
 
 function calculate(){
 
@@ -2036,7 +2105,8 @@ document.getElementById("expr").value
 )()
 );
 
-}catch(e){
+}
+catch(e){
 
 out("Invalid expression");
 
@@ -2045,31 +2115,38 @@ out("Invalid expression");
 }
 
 
+/* =========================
+   FORM CALCULATIONS
+========================= */
 
 function runForm(id){
 
 let f=
-i=>document.getElementById("f"+i)?.value;
+i=>
+document.getElementById("f"+i)?.value;
 
 let v="";
 
 
 if(id==="percent")
-
-v=(+f(0)*+f(1)/100);
+v=
+(+f(0)*+f(1)/100);
 
 
 if(id==="profit")
-
 v=
 `Profit: ${+f(1)-+f(0)}
-Profit %: ${(
-((+f(1)-+f(0))/(+f(0)||1))*100
-).toFixed(2)}%`;
+Profit %: ${
+(
+(+f(1)-+f(0))
+/
+(+f(0)||1)
+*100
+).toFixed(2)
+}%`;
 
 
 if(id==="discount")
-
 v=
 (
 +f(0)*
@@ -2078,14 +2155,13 @@ v=
 
 
 if(id==="tip")
-
 v=
-`Tip: ${(
-(+f(0)*+f(1)/100)
-).toFixed(2)}
-Total: ${(
-(+f(0)*(1+ +f(1)/100))
-).toFixed(2)}`;
+`Tip: ${
+(+f(0)*+f(1)/100).toFixed(2)
+}
+Total: ${
+(+f(0)*(1+ +f(1)/100)).toFixed(2)
+}`;
 
 
 if(
@@ -2119,16 +2195,13 @@ v=
 (
 +f(0)/
 Math.pow(+f(1)/100,2)
-)
-.toFixed(2);
+).toFixed(2);
 
 
 if(id==="currency")
 
 v=
-(
-+f(0)*+f(1)
-).toFixed(2);
+(+f(0)*+f(1)).toFixed(2);
 
 
 if(id==="random")
@@ -2136,1049 +2209,4 @@ if(id==="random")
 v=
 Math.floor(
 Math.random()*
-(+f(1)-+f(0)+1)
-)+ +f(0);
-
-
-if(id==="area")
-
-v=
-`Rectangle area: ${+f(0)*+f(1)}
-Circle area (using first): ${
-(Math.PI*Math.pow(+f(0),2)).toFixed(2)
-}`;
-
-
-if(id==="volume")
-
-v=
-(
-+f(0)*+f(1)*+f(2)
-).toFixed(2);
-
-
-if(id==="aspect"){
-
-let a=+f(0);
-
-let b=+f(1);
-
-let g=gcd(a,b);
-
-v=`${a/g}:${b/g}`;
-
-}
-
-
-if(id==="age"){
-
-let d=new Date(f(0));
-
-let now=new Date();
-
-let age=
-now.getFullYear()-d.getFullYear();
-
-if(
-new Date(
-now.getFullYear(),
-d.getMonth(),
-d.getDate()
-)>now
-)
-age--;
-
-v=age+" years";
-
-}
-
-
-if(id==="datediff")
-
-v=
-Math.abs(
-(new Date(f(1))-new Date(f(0)))
-/86400000
-)
-+" days";
-
-
-if(id==="adddays"){
-
-let d=new Date(f(0));
-
-d.setDate(
-d.getDate()+ +f(1)
-);
-
-v=d.toISOString().slice(0,10);
-
-}
-
-
-if(id==="weekday")
-
-v=
-new Date(f(0))
-.toLocaleDateString(
-undefined,
-{weekday:"long"}
-);
-
-
-if(id==="unix"){
-
-let x=f(0);
-
-v=
-/^\d+$/.test(x)
-?
-new Date(+x*1000).toString()
-:
-Math.floor(
-new Date(x).getTime()/1000
-);
-
-}
-
-
-if(id==="prime"){
-
-let n=+f(0);
-
-let prime=
-n>1 &&
-[...Array(
-Math.floor(Math.sqrt(n))-1
-)]
-.every(
-(_,i)=>n%(i+2)!==0
-);
-
-v=
-prime
-?
-`${n} is prime`
-:
-`${n} is not prime`;
-
-}
-
-
-if(id==="fib"){
-
-let n=
-Math.min(
-100,
-+f(0)||10
-);
-
-let a=[0,1];
-
-while(a.length<n)
-
-a.push(
-a.at(-1)+a.at(-2)
-);
-
-v=
-a.slice(0,n).join(", ");
-
-}
-
-
-if(id==="roman"){
-
-let n=+f(0);
-
-let vals=[
-[1000,"M"],
-[900,"CM"],
-[500,"D"],
-[400,"CD"],
-[100,"C"],
-[90,"XC"],
-[50,"L"],
-[40,"XL"],
-[10,"X"],
-[9,"IX"],
-[5,"V"],
-[4,"IV"],
-[1,"I"]
-];
-
-let s="";
-
-for(let [x,c] of vals){
-
-while(n>=x){
-
-s+=c;
-
-n-=x;
-
-}
-
-}
-
-v=s||"Enter 1-3999";
-
-}
-
-
-if(
-[
-"length",
-"weight",
-"temp",
-"time",
-"data",
-"speed",
-"power"
-]
-.includes(id)
-)
-
-v=
-convert(
-id,
-+f(0),
-f(1),
-f(2)
-);
-
-
-if(id==="gpa"){
-
-let grades=
-f(0)
-.split(",")
-.map(
-x=>({
-A:4,
-B:3,
-C:2,
-D:1,
-F:0
-}[x.trim().toUpperCase()]??0
-)
-);
-
-let cr=
-f(1)
-.split(",")
-.map(Number);
-
-v=
-(
-grades.reduce(
-(s,x,i)=>
-s+x*(cr[i]||1),
-0
-)/
-(
-cr.reduce(
-(s,x)=>s+x,
-0
-)||
-grades.length
-)
-)
-.toFixed(2);
-
-}
-
-
-out(v);
-
-}
-
-
-
-function gcd(a,b){
-
-while(b){
-
-[a,b]=[b,a%b];
-
-}
-
-return Math.abs(a);
-
-}
-
-
-
-function convert(id,v,from,to){
-
-if(id==="temp"){
-
-let c=
-from.toUpperCase()==="F"
-?
-(v-32)*5/9
-:
-from.toUpperCase()==="K"
-?
-v-273.15
-:
-v;
-
-return
-to.toUpperCase()==="F"
-?
-c*9/5+32
-:
-to.toUpperCase()==="K"
-?
-c+273.15
-:
-c;
-
-}
-
-
-const maps={
-
-length:{
-mm:1,
-cm:.01,
-m:1,
-km:1000,
-in:.0254,
-ft:.3048,
-yd:.9144,
-mi:1609.344
-},
-
-weight:{
-g:1,
-kg:1000,
-lb:453.59237,
-oz:28.3495
-},
-
-time:{
-seconds:1,
-minutes:60,
-hours:3600
-},
-
-data:{
-b:1,
-kb:1024,
-mb:1048576,
-gb:1073741824
-},
-
-speed:{
-ms:1,
-kmh:.2777777778,
-mph:.44704
-},
-
-power:{
-w:1,
-kw:1000,
-hp:745.699872
-}
-
-};
-
-
-let m=maps[id];
-
-if(!m)
-
-return v;
-
-return (
-v*m[from.toLowerCase()]/
-m[to.toLowerCase()]
-)
-.toFixed(6)
-.replace(/\.?0+$/,"");
-
-}
-
-
-
-function lorem(){
-
-let base=
-"Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
-
-let n=
-+document.getElementById("words").value||50;
-
-let words=
-base.split(" ");
-
-out(
-Array.from(
-{length:n},
-(_,i)=>words[i%words.length]
-)
-.join(" ")
-+" ."
-);
-
-}
-
-
-
-function qr(){
-
-let s=
-encodeURIComponent(
-document.getElementById("qrtext").value
-);
-
-document.getElementById("r").innerHTML=
-
-`<img
-style="max-width:260px"
-src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${s}"
-alt="QR Code"
->
-
-<br>
-
-<small>
-QR image generated using a public QR service.
-</small>`;
-
-}
-
-
-
-function downloadBlob(blob,name){
-
-let a=
-document.createElement("a");
-
-a.href=
-URL.createObjectURL(blob);
-
-a.download=name;
-
-a.click();
-
-setTimeout(
-()=>URL.revokeObjectURL(a.href),
-1000
-);
-
-}
-
-
-
-function afterUI(id){
-
-if(id==="color"){
-
-document.getElementById("color").oninput=
-e=>
-document.getElementById("r")
-.textContent=
-e.target.value.toUpperCase();
-
-}
-
-
-if(id==="gradient"){
-
-let u=()=>{
-
-let a=c1.value;
-
-let b=c2.value;
-
-let s=
-`linear-gradient(90deg,${a},${b})`;
-
-grad.style.background=s;
-
-r.textContent=
-`background: ${s};`;
-
-};
-
-c1.oninput=c2.oninput=u;
-
-u();
-
-}
-
-
-if(id==="device")
-
-out(
-`Browser: ${navigator.userAgent}
-Language: ${navigator.language}
-Screen: ${screen.width} × ${screen.height}
-Online: ${navigator.onLine}`
-);
-
-
-if(id==="oneimg")
-
-document.getElementById("oneimg")
-.onchange=
-e=>
-imageAction(
-e.target.files[0],
-id
-);
-
-
-if(id==="imagepdf")
-
-document.getElementById("imgs")
-.onchange=
-e=>{
-
-window.pdfImgs=
-[...e.target.files];
-
-prev.innerHTML=
-pdfImgs
-.map(x=>
-`<img src="${URL.createObjectURL(x)}">`
-)
-.join("");
-
-};
-
-}
-
-
-
-async function imageAction(file,id){
-
-if(!file)
-
-return;
-
-let im=new Image();
-
-im.onload=()=>{
-
-if(id==="base64"){
-
-imgout.innerHTML=
-
-`<textarea
-style="height:160px"
->${im.src}</textarea>
-
-<div class="btns">
-
-<button
-class="action"
-onclick="
-navigator.clipboard.writeText(
-document.querySelector('#imgout textarea').value
-)
-"
->
-Copy
-</button>
-
-</div>`;
-
-}
-
-else{
-
-let c=
-document.createElement("canvas");
-
-let w=im.width;
-
-let h=im.height;
-
-
-if(id==="resize"){
-
-w=
-+prompt(
-"New width",
-im.width
-)||
-im.width;
-
-h=
-+prompt(
-"New height",
-im.height
-)||
-im.height;
-
-}
-
-
-c.width=w;
-
-c.height=h;
-
-c.getContext("2d")
-.drawImage(
-im,
-0,
-0,
-w,
-h
-);
-
-
-let type=
-id==="convertimg"
-?
-(
-prompt(
-"Type: image/png, image/jpeg or image/webp",
-"image/png"
-)||"image/png"
-)
-:
-"image/jpeg";
-
-
-c.toBlob(
-b=>{
-
-let url=
-URL.createObjectURL(b);
-
-imgout.innerHTML=
-
-`<img
-style="
-max-width:100%;
-max-height:280px
-"
-src="${url}"
->
-
-<div class="btns">
-
-<a
-class="action"
-style="
-text-decoration:none;
-display:inline-block
-"
-href="${url}"
-download="toolmela-image.${type.split('/')[1]}"
->
-Download Image
-</a>
-
-</div>`;
-
-},
-type,
-id==="compress"
-?
-0.65
-:
-.92
-);
-
-}
-
-};
-
-im.src=
-URL.createObjectURL(file);
-
-}
-
-
-
-async function makeImagePDF(){
-
-if(!window.pdfImgs?.length){
-
-alert(
-"Select pictures first."
-);
-
-return;
-
-}
-
-
-const {jsPDF}=
-window.jspdf;
-
-const pdf=
-new jsPDF({
-format:"a4"
-});
-
-let first=true;
-
-
-for(const f of pdfImgs){
-
-let data=
-await fileData(f);
-
-let im=
-await load(data);
-
-if(!first)
-
-pdf.addPage();
-
-first=false;
-
-
-let r=
-Math.min(
-194/im.width,
-281/im.height
-);
-
-let w=
-im.width*r;
-
-let h=
-im.height*r;
-
-
-pdf.addImage(
-im,
-"JPEG",
-(210-w)/2,
-(297-h)/2,
-w,
-h
-);
-
-}
-
-
-pdf.save(
-"toolmela-images.pdf"
-);
-
-}
-
-
-
-function load(src){
-
-return new Promise(
-(res,rej)=>{
-
-let i=new Image;
-
-i.onload=()=>res(i);
-
-i.onerror=rej;
-
-i.src=src;
-
-}
-);
-
-}
-
-
-
-function fileData(f){
-
-return new Promise(r=>{
-
-let x=new FileReader;
-
-x.onload=()=>r(x.result);
-
-x.readAsDataURL(f);
-
-});
-
-}
-
-
-
-function makeTextPDF(){
-
-let {jsPDF}=
-window.jspdf;
-
-let p=new jsPDF();
-
-let s=
-document.getElementById("a").value||"";
-
-p.setFontSize(12);
-
-let y=18;
-
-p.splitTextToSize(
-s,
-180
-)
-.forEach(x=>{
-
-if(y>280){
-
-p.addPage();
-
-y=18;
-
-}
-
-p.text(
-x,
-15,
-y
-);
-
-y+=7;
-
-});
-
-p.save(
-"toolmela-text.pdf"
-);
-
-}
-
-
-
-function startSW(){
-
-if(window._timer)
-
-return;
-
-window._start=
-Date.now()-
-(window._elapsed||0);
-
-window._timer=
-setInterval(()=>{
-
-let x=
-Date.now()-
-window._start;
-
-let m=
-Math.floor(
-x/60000
-);
-
-let sec=
-((x%60000)/1000)
-.toFixed(1)
-.padStart(4,"0");
-
-document.getElementById("sw")
-.textContent=
-`${String(m).padStart(2,"0")}:${sec}`;
-
-},100);
-
-}
-
-
-
-function stopSW(){
-
-clearInterval(
-window._timer
-);
-
-window._timer=null;
-
-window._elapsed=
-Date.now()-
-(window._start||Date.now());
-
-}
-
-
-
-function resetSW(){
-
-stopSW();
-
-window._elapsed=0;
-
-document.getElementById("sw")
-.textContent=
-"00:00:00.0";
-
-}
-
-
-
-document.addEventListener(
-"keydown",
-e=>{
-
-if(e.key==="Escape")
-
-closeModal();
-
-}
-);
-
-</script>
-
-
-
-<!-- ==============================
-     TOOLMELA INSTALL SYSTEM
-     ============================== -->
-
-<script>
-
-let deferredPrompt=null;
-
-const installBtn=
-document.getElementById("installBtn");
-
-
-/*
-Chrome جب بتائے گا کہ website
-install ہونے کے لیے تیار ہے
-*/
-
-window.addEventListener(
-"beforeinstallprompt",
-function(e){
-
-e.preventDefault();
-
-deferredPrompt=e;
-
-console.log(
-"ToolMela install prompt available"
-);
-
-}
-);
-
-
-
-/*
-Install Button
-*/
-
-installBtn.addEventListener(
-"click",
-async function(){
-
-/*
-اگر Chrome نے Install prompt
-دیا ہے تو وہ کھولیں
-*/
-
-if(deferredPrompt){
-
-deferredPrompt.prompt();
-
-const result=
-await deferredPrompt.userChoice;
-
-console.log(
-"Install result:",
-result.outcome
-);
-
-deferredPrompt=null;
-
-return;
-
-}
-
-
-/*
-اگر automatic prompt available
-نہیں ہے تو user کو بتائیں
-*/
-
-alert(
-"اگر Install popup نہیں آیا تو Chrome کے ⋮ menu پر جائیں اور 'Install app' یا 'Add to Home screen' منتخب کریں۔"
-);
-
-}
-);
-
-
-
-/*
-App install ہونے کے بعد
-*/
-
-window.addEventListener(
-"appinstalled",
-function(){
-
-console.log(
-"ToolMela successfully installed"
-);
-
-installBtn.style.display=
-"none";
-
-deferredPrompt=null;
-
-}
-);
-
-
-
-/*
-Service Worker
-*/
-
-if(
-"serviceWorker"
-in navigator
-){
-
-window.addEventListener(
-"load",
-function(){
-
-navigator.serviceWorker
-.register("./sw.js")
-.then(
-function(registration){
-
-console.log(
-"ToolMela Service Worker registered:",
-registration.scope
-);
-
-}
-)
-.catch(
-function(error){
-
-console.error(
-"Service Worker registration failed:",
-error
-);
-
-}
-);
-
-}
-);
-
-}
-
-</script>
-
-
-</body>
-
-  </html>
+(+f(1)-+f(

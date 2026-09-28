@@ -1,11 +1,11 @@
 {
-  "name": "ToolMela Public Reviews",
-  "short_name": "ToolMela Reviews",
-  "start_url": "./reviews.html",
+  "name": "ToolMela",
+  "short_name": "ToolMela",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f5f7fb",
-  "theme_color": "#6c4df6",
-  "description": "ToolMela public customer reviews and ratings.",
+  "theme_color": "#4f46e5",
+  "description": "Free online tools for PDF, images, text and more.",
   "icons": [
     {
       "src": "icon-192.png",

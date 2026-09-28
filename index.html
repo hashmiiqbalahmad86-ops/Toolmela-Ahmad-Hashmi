@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#4f46e5">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="ToolMela - Free Online Tools">
@@ -10,7 +11,57 @@
 
 <style>
 :root{--p:#4f46e5;--bg:#f5f7fb;--card:#fff;--text:#111827;--border:#e5e7eb}
-*{box-sizing:border-box}
+*{box-sizing:border-box} <button id="installBtn" style="
+display:none;
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:9999;
+padding:14px 20px;
+border:0;
+border-radius:12px;
+background:#4f46e5;
+color:white;
+font-size:16px;
+font-weight:bold;
+box-shadow:0 5px 20px rgba(0,0,0,.2);
+">
+📲 Install ToolMela
+</button>
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+
+  const { outcome } = await deferredPrompt.userChoice;
+
+  deferredPrompt = null;
+  installBtn.style.display = "none";
+});
+
+window.addEventListener("appinstalled", () => {
+  installBtn.style.display = "none";
+});
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
+</script>
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.3s}
 header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--border)}
 .nav{max-width:1150px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:15px}

@@ -7,154 +7,227 @@
 <title>ToolMela - Free Online Tools</title>
 
 <meta name="theme-color" content="#4f46e5">
+<meta name="description" content="ToolMela - Free online tools for everyone.">
+
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icon-192.png">
 
 <style>
 *{
-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
-body{ 
-margin:0;
-font-family:Arial,sans-serif;
-background:#f5f7fb;
-color:#111827;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
 header{
-background:linear-gradient(135deg,#4f46e5,#7c3aed);
-color:white;
-padding:25px 15px;
-text-align:center;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:white;
+  padding:22px 15px;
+  text-align:center;
 }
 
 .logo{
-font-size:30px;
-font-weight:bold;
+  font-size:30px;
+  font-weight:bold;
 }
 
 main{
-max-width:1000px;
-margin:auto;
-padding:20px;
+  max-width:1050px;
+  margin:auto;
+  padding:20px;
 }
 
 .hero{
-text-align:center;
-padding:35px 10px;
+  text-align:center;
+  padding:35px 10px;
 }
 
 .hero h1{
-font-size:42px;
-margin:0 0 10px;
+  font-size:42px;
+  margin:0 0 10px;
 }
 
 .hero p{
-font-size:18px;
-color:#6b7280;
+  font-size:19px;
+  color:#6b7280;
 }
 
-/* INSTALL BOX */
+/* INSTALL */
 
 .install-box{
-background:white;
-border:3px solid #4f46e5;
-border-radius:20px;
-padding:25px;
-margin:20px 0 35px;
-text-align:center;
-box-shadow:0 8px 25px rgba(0,0,0,.12);
+  background:white;
+  border:3px solid #4f46e5;
+  border-radius:20px;
+  padding:25px 18px;
+  margin:20px 0 35px;
+  text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
 }
 
 .install-box h2{
-margin:0 0 8px;
-font-size:26px;
+  margin:0 0 10px;
+  font-size:28px;
 }
 
 .install-box p{
-color:#6b7280;
-margin-bottom:20px;
+  color:#6b7280;
+  font-size:17px;
 }
 
 #installBtn{
-display:block;
-width:100%;
-max-width:450px;
-margin:auto;
-padding:17px 20px;
-background:#4f46e5;
-color:white;
-border:none;
-border-radius:14px;
-font-size:19px;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 5px 15px rgba(79,70,229,.35);
-}
-
-#installBtn:hover{
-background:#3730a3;
+  display:block;
+  width:100%;
+  max-width:450px;
+  margin:20px auto 0;
+  padding:17px;
+  background:#4f46e5;
+  color:white;
+  border:none;
+  border-radius:14px;
+  font-size:19px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 /* TOOLS */
 
 .tools-title{
-text-align:center;
-margin-bottom:20px;
+  text-align:center;
+  font-size:30px;
+  margin-bottom:22px;
 }
 
 .tools{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
 }
 
 .card{
-background:white;
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:22px;
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:17px;
+  padding:22px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
 
 .card h3{
-margin-top:0;
+  margin:0 0 10px;
+  font-size:21px;
 }
 
 .card p{
-color:#6b7280;
+  color:#6b7280;
+  min-height:40px;
 }
 
-/* FOOTER */
+.toolBtn{
+  width:100%;
+  padding:13px;
+  background:#4f46e5;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* MODAL */
+
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9999;
+  padding:20px;
+  overflow:auto;
+}
+
+.modal-box{
+  background:white;
+  max-width:650px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:18px;
+}
+
+.close{
+  float:right;
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:50%;
+  background:#eee;
+  font-size:22px;
+  cursor:pointer;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:12px;
+  margin:8px 0 12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-size:16px;
+}
+
+textarea{
+  min-height:130px;
+}
+
+.actionBtn{
+  padding:13px 18px;
+  background:#4f46e5;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.result{
+  background:#f3f4f6;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
 
 footer{
-margin-top:40px;
-background:#111827;
-color:white;
-text-align:center;
-padding:25px;
+  margin-top:40px;
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:25px;
 }
-
-/* MOBILE */
 
 @media(max-width:600px){
 
-.hero h1{
-font-size:32px;
-}
+  .hero h1{
+    font-size:32px;
+  }
 
-.tools{
-grid-template-columns:1fr;
-}
+  .tools{
+    grid-template-columns:1fr;
+  }
 
-.install-box{
-padding:20px 15px;
-}
+  .install-box{
+    padding:20px 15px;
+  }
 
-#installBtn{
-font-size:17px;
-}
-
+  .tools-title{
+    font-size:27px;
+  }
 }
 </style>
 </head>
@@ -162,90 +235,1186 @@ font-size:17px;
 <body>
 
 <header>
-<div class="logo">🛠️ ToolMela</div>
+  <div class="logo">🛠️ ToolMela</div>
 </header>
-
 
 <main>
 
 <section class="hero">
-
-<h1>Free Online Tools</h1>
-
-<p>
-All your useful tools in one place.
-</p>
-
+  <h1>Free Online Tools</h1>
+  <p>All your useful tools in one place.</p>
 </section>
 
-
-<!-- PERMANENT INSTALL BUTTON -->
+<!-- INSTALL APP -->
 
 <section class="install-box">
 
-<h2>📱 Install ToolMela</h2>
+  <h2>📱 Install ToolMela</h2>
 
-<p>
-Get quick access to ToolMela from your phone.
-</p>
+  <p>
+    Get quick access to ToolMela from your phone.
+  </p>
 
-<button id="installBtn" type="button">
-📲 Install App
-</button>
+  <button id="installBtn">
+    📲 Install App
+  </button>
 
 </section>
 
-
 <h2 class="tools-title">
-🛠️ Our Tools
+  🛠️ Our Tools
 </h2>
-
 
 <section class="tools">
 
-<div class="card">
-<h3>📄 PDF Tools</h3>
-<p>Work with PDF files easily.</p>
-</div>
+<!-- CALCULATOR -->
 
 <div class="card">
-<h3>🖼️ Image Tools</h3>
-<p>Useful tools for your images.</p>
+  <h3>🧮 Calculator</h3>
+  <p>Perform quick calculations.</p>
+  <button class="toolBtn" onclick="openTool('calculator')">
+    Open Tool
+  </button>
 </div>
 
-<div class="card">
-<h3>📝 Text Tools</h3>
-<p>Useful online text tools.</p>
-</div>
+<!-- WORD COUNTER -->
 
 <div class="card">
-<h3>🧮 Calculator</h3>
-<p>Perform quick calculations.</p>
+  <h3>📝 Word Counter</h3>
+  <p>Count words and characters.</p>
+  <button class="toolBtn" onclick="openTool('word')">
+    Open Tool
+  </button>
 </div>
 
-<div class="card">
-<h3>🔄 Converter</h3>
-<p>Convert different units easily.</p>
-</div>
+<!-- CASE CONVERTER -->
 
 <div class="card">
-<h3>🔐 Security Tools</h3>
-<p>Useful security utilities.</p>
+  <h3>🔤 Case Converter</h3>
+  <p>Convert text to uppercase or lowercase.</p>
+  <button class="toolBtn" onclick="openTool('case')">
+    Open Tool
+  </button>
+</div>
+
+<!-- PASSWORD -->
+
+<div class="card">
+  <h3>🔐 Password Generator</h3>
+  <p>Generate a strong random password.</p>
+  <button class="toolBtn" onclick="openTool('password')">
+    Open Tool
+  </button>
+</div>
+
+<!-- UNIT -->
+
+<div class="card">
+  <h3>📏 Unit Converter</h3>
+  <p>Convert common units easily.</p>
+  <button class="toolBtn" onclick="openTool('unit')">
+    Open Tool
+  </button>
+</div>
+
+<!-- PERCENTAGE -->
+
+<div class="card">
+  <h3>📊 Percentage Calculator</h3>
+  <p>Calculate percentages easily.</p>
+  <button class="toolBtn" onclick="openTool('percentage')">
+    Open Tool
+  </button>
+</div>
+
+<!-- JSON -->
+
+<div class="card">
+  <h3>🧾 JSON Formatter</h3>
+  <p>Format JSON data easily.</p>
+  <button class="toolBtn" onclick="openTool('json')">
+    Open Tool
+  </button>
+</div>
+
+<!-- BASE64 -->
+
+<div class="card">
+  <h3>🔡 Base64 Tool</h3>
+  <p>Encode and decode Base64 text.</p>
+  <button class="toolBtn" onclick="openTool('base64')">
+    Open Tool
+  </button>
+</div>
+
+<!-- COLOR -->
+
+<div class="card">
+  <h3>🎨 Color Tool</h3>
+  <p>Choose a color and get HEX code.</p>
+  <button class="toolBtn" onclick="openTool('color')">
+    Open Tool
+  </button>
+</div>
+
+<!-- TIMESTAMP -->
+
+<div class="card">
+  <h3>⏱️ Timestamp Tool</h3>
+  <p>Convert date to Unix timestamp.</p>
+  <button class="toolBtn" onclick="openTool('timestamp')">
+    Open Tool
+  </button>
+</div>
+
+<!-- IMAGE -->
+
+<div class="card">
+  <h3>🖼️ Image Compressor</h3>
+  <p>Compress your images.</p>
+  <button class="toolBtn" onclick="openTool('image')">
+    Open Tool
+  </button>
+</div>
+
+<!-- PDF -->
+
+<div class="card">
+  <h3>📄 PDF / Print Tool</h3>
+  <p>Save pages as PDF.</p>
+  <button class="toolBtn" onclick="openTool('pdf')">
+    Open Tool
+  </button>
 </div>
 
 </section>
 
 </main>
 
+<!-- TOOL WINDOW -->
+
+<div id="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeTool()">
+      ×
+    </button>
+
+    <div id="toolContent"></div>
+
+  </div>
+
+</div>
 
 <footer>
-© 2026 ToolMela
+  © 2026 ToolMela
 </footer>
 
-
 <script>
+
+/* =========================
+   INSTALL APP
+========================= */
 
 let deferredPrompt = null;
 
 const installBtn =
-document.getElementById("
+document.getElementById("installBtn");
+
+window.addEventListener(
+  "beforeinstallprompt",
+  function(event){
+
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+  }
+);
+
+installBtn.addEventListener(
+  "click",
+  async function(){
+
+    if(deferredPrompt){
+
+      deferredPrompt.prompt();
+
+      try{
+        await deferredPrompt.userChoice;
+      }catch(error){
+        console.log(error);
+      }
+
+      deferredPrompt = null;
+
+    }else{
+
+      alert(
+        "📱 Install ToolMela\n\n" +
+        "Chrome menu ⋮ کھولیں\n\n" +
+        "پھر Add to Home screen یا Install app دبائیں\n\n" +
+        "پھر Install دبائیں۔"
+      );
+
+    }
+
+  }
+);
+
+window.addEventListener(
+  "appinstalled",
+  function(){
+
+    installBtn.innerHTML =
+    "✅ ToolMela Installed";
+
+  }
+);
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeTool(){
+
+  document.getElementById("modal")
+  .style.display="none";
+
+}
+
+function showModal(html){
+
+  document.getElementById("toolContent")
+  .innerHTML=html;
+
+  document.getElementById("modal")
+  .style.display="block";
+
+}
+
+
+/* =========================
+   TOOLS
+========================= */
+
+function openTool(tool){
+
+/* CALCULATOR */
+
+if(tool==="calculator"){
+
+showModal(`
+
+<h2>🧮 Calculator</h2>
+
+<input id="num1"
+type="number"
+placeholder="First number">
+
+<select id="operator">
+
+<option value="+">+</option>
+<option value="-">−</option>
+<option value="*">×</option>
+<option value="/">÷</option>
+
+</select>
+
+<input id="num2"
+type="number"
+placeholder="Second number">
+
+<button class="actionBtn"
+onclick="calculate()">
+Calculate
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* WORD COUNTER */
+
+if(tool==="word"){
+
+showModal(`
+
+<h2>📝 Word Counter</h2>
+
+<textarea
+id="wordText"
+placeholder="Type or paste your text here...">
+</textarea>
+
+<button class="actionBtn"
+onclick="countWords()">
+Count
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* CASE */
+
+if(tool==="case"){
+
+showModal(`
+
+<h2>🔤 Case Converter</h2>
+
+<textarea
+id="caseText"
+placeholder="Enter your text...">
+</textarea>
+
+<button class="actionBtn"
+onclick="upperCase()">
+UPPERCASE
+</button>
+
+<button class="actionBtn"
+onclick="lowerCase()">
+lowercase
+</button>
+
+<div class="result"
+id="result">
+Converted text will appear here.
+</div>
+
+`);
+
+}
+
+
+/* PASSWORD */
+
+if(tool==="password"){
+
+showModal(`
+
+<h2>🔐 Password Generator</h2>
+
+<input
+id="passwordLength"
+type="number"
+value="16"
+min="6"
+max="50">
+
+<button class="actionBtn"
+onclick="generatePassword()">
+Generate Password
+</button>
+
+<div class="result"
+id="result">
+Your password will appear here.
+</div>
+
+`);
+
+}
+
+
+/* UNIT */
+
+if(tool==="unit"){
+
+showModal(`
+
+<h2>📏 Unit Converter</h2>
+
+<input
+id="unitValue"
+type="number"
+value="1">
+
+<select id="unitFrom">
+
+<option value="meter">
+Meter
+</option>
+
+<option value="kilometer">
+Kilometer
+</option>
+
+<option value="centimeter">
+Centimeter
+</option>
+
+<option value="feet">
+Feet
+</option>
+
+<option value="mile">
+Mile
+</option>
+
+</select>
+
+<select id="unitTo">
+
+<option value="meter">
+Meter
+</option>
+
+<option value="kilometer">
+Kilometer
+</option>
+
+<option value="centimeter">
+Centimeter
+</option>
+
+<option value="feet">
+Feet
+</option>
+
+<option value="mile">
+Mile
+</option>
+
+</select>
+
+<button class="actionBtn"
+onclick="convertUnit()">
+Convert
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* PERCENTAGE */
+
+if(tool==="percentage"){
+
+showModal(`
+
+<h2>📊 Percentage Calculator</h2>
+
+<input
+id="percentageValue"
+type="number"
+placeholder="Value">
+
+<input
+id="percentageTotal"
+type="number"
+placeholder="Total">
+
+<button class="actionBtn"
+onclick="calculatePercentage()">
+Calculate
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* JSON */
+
+if(tool==="json"){
+
+showModal(`
+
+<h2>🧾 JSON Formatter</h2>
+
+<textarea
+id="jsonText"
+placeholder='{"name":"ToolMela"}'>
+</textarea>
+
+<button class="actionBtn"
+onclick="formatJSON()">
+Format JSON
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* BASE64 */
+
+if(tool==="base64"){
+
+showModal(`
+
+<h2>🔡 Base64 Tool</h2>
+
+<textarea
+id="base64Text"
+placeholder="Enter text...">
+</textarea>
+
+<button class="actionBtn"
+onclick="encodeBase64()">
+Encode
+</button>
+
+<button class="actionBtn"
+onclick="decodeBase64()">
+Decode
+</button>
+
+<div class="result"
+id="result">
+Result will appear here.
+</div>
+
+`);
+
+}
+
+
+/* COLOR */
+
+if(tool==="color"){
+
+showModal(`
+
+<h2>🎨 Color Tool</h2>
+
+<input
+id="colorPicker"
+type="color"
+value="#4f46e5">
+
+<button class="actionBtn"
+onclick="getColor()">
+Get HEX
+</button>
+
+<div class="result"
+id="result">
+Color code will appear here.
+</div>
+
+`);
+
+}
+
+
+/* TIMESTAMP */
+
+if(tool==="timestamp"){
+
+showModal(`
+
+<h2>⏱️ Timestamp Tool</h2>
+
+<input
+id="dateInput"
+type="datetime-local">
+
+<button class="actionBtn"
+onclick="getTimestamp()">
+Convert
+</button>
+
+<div class="result"
+id="result">
+Timestamp will appear here.
+</div>
+
+`);
+
+}
+
+
+/* IMAGE */
+
+if(tool==="image"){
+
+showModal(`
+
+<h2>🖼️ Image Compressor</h2>
+
+<input
+id="imageFile"
+type="file"
+accept="image/*">
+
+<br>
+
+<label>
+Quality
+</label>
+
+<input
+id="imageQuality"
+type="range"
+min="0.2"
+max="1"
+step="0.1"
+value="0.7">
+
+<button class="actionBtn"
+onclick="compressImage()">
+Compress & Download
+</button>
+
+<div class="result"
+id="result">
+Choose an image first.
+</div>
+
+`);
+
+}
+
+
+/* PDF */
+
+if(tool==="pdf"){
+
+showModal(`
+
+<h2>📄 PDF Tool</h2>
+
+<p>
+You can save this page as a PDF using your browser's print option.
+</p>
+
+<button class="actionBtn"
+onclick="window.print()">
+🖨️ Print / Save PDF
+</button>
+
+`);
+
+}
+
+}
+
+
+/* =========================
+   CALCULATOR
+========================= */
+
+function calculate(){
+
+let a =
+parseFloat(
+document.getElementById("num1").value
+);
+
+let b =
+parseFloat(
+document.getElementById("num2").value
+);
+
+let op =
+document.getElementById("operator").value;
+
+let result;
+
+if(isNaN(a)||isNaN(b)){
+
+result="Please enter both numbers.";
+
+}
+
+else if(op==="+"){
+
+result=a+b;
+
+}
+
+else if(op==="-"){
+
+result=a-b;
+
+}
+
+else if(op==="*"){
+
+result=a*b;
+
+}
+
+else if(op==="/"){
+
+if(b===0){
+
+result="Cannot divide by zero.";
+
+}else{
+
+result=a/b;
+
+}
+
+}
+
+document.getElementById("result")
+.textContent=result;
+
+}
+
+
+/* =========================
+   WORD COUNTER
+========================= */
+
+function countWords(){
+
+let text =
+document.getElementById("wordText").value;
+
+let words =
+text.trim()
+? text.trim().split(/\s+/).length
+:0;
+
+document.getElementById("result")
+.textContent=
+"Words: "+words+
+"\nCharacters: "+text.length;
+
+}
+
+
+/* =========================
+   CASE
+========================= */
+
+function upperCase(){
+
+let text =
+document.getElementById("caseText").value;
+
+document.getElementById("result")
+.textContent=
+text.toUpperCase();
+
+}
+
+function lowerCase(){
+
+let text =
+document.getElementById("caseText").value;
+
+document.getElementById("result")
+.textContent=
+text.toLowerCase();
+
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+function generatePassword(){
+
+let length =
+parseInt(
+document.getElementById("passwordLength").value
+);
+
+if(length<6) length=6;
+
+if(length>50) length=50;
+
+let chars=
+"ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+
+let password="";
+
+for(let i=0;i<length;i++){
+
+password+=
+chars.charAt(
+Math.floor(
+Math.random()*chars.length
+)
+);
+
+}
+
+document.getElementById("result")
+.textContent=password;
+
+}
+
+
+/* =========================
+   UNIT CONVERTER
+========================= */
+
+function convertUnit(){
+
+let value=
+parseFloat(
+document.getElementById("unitValue").value
+);
+
+let from=
+document.getElementById("unitFrom").value;
+
+let to=
+document.getElementById("unitTo").value;
+
+let units={
+
+meter:1,
+
+kilometer:1000,
+
+centimeter:0.01,
+
+feet:0.3048,
+
+mile:1609.344
+
+};
+
+let meters =
+value*units[from];
+
+let result =
+meters/units[to];
+
+document.getElementById("result")
+.textContent=result;
+
+}
+
+
+/* =========================
+   PERCENTAGE
+========================= */
+
+function calculatePercentage(){
+
+let value=
+parseFloat(
+document.getElementById(
+"percentageValue"
+).value
+);
+
+let total=
+parseFloat(
+document.getElementById(
+"percentageTotal"
+).value
+);
+
+if(!total){
+
+document.getElementById("result")
+.textContent=
+"Please enter a valid total.";
+
+return;
+
+}
+
+let result =
+(value/total)*100;
+
+document.getElementById("result")
+.textContent=
+result.toFixed(2)+"%";
+
+}
+
+
+/* =========================
+   JSON
+========================= */
+
+function formatJSON(){
+
+let text=
+document.getElementById("jsonText")
+.value;
+
+try{
+
+let data=
+JSON.parse(text);
+
+document.getElementById("result")
+.textContent=
+JSON.stringify(data,null,2);
+
+}catch(error){
+
+document.getElementById("result")
+.textContent=
+"Invalid JSON.";
+
+}
+
+}
+
+
+/* =========================
+   BASE64
+========================= */
+
+function encodeBase64(){
+
+let text=
+document.getElementById("base64Text")
+.value;
+
+try{
+
+document.getElementById("result")
+.textContent=
+btoa(
+unescape(
+encodeURIComponent(text)
+)
+);
+
+}catch(error){
+
+document.getElementById("result")
+.textContent=
+"Could not encode.";
+
+}
+
+}
+
+function decodeBase64(){
+
+let text=
+document.getElementById("base64Text")
+.value;
+
+try{
+
+document.getElementById("result")
+.textContent=
+decodeURIComponent(
+escape(
+atob(text)
+)
+);
+
+}catch(error){
+
+document.getElementById("result")
+.textContent=
+"Invalid Base64.";
+
+}
+
+}
+
+
+/* =========================
+   COLOR
+========================= */
+
+function getColor(){
+
+let color=
+document.getElementById(
+"colorPicker"
+).value;
+
+document.getElementById("result")
+.textContent=
+color.toUpperCase();
+
+}
+
+
+/* =========================
+   TIMESTAMP
+========================= */
+
+function getTimestamp(){
+
+let value=
+document.getElementById(
+"dateInput"
+).value;
+
+if(!value){
+
+document.getElementById("result")
+.textContent=
+"Please select a date.";
+
+return;
+
+}
+
+let date=
+new Date(value);
+
+document.getElementById("result")
+.textContent=
+"Unix Timestamp: "+
+Math.floor(date.getTime()/1000);
+
+}
+
+
+/* =========================
+   IMAGE COMPRESSOR
+========================= */
+
+function compressImage(){
+
+let file=
+document.getElementById(
+"imageFile"
+).files[0];
+
+if(!file){
+
+document.getElementById("result")
+.textContent=
+"Please select an image first.";
+
+return;
+
+}
+
+let quality=
+parseFloat(
+document.getElementById(
+"imageQuality"
+).value
+);
+
+let image=
+new Image();
+
+let reader=
+new FileReader();
+
+reader.onload=function(e){
+
+image.onload=function(){
+
+let canvas=
+document.createElement("canvas");
+
+canvas.width=
+image.width;
+
+canvas.height=
+image.height;
+
+let ctx=
+canvas.getContext("2d");
+
+ctx.drawImage(
+image,
+0,
+0
+);
+
+canvas.toBlob(
+function(blob){
+
+let link=
+document.createElement("a");
+
+link.href=
+URL.createObjectURL(blob);
+
+link.download=
+"toolmela-compressed.jpg";
+
+link.click();
+
+document.getElementById(
+"result"
+).textContent=
+"Image compressed and downloaded.";
+
+},
+"image/jpeg",
+quality
+);
+
+};
+
+image.src=e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   SERVICE WORKER
+========================= */
+
+if(
+"serviceWorker"
+in navigator
+){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register("./sw.js")
+.catch(function(error){
+
+console.log(
+"Service Worker Error:",
+error
+);
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

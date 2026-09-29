@@ -7,6 +7,12 @@
 <meta name="description" content="ToolMela - Free online tools for PDF, images, text, calculators, converters and more.">
 <title>ToolMela - Free Online Tools</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script type="module">
+import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
+window.pdfjsLib = pdfjsLib;
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+</script>
 <style>
 :root{--p:#4f46e5;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e4e7ec}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
@@ -29,7 +35,7 @@ footer{text-align:center;padding:35px 15px;background:#111827;color:#cbd5e1}foot
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="logo">Tool<span>Mela</span></div><div class="search"><input id="search" placeholder="🔎 Search 70+ tools..."></div></div></header>
+<header><div class="nav"><div class="logo">Tool<span>Mela</span></div><div class="search"><input id="search" placeholder="🔎 Search 90+ tools..."></div></div></header>
 
 <section class="hero"><h1>Free Online Tools</h1><p>PDF, Image, Text, Calculator, Converter, Developer & Daily tools — all in one place.</p></section>
 <div class="categories" id="cats"></div>
@@ -114,7 +120,26 @@ const tools=[
 ["🔎","Text Compare","Text","Compare two pieces of text.","compare"],
 ["⏳","Stopwatch","Utility","Simple browser stopwatch.","stopwatch"],
 ["🔔","Character Limit","Text","Count text against a character limit.","limit"],
-["🧮","GPA Calculator","Calculator","Calculate GPA from grades and credit hours.","gpa"]
+["🧮","GPA Calculator","Calculator","Calculate GPA from grades and credit hours.","gpa"],
+["📎","Merge PDF","PDF","Combine multiple PDF files into one PDF.","mergepdf"],
+["🗂️","PDF Page Counter","PDF","Count pages in a PDF file.","pdfpages"],
+["📝","PDF Text Extractor","PDF","Extract selectable text from a PDF in your browser.","pdftext"],
+["🖼️","PDF to JPG","PDF","Convert PDF pages to JPG images.","pdftojpg"],
+["🖼️","Image Cropper","Image","Crop an image and download the result.","crop"],
+["🔄","Image Rotator","Image","Rotate an image by 90, 180 or 270 degrees.","rotate"],
+["↔️","Image Flipper","Image","Flip an image horizontally or vertically.","flip"],
+["⚫","Grayscale Image","Image","Convert an image to grayscale.","grayscale"],
+["🌐","Image to WebP","Image","Convert JPG or PNG images to WebP.","towebp"],
+["🧩","Base64 Encoder/Decoder","Developer","Encode text to Base64 or decode Base64 text.","base64text"],
+["🔐","JWT Decoder","Developer","Decode the header and payload of a JWT token.","jwt"],
+["🔗","Slug Generator","Text","Create a clean URL slug from text.","slug"],
+["🔢","Password Strength Checker","Security","Check password length and character variety locally.","passstrength"],
+["🗣️","Text to Speech","Utility","Read text aloud using your browser voice.","tts"],
+["🎙️","Speech to Text","Utility","Dictate speech into text using browser speech recognition.","stt"],
+["🎨","Random Color Generator","Generator","Generate random HEX colors.","randomcolor"],
+["📋","Meta Tag Generator","Developer","Generate HTML title and description meta tags.","metatags"],
+["📶","WiFi QR Generator","Generator","Create a QR code for a WiFi network.","wifiqr"],
+["🧾","Markdown to HTML","Developer","Convert basic Markdown to HTML.","markdown"]
 ];
 
 const categories=["All",...new Set(tools.map(x=>x[2]))];
@@ -153,6 +178,18 @@ function ui(id){
  if(id==="device")return `<div class="result" id="r"></div>`;
  if(id==="cssmin"||id==="jsmin")return `${ta}<div class="btns"><button class="action" onclick="runText('${id}')">Minify</button></div><div class="result" id="r"></div>`;
  if(id==="stopwatch")return `<div id="sw" class="result" style="font-size:32px;text-align:center">00:00:00.0</div><div class="btns"><button class="action" onclick="startSW()">Start</button><button class="action secondary" onclick="stopSW()">Stop</button><button class="action secondary" onclick="resetSW()">Reset</button></div>`;
+ if(["crop","rotate","flip","grayscale","towebp"].includes(id))return `<div class="upload" onclick="document.getElementById('imgedit').click()">🖼️ Select image<input id="imgedit" type="file" accept="image/*"></div><div class="row"><input id="cropw" type="number" placeholder="Crop width (optional)"><input id="croph" type="number" placeholder="Crop height (optional)"></div><select id="rotateDeg"><option value="90">Rotate 90°</option><option value="180">Rotate 180°</option><option value="270">Rotate 270°</option></select><select id="flipDir"><option value="h">Flip Horizontal</option><option value="v">Flip Vertical</option></select><div class="btns"><button class="action" onclick="imageEdit('${id}')">Process & Download</button></div>`;
+ if(["mergepdf","pdfpages","pdftext","pdftojpg"].includes(id))return `<div class="upload" onclick="document.getElementById('pdfinput').click()">📄 Select PDF file(s)<input id="pdfinput" type="file" accept="application/pdf" ${id==="mergepdf"?"multiple":""}></div><div class="btns"><button class="action" onclick="pdfAction('${id}')">${id==="mergepdf"?"Merge PDFs":id==="pdftojpg"?"Convert to JPG":id==="pdftext"?"Extract Text":"Count Pages"}</button></div><div class="result" id="r"></div>`;
+ if(id==="base64text")return `${ta}<div class="btns"><button class="action" onclick="base64Text('encode')">Encode</button><button class="action" onclick="base64Text('decode')">Decode</button></div><div class="result" id="r"></div>`;
+ if(id==="jwt")return `${ta}<div class="btns"><button class="action" onclick="decodeJWT()">Decode JWT</button></div><div class="result" id="r"></div>`;
+ if(id==="slug")return `${ta}<div class="btns"><button class="action" onclick="makeSlug()">Generate Slug</button><button class="action secondary" onclick="copyResult()">Copy</button></div><div class="result" id="r"></div>`;
+ if(id==="passstrength")return `<input id="passcheck" type="password" placeholder="Enter password"><div class="btns"><button class="action" onclick="checkStrength()">Check Strength</button></div><div class="result" id="r"></div>`;
+ if(id==="tts")return `${ta}<div class="btns"><button class="action" onclick="speakText()">🔊 Speak</button><button class="action secondary" onclick="speechSynthesis.cancel()">Stop</button></div>`;
+ if(id==="stt")return `<div class="btns"><button class="action" onclick="startSTT()">🎙️ Start Listening</button><button class="action secondary" onclick="stopSTT()">Stop</button></div><textarea id="sttout" placeholder="Speech will appear here..."></textarea>`;
+ if(id==="randomcolor")return `<div class="btns"><button class="action" onclick="randomColor()">Generate Color</button></div><div id="colorbox" style="height:120px;border-radius:12px;margin-top:12px"></div><div class="result" id="r"></div>`;
+ if(id==="metatags")return `<input id="mtitle2" placeholder="Page title"><input id="mdesc2" placeholder="Page description"><input id="murl2" placeholder="https://example.com"><div class="btns"><button class="action" onclick="metaTags()">Generate HTML</button><button class="action secondary" onclick="copyResult()">Copy</button></div><div class="result" id="r"></div>`;
+ if(id==="wifiqr")return `<input id="wssid" placeholder="WiFi name (SSID)"><input id="wpass" placeholder="WiFi password"><select id="wsec"><option>WPA</option><option>WEP</option><option value="nopass">No password</option></select><div class="btns"><button class="action" onclick="wifiQR()">Create WiFi QR</button></div><div id="r" class="result"></div>`;
+ if(id==="markdown")return `${ta}<div class="btns"><button class="action" onclick="markdownHTML()">Convert to HTML</button></div><div class="result" id="r"></div>`;
  return `<p>This tool is ready for use.</p>`;
 }
 function formFor(id){
@@ -266,6 +303,80 @@ function startSW(){if(window._timer)return;window._start=Date.now()-(window._ela
 function stopSW(){clearInterval(window._timer);window._timer=null;window._elapsed=Date.now()-(window._start||Date.now())}
 function resetSW(){stopSW();window._elapsed=0;document.getElementById("sw").textContent="00:00:00.0"}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+async function pdfAction(id){
+ const files=[...(document.getElementById("pdfinput")?.files||[])];
+ if(!files.length){out("Select a PDF first.");return}
+ try{
+  if(id==="mergepdf"){
+   const outPdf=await PDFLib.PDFDocument.create();
+   for(const f of files){
+    const src=await PDFLib.PDFDocument.load(await f.arrayBuffer());
+    const pages=await outPdf.copyPages(src,src.getPageIndices());
+    pages.forEach(p=>outPdf.addPage(p));
+   }
+   downloadBlob(new Blob([await outPdf.save()],{type:"application/pdf"}),"toolmela-merged.pdf");
+   out(`Merged ${files.length} PDF file(s).`); return;
+  }
+  const data=await files[0].arrayBuffer();
+  const pdf=await window.pdfjsLib.getDocument({data}).promise;
+  if(id==="pdfpages"){out(`Pages: ${pdf.numPages}`);return}
+  if(id==="pdftext"){
+   let all="";
+   for(let n=1;n<=pdf.numPages;n++){
+    const page=await pdf.getPage(n),tc=await page.getTextContent();
+    all+=`--- Page ${n} ---\n`+tc.items.map(x=>x.str).join(" ")+"\n\n";
+   }
+   document.getElementById("r").textContent=all; return;
+  }
+  if(id==="pdftojpg"){
+   for(let n=1;n<=Math.min(pdf.numPages,20);n++){
+    const page=await pdf.getPage(n),vp=page.getViewport({scale:1.5});
+    const c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;
+    await page.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;
+    await new Promise(resolve=>c.toBlob(b=>{downloadBlob(b,`page-${n}.jpg`);resolve()},"image/jpeg",.9));
+   }
+   out(`Converted ${Math.min(pdf.numPages,20)} page(s).`);
+  }
+ }catch(e){out("PDF error: "+e.message)}
+}
+function imageEdit(id){
+ const f=document.getElementById("imgedit")?.files?.[0];
+ if(!f){out("Select an image first.");return}
+ const im=new Image();
+ im.onload=()=>{
+  const w=im.width,h=im.height,rot=id==="rotate"?+document.getElementById("rotateDeg").value:0;
+  const c=document.createElement("canvas"),x=c.getContext("2d");
+  if(id==="crop"){
+   const cw=Math.min(+document.getElementById("cropw").value||w,w);
+   const ch=Math.min(+document.getElementById("croph").value||h,h);
+   c.width=cw;c.height=ch;x.drawImage(im,0,0,cw,ch);
+  }else if(id==="rotate"){
+   c.width=(rot===90||rot===270)?h:w;c.height=(rot===90||rot===270)?w:h;
+   x.translate(c.width/2,c.height/2);x.rotate(rot*Math.PI/180);x.drawImage(im,-w/2,-h/2);
+  }else if(id==="flip"){
+   c.width=w;c.height=h;const dir=document.getElementById("flipDir").value;
+   x.translate(dir==="h"?w:0,dir==="v"?h:0);x.scale(dir==="h"?-1:1,dir==="v"?-1:1);x.drawImage(im,0,0);
+  }else{
+   c.width=w;c.height=h;if(id==="grayscale")x.filter="grayscale(1)";x.drawImage(im,0,0);
+  }
+  const type=id==="towebp"?"image/webp":"image/png";
+  c.toBlob(b=>downloadBlob(b,`toolmela-${id}.${id==="towebp"?"webp":"png"}`),type,.9);
+ };
+ im.src=URL.createObjectURL(f);
+}
+function base64Text(mode){const s=document.getElementById("a").value;try{out(mode==="encode"?btoa(unescape(encodeURIComponent(s))):decodeURIComponent(escape(atob(s))))}catch(e){out("Invalid Base64 text.")}}
+function decodeJWT(){try{const p=document.getElementById("a").value.split(".");if(p.length<2)throw Error("Invalid JWT");const dec=s=>JSON.parse(atob(s.replace(/-/g,"+").replace(/_/g,"/")));out(JSON.stringify({header:dec(p[0]),payload:dec(p[1])},null,2))}catch(e){out("Invalid JWT: "+e.message)}}
+function makeSlug(){out((document.getElementById("a").value||"").toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g,"").trim().replace(/[-\s]+/g,"-"))}
+function checkStrength(){const p=document.getElementById("passcheck").value;let score=0;if(p.length>=8)score++;if(p.length>=12)score++;if(/[a-z]/.test(p)&&/[A-Z]/.test(p))score++;if(/\d/.test(p))score++;if(/[^A-Za-z0-9]/.test(p))score++;out(`Length: ${p.length}\nScore: ${score}/5\n${score<=2?"Weak":score===3?"Fair":score===4?"Strong":"Very strong"}`)}
+function speakText(){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(document.getElementById("a").value))}
+let stt;
+function startSTT(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){document.getElementById("sttout").value="Speech recognition is not supported in this browser.";return}stt=new R();stt.continuous=true;stt.interimResults=true;stt.onresult=e=>{let s="";for(let i=e.resultIndex;i<e.results.length;i++)s+=e.results[i][0].transcript;document.getElementById("sttout").value+=s+" "};stt.start()}
+function stopSTT(){try{stt?.stop()}catch(e){}}
+function randomColor(){const h="#"+Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");document.getElementById("colorbox").style.background=h;out(h)}
+function metaTags(){const e=s=>String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;");out(`<title>${e(document.getElementById("mtitle2").value)}</title>\n<meta name="description" content="${e(document.getElementById("mdesc2").value)}">\n<link rel="canonical" href="${e(document.getElementById("murl2").value)}">`)}
+function wifiQR(){const s=`WIFI:T:${document.getElementById("wsec").value};S:${document.getElementById("wssid").value};P:${document.getElementById("wpass").value};;`;document.getElementById("r").innerHTML=`<img alt="WiFi QR" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(s)}"><p>${s}</p>`}
+function markdownHTML(){let s=document.getElementById("a").value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");s=s.replace(/^### (.*)$/gm,"<h3>$1</h3>").replace(/^## (.*)$/gm,"<h2>$1</h2>").replace(/^# (.*)$/gm,"<h1>$1</h1>").replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\*(.*?)\*/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\n/g,"<br>");out(s)}
 
 let deferredPrompt=null;
 const installBtn=document.getElementById("installBtn");

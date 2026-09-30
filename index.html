@@ -6,6 +6,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="description" content="ToolMela - Free online tools for PDF, images, text, calculators, converters and more.">
 <title>ToolMela - Free Online Tools</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script type="module">
@@ -67,15 +68,40 @@ input,textarea,select{background:var(--card);color:var(--text);border-color:var(
 .review-jump{display:inline-block;margin:12px auto;padding:12px 20px;border-radius:12px;background:var(--p);color:#fff;text-decoration:none;font-weight:800}
 .catalog-badge{font-size:11px;opacity:.65;margin-top:8px}
 
+
+/* Google login gate */
+.auth-gate{position:fixed;inset:0;background:#0008;z-index:100000;display:none;align-items:center;justify-content:center;padding:20px}.auth-gate.show{display:flex}
+.auth-card{width:min(430px,100%);background:#fff;border:1px solid #e4e7ec;border-radius:24px;padding:30px;text-align:center;box-shadow:0 20px 70px #10182825}
+.auth-logo{font-size:34px;font-weight:900;color:#635bff;margin-bottom:8px}.auth-card h2{margin:8px 0;font-size:25px}.auth-card p{color:#667085;line-height:1.5}.google-btn{width:100%;border:1px solid #d0d5dd;background:#fff;color:#101828;border-radius:12px;padding:13px 16px;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}.google-icon{font-size:20px}.auth-status{font-size:13px;margin-top:12px;color:#667085}.auth-user{position:fixed;right:12px;top:76px;z-index:30;display:none;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:7px 10px;font-size:12px}.logout-btn{border:0;background:#fee4e2;color:#b42318;border-radius:8px;padding:5px 8px;margin-left:6px;cursor:pointer}
+body.auth-locked>header,body.auth-locked>main,body.auth-locked>.hero,body.auth-locked>.categories,body.auth-locked>.count,body.auth-locked>.theme-bar,body.auth-locked>.reviews,body.auth-locked>.follow-gate,body.auth-locked>footer{visibility:visible}
+.auth-help{font-size:12px;color:var(--muted);margin-top:10px}
+.favorite-btn{float:right;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:9px;padding:5px 8px;cursor:pointer;font-size:15px}
+.auth-ready .auth-gate{display:none}
+@media(prefers-color-scheme:dark){.auth-card{background:#121a2b;color:#f2f4f7;border-color:#263247}.auth-card p,.auth-status{color:#98a2b3}.google-btn{background:#fff;color:#101828}}
+
 </style>
 </head>
 <body>
+<div class="auth-gate" id="authGate">
+  <div class="auth-card">
+    <div class="auth-logo">ToolMela</div>
+    <h2>🔐 Google Login</h2>
+    <p id="authMessage">Google login sirf Reviews, Favorites aur extra account features ke liye hai. Aam tools bina login ke use kar sakte hain.</p>
+    <button class="google-btn" onclick="signInWithGoogle()"><span class="google-icon">G</span> Continue with Google</button>
+    <button class="theme-btn" style="margin-top:10px;width:100%" onclick="closeAuthPrompt()">Continue without login</button>
+    <div class="auth-status" id="authStatus">Secure sign-in powered by Supabase.</div>
+  </div>
+</div>
+<div class="auth-user" id="authUser"></div>
+
 <header><div class="nav"><div class="logo">Tool<span>Mela</span></div><div class="search"><input id="search" placeholder="🔎 Search 500+ tools..."></div></div></header>
 
 <div class="theme-bar">
   <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
   <button class="theme-btn" onclick="setTheme('dark')">🌙 Dark</button>
   <button class="theme-btn" onclick="setTheme('auto')">⚙️ Auto</button>
+  <button class="theme-btn" id="authAction" onclick="openGooglePrompt('account')">🔐 Google Login</button>
+  <button class="theme-btn" onclick="showFavorites()">❤️ My Favorites</button>
   <a class="review-jump" href="#reviews">⭐ Reviews</a>
 </div>
 
@@ -91,7 +117,7 @@ input,textarea,select{background:var(--card);color:var(--text);border-color:var(
 <section class="reviews" id="reviews">
   <div class="review-card">
     <h2 style="margin-top:0">⭐ User Reviews</h2>
-    <p style="color:var(--muted)">Share your experience with ToolMela.</p>
+    <p style="color:var(--muted)">Share your experience with ToolMela. <strong>Google login is required only to submit a review.</strong></p>
     <div class="review-grid">
       <div class="review-form">
         <label for="reviewName">Your name</label>
@@ -109,7 +135,7 @@ input,textarea,select{background:var(--card);color:var(--text);border-color:var(
         <div class="btns">
           <button class="action" onclick="submitReview()">Submit Review</button>
         </div>
-        <div class="review-note">Reviews are stored online and visible to all visitors.</div>
+        <div class="review-note">⭐ Reviews are stored online and visible to all visitors. Google login is required to submit a review.</div>
       </div>
       <div>
         <div id="reviewSummary" class="result" style="margin-top:0"></div>
@@ -641,13 +667,15 @@ const tools=[
 
 const categories=["All",...new Set(tools.map(x=>x[2]))];
 let active="All";
+let favoritesOnly=false;
+let currentUser=null;
 const grid=document.getElementById("grid"),cats=document.getElementById("cats"),search=document.getElementById("search"),count=document.getElementById("count");
-categories.forEach(c=>{let b=document.createElement("button");b.className="cat"+(c==="All"?" active":"");b.textContent=c;b.onclick=()=>{active=c;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()};cats.appendChild(b)});
+categories.forEach(c=>{let b=document.createElement("button");b.className="cat"+(c==="All"?" active":"");b.textContent=c;b.onclick=()=>{active=c;favoritesOnly=false;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()};cats.appendChild(b)});
 function render(){
  let q=search.value.toLowerCase();
- let a=tools.filter(t=>(active==="All"||t[2]===active)&&(t[1].toLowerCase().includes(q)||t[3].toLowerCase().includes(q)));
+ let a=tools.filter(t=>((!favoritesOnly&&(active==="All"||t[2]===active))||(favoritesOnly&&isFavorite(t[4])))&&(t[1].toLowerCase().includes(q)||t[3].toLowerCase().includes(q)));
  count.textContent=`Showing ${a.length} of ${tools.length} tools`;
- grid.innerHTML=a.map((t,i)=>`<div class="tool" onclick="openTool('${t[4]}')"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[3]}</p><span class="tag">${t[2]}</span></div>`).join("");
+ grid.innerHTML=a.map((t,i)=>{const fav=isFavorite(t[4]);return `<div class="tool" onclick="openTool('${t[4]}')"><button class="favorite-btn" title="${fav?'Remove from favorites':'Add to favorites'}" onclick="event.stopPropagation();toggleFavorite('${t[4]}')">${fav?'❤️':'🤍'}</button><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[3]}</p><span class="tag">${t[2]}</span></div>`}).join("");
 }
 search.oninput=render;render();
 
@@ -674,6 +702,21 @@ function setTheme(mode){
 }
 (function(){const t=localStorage.getItem("toolmela_theme");setTheme(t||"auto");toolMelaUnlocked=localStorage.getItem("toolmela_tiktok_unlock")==="1"})();
 
+function favoritesKey(){return currentUser?"toolmela_favorites_"+currentUser.id:null;}
+function getFavorites(){try{return JSON.parse(localStorage.getItem(favoritesKey())||"[]")}catch(e){return []}}
+function isFavorite(id){return !!currentUser&&getFavorites().includes(id)}
+function toggleFavorite(id){
+  if(!currentUser){openGooglePrompt("favorites");return;}
+  let a=getFavorites();
+  if(a.includes(id)) a=a.filter(x=>x!==id); else a.push(id);
+  localStorage.setItem(favoritesKey(),JSON.stringify(a));
+  render();
+}
+function showFavorites(){
+  if(!currentUser){openGooglePrompt("favorites");return;}
+  favoritesOnly=true;active="All";document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));render();
+  document.getElementById("grid")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
 function realOpenTool(id){
  if(id==="catalog"){document.getElementById("body").innerHTML=`<div class="result"><strong>🛠️ Tool ready</strong><br><br>This ToolMela utility is part of the 500-tool catalog. The core browser tools are fully functional; this catalog item is prepared for its dedicated implementation.</div>`;return;}
  const t=tools.find(x=>x[4]===id);mtitle.textContent=t[0]+" "+t[1];mdesc.textContent=t[3];body.innerHTML=ui(id);modal.classList.add("show");afterUI(id);
@@ -908,6 +951,55 @@ if(installBtn){
  window.addEventListener("appinstalled",()=>{installBtn.textContent="✅ ToolMela Installed";});
 }
 
+
+/* ToolMela Google Account Login — optional for tools, required for Reviews/Favorites */
+const AUTH_SUPABASE_URL="https://ekgphjqfebnrkdtietdj.supabase.co";
+const AUTH_SUPABASE_KEY="sb_publishable_0EMIcW4fmMnSp-yJt43nSA_JTla-pQ1";
+const authClient=window.supabase.createClient(AUTH_SUPABASE_URL,AUTH_SUPABASE_KEY);
+const authRedirect=window.location.origin+window.location.pathname;
+
+function openGooglePrompt(reason){
+  const gate=document.getElementById("authGate");
+  const msg=document.getElementById("authMessage");
+  if(msg){
+    msg.textContent=reason==="reviews"?"Review submit karne ke liye Google account se login karein. Aam tools bina login ke use ho sakte hain.":reason==="favorites"?"Favorites save karne ke liye Google account se login karein. Aam tools bina login ke use ho sakte hain.":"Google login optional hai. Reviews aur Favorites ke liye login karein.";
+  }
+  gate?.classList.add("show");
+}
+function closeAuthPrompt(){document.getElementById("authGate")?.classList.remove("show");}
+async function signInWithGoogle(){
+  const status=document.getElementById("authStatus");
+  if(status)status.textContent="Opening Google sign-in...";
+  const {error}=await authClient.auth.signInWithOAuth({provider:"google",options:{redirectTo:authRedirect}});
+  if(error){console.error(error);if(status)status.textContent="Google sign-in error: "+error.message;}
+}
+function showAuthUser(user){
+  currentUser=user||null;
+  closeAuthPrompt();
+  const box=document.getElementById("authUser");
+  const action=document.getElementById("authAction");
+  const name=user?.user_metadata?.full_name||user?.email||"Google user";
+  if(box){box.style.display="block";box.innerHTML=`👤 ${escapeReviewText(name)} <button class="logout-btn" onclick="signOutGoogle()">Sign out</button>`;}
+  if(action)action.innerHTML=`👤 ${escapeReviewText(name)} · Sign out`;
+  const reviewName=document.getElementById("reviewName");
+  if(reviewName && !reviewName.value.trim()) reviewName.value=user?.user_metadata?.full_name||user?.email||"";
+  render();
+}
+function showAuthGate(){
+  currentUser=null;
+  const box=document.getElementById("authUser");
+  const action=document.getElementById("authAction");
+  if(box)box.style.display="none";
+  if(action)action.textContent="🔐 Google Login";
+  render();
+}
+async function signOutGoogle(){await authClient.auth.signOut();closeAuthPrompt();showAuthGate();}
+(async function initGoogleAuth(){
+  const {data}=await authClient.auth.getSession();
+  if(data?.session?.user)showAuthUser(data.session.user);else showAuthGate();
+  authClient.auth.onAuthStateChange((_event,session)=>{if(session?.user)showAuthUser(session.user);else showAuthGate();});
+})();
+
 /* ToolMela global review system — Supabase */
 const SUPABASE_URL="https://ekgphjqfebnrkdtietdj.supabase.co";
 const SUPABASE_KEY="sb_publishable_0EMIcW4fmMnSp-yJt43nSA_JTla-pQ1";
@@ -936,6 +1028,7 @@ async function getReviews(){
 }
 
 async function submitReview(){
+  if(!currentUser){openGooglePrompt("reviews");return;}
   const name=document.getElementById("reviewName").value.trim();
   const review=document.getElementById("reviewText").value.trim();
   if(!name){alert("Please enter your name.");return}

@@ -4,8 +4,8 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f5f7fb",
-  "theme_color": "#4f46e5",
-  "description": "Free online tools for PDF, images, text and more.",
+  "theme_color": "#0b1f5e",
+  "description": "Free online tools for PDF, images and more.",
   "icons": [
     {
       "src": "icon-192.png",

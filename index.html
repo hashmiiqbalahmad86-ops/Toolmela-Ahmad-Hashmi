@@ -109,7 +109,7 @@ input,textarea,select{background:var(--card);color:var(--text);border-color:var(
         <div class="btns">
           <button class="action" onclick="submitReview()">Submit Review</button>
         </div>
-        <div class="review-note">Reviews are saved in this browser on this device.</div>
+        <div class="review-note">Reviews are stored online and visible to all visitors.</div>
       </div>
       <div>
         <div id="reviewSummary" class="result" style="margin-top:0"></div>
@@ -908,14 +908,12 @@ if(installBtn){
  window.addEventListener("appinstalled",()=>{installBtn.textContent="✅ ToolMela Installed";});
 }
 
-/* ToolMela local review system */
+/* ToolMela global review system — Supabase */
+const SUPABASE_URL="https://ekgphjqfebnrkdtietdj.supabase.co";
+const SUPABASE_KEY="sb_publishable_0EMIcW4fmMnSp-yJt43nSA_JTla-pQ1";
+const REVIEWS_API=SUPABASE_URL+"/rest/v1/reviews";
 let selectedRating=0;
-const REVIEW_KEY="toolmela_reviews_v1";
 
-function getReviews(){
-  try{return JSON.parse(localStorage.getItem(REVIEW_KEY)||"[]")}catch(e){return []}
-}
-function saveReviews(a){localStorage.setItem(REVIEW_KEY,JSON.stringify(a))}
 function escapeReviewText(v){
   return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
@@ -929,48 +927,82 @@ document.querySelectorAll("#starPicker .star").forEach(b=>{
   b.addEventListener("click",()=>setRating(+b.dataset.star));
 });
 
-function submitReview(){
+async function getReviews(){
+  const res=await fetch(REVIEWS_API+"?select=name,rating,review,created_at&order=created_at.desc",{
+    headers:{apikey:SUPABASE_KEY,Authorization:"Bearer "+SUPABASE_KEY}
+  });
+  if(!res.ok) throw new Error("Could not load reviews ("+res.status+")");
+  return await res.json();
+}
+
+async function submitReview(){
   const name=document.getElementById("reviewName").value.trim();
   const review=document.getElementById("reviewText").value.trim();
   if(!name){alert("Please enter your name.");return}
   if(!selectedRating){alert("Please select a star rating.");return}
   if(!review){alert("Please write a review.");return}
 
-  const reviews=getReviews();
-  reviews.unshift({
-    name:name.slice(0,40),
-    rating:selectedRating,
-    text:review.slice(0,500),
-    date:new Date().toLocaleDateString()
-  });
-  saveReviews(reviews);
-  document.getElementById("reviewName").value="";
-  document.getElementById("reviewText").value="";
-  setRating(0);
-  renderReviews();
-  alert("⭐ Thank you! Your review has been added.");
+  const button=document.querySelector('#reviews button.action');
+  if(button){button.disabled=true;button.textContent="Submitting...";}
+  try{
+    const res=await fetch(REVIEWS_API,{
+      method:"POST",
+      headers:{
+        apikey:SUPABASE_KEY,
+        Authorization:"Bearer "+SUPABASE_KEY,
+        "Content-Type":"application/json",
+        Prefer:"return=minimal"
+      },
+      body:JSON.stringify({name:name.slice(0,40),rating:selectedRating,review:review.slice(0,500)})
+    });
+    if(!res.ok){
+      const msg=await res.text();
+      throw new Error(msg||("HTTP "+res.status));
+    }
+    document.getElementById("reviewName").value="";
+    document.getElementById("reviewText").value="";
+    setRating(0);
+    await renderReviews();
+    alert("⭐ Thank you! Your review is now live for all visitors.");
+  }catch(e){
+    console.error(e);
+    alert("Review could not be submitted. Please try again.");
+  }finally{
+    if(button){button.disabled=false;button.textContent="Submit Review";}
+  }
 }
 
-function renderReviews(){
-  const reviews=getReviews();
+async function renderReviews(){
   const list=document.getElementById("reviewList");
   const summary=document.getElementById("reviewSummary");
-  if(!reviews.length){
-    summary.textContent="⭐ No reviews yet. Be the first to review ToolMela!";
-    list.innerHTML='<div class="review-empty">Your review will appear here.</div>';
-    return;
+  summary.textContent="Loading reviews...";
+  list.innerHTML="";
+  try{
+    const reviews=await getReviews();
+    if(!reviews.length){
+      summary.textContent="⭐ No reviews yet. Be the first to review ToolMela!";
+      list.innerHTML='<div class="review-empty">Your review will appear here.</div>';
+      return;
+    }
+    const avg=reviews.reduce((sum,r)=>sum+(Number(r.rating)||0),0)/reviews.length;
+    summary.innerHTML=`<strong>⭐ ${avg.toFixed(1)} / 5</strong> &nbsp; (${reviews.length} review${reviews.length===1?"":"s"})`;
+    list.innerHTML=reviews.map(r=>{
+      const rating=Math.max(0,Math.min(5,Number(r.rating)||0));
+      const date=r.created_at?new Date(r.created_at).toLocaleDateString():"";
+      return `<div class="review-item">
+        <div class="review-top">
+          <div class="review-name">${escapeReviewText(r.name)}</div>
+          <div class="review-stars">${"★".repeat(rating)}<span style="opacity:.25">${"★".repeat(5-rating)}</span></div>
+        </div>
+        <div style="margin-top:7px">${escapeReviewText(r.review)}</div>
+        <div class="review-date" style="margin-top:7px">${escapeReviewText(date)}</div>
+      </div>`;
+    }).join("");
+  }catch(e){
+    console.error(e);
+    summary.textContent="Could not load reviews.";
+    list.innerHTML='<div class="review-empty">Please refresh the page and try again.</div>';
   }
-  const avg=reviews.reduce((sum,r)=>sum+(+r.rating||0),0)/reviews.length;
-  summary.innerHTML=`<strong>⭐ ${avg.toFixed(1)} / 5</strong> &nbsp; (${reviews.length} review${reviews.length===1?"":"s"})`;
-  list.innerHTML=reviews.map(r=>`
-    <div class="review-item">
-      <div class="review-top">
-        <div class="review-name">${escapeReviewText(r.name)}</div>
-        <div class="review-stars">${"★".repeat(Math.max(0,Math.min(5,+r.rating||0)))}<span style="opacity:.25">${"★".repeat(5-Math.max(0,Math.min(5,+r.rating||0)))}</span></div>
-      </div>
-      <div style="margin-top:7px">${escapeReviewText(r.text)}</div>
-      <div class="review-date" style="margin-top:7px">${escapeReviewText(r.date)}</div>
-    </div>`).join("");
 }
 renderReviews();
 
